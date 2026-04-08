@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>开局成合欢宗炉鼎：我越死越强</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --gold:#f6c94e;--gold-dark:#c8982a;--red:#e63946;--red-glow:#ff2244;
+  --crimson:#8b0000;--purple:#7b2d8e;--purple-light:#a855f7;
+  --blue:#3a86ff;--cyan:#06d6a0;--jade:#2d6a4f;
+  --bg-dark:#0a0a12;--bg-panel:rgba(12,8,22,0.94);
+  --text:#e8e0d0;--text-dim:#7a7088;--text-gold:#ffd700;
+  --border:rgba(246,201,78,0.15);--border-active:rgba(246,201,78,0.5);
+}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Noto Sans SC',sans-serif;background:var(--bg-dark);color:var(--text);}
+button{font-family:inherit;}
+#app{width:100%;height:100%;position:relative;overflow:hidden;}
+.bg-layer{position:absolute;inset:0;z-index:0;}
+.bg-layer::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 25% 15%,rgba(123,45,142,0.12),transparent 55%),radial-gradient(ellipse at 75% 85%,rgba(139,0,0,0.08),transparent 45%),radial-gradient(ellipse at 50% 50%,rgba(10,10,18,1),transparent);}
+.bg-layer::after{content:'';position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20% 30%,rgba(255,215,0,0.25),transparent),radial-gradient(1px 1px at 80% 70%,rgba(168,85,247,0.15),transparent),radial-gradient(1px 1px at 50% 50%,rgba(255,255,255,0.08),transparent);background-size:200px 200px,300px 300px,250px 250px;animation:twinkle 8s ease-in-out infinite alternate;}
+@keyframes twinkle{0%{opacity:.4}100%{opacity:1}}
+.particle{position:absolute;border-radius:50%;pointer-events:none;animation:float-up linear forwards;}
+@keyframes float-up{0%{transform:translateY(0) scale(1);opacity:.7}100%{transform:translateY(-100vh) scale(0);opacity:0}}
+
+.game-ui{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;width:100%;}
+.top-bar{display:flex;align-items:center;padding:5px 10px;background:linear-gradient(180deg,rgba(12,8,22,0.96),rgba(12,8,22,0.75));border-bottom:1px solid var(--border);flex-shrink:0;gap:8px;flex-wrap:wrap;min-height:40px;}
+.stat-item{display:flex;align-items:center;gap:3px;font-size:11px;white-space:nowrap;}
+.stat-label{color:var(--text-dim);font-size:9px;}
+.stat-val{color:var(--text-gold);font-weight:700;font-size:12px;}
+.realm-badge{background:linear-gradient(135deg,var(--crimson),var(--purple));padding:2px 10px;border-radius:20px;font-family:'Ma Shan Zheng',cursive;font-size:14px;color:var(--gold);border:1px solid var(--gold-dark);text-shadow:0 0 6px rgba(255,215,0,0.4);}
+.lives-display{color:var(--red);font-weight:900;font-size:14px;text-shadow:0 0 5px var(--red-glow);}
+.xp-bar-wrap{width:100%;height:5px;background:rgba(255,255,255,0.04);flex-shrink:0;position:relative;}
+.xp-bar{height:100%;background:linear-gradient(90deg,var(--purple),var(--gold));transition:width 0.4s;border-radius:0 3px 3px 0;box-shadow:0 0 8px var(--gold);}
+.xp-text{position:absolute;right:8px;top:-1px;font-size:8px;color:var(--text-dim);}
+.main-area{flex:1;display:flex;overflow:hidden;position:relative;}
+.left-panel{width:190px;background:var(--bg-panel);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;}
+.lp-tabs{display:flex;border-bottom:1px solid var(--border);}
+.lp-tab{flex:1;padding:7px 4px;text-align:center;font-size:11px;cursor:pointer;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s;color:var(--text-dim);font-weight:500;}
+.lp-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.lp-body{flex:1;overflow-y:auto;padding:4px;}
+.chapter-item{padding:7px 8px;margin:2px 0;border-radius:6px;cursor:pointer;font-size:11px;transition:background 0.2s,border-color 0.2s;border:1px solid transparent;display:flex;align-items:center;gap:5px;}
+.chapter-item:hover,.chapter-item.active{background:rgba(246,201,78,0.08);border-color:var(--border-active);}
+.chapter-item.locked{opacity:0.35;cursor:not-allowed;}
+.ch-num{font-family:'Ma Shan Zheng',cursive;font-size:16px;color:var(--gold);min-width:20px;}
+.ch-name{font-size:10px;line-height:1.3;flex:1;}
+.ch-status{font-size:9px;white-space:nowrap;}
+.building-card{padding:8px;margin:3px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color 0.2s,background 0.2s;background:rgba(255,255,255,0.02);}
+.building-card:hover{border-color:var(--border-active);background:rgba(246,201,78,0.05);}
+.building-card.locked{opacity:0.3;cursor:not-allowed;}
+.bld-name{font-size:12px;font-weight:700;color:var(--text);}
+.bld-desc{font-size:9px;color:var(--text-dim);margin-top:2px;}
+.sect-divider{font-family:'Ma Shan Zheng',cursive;font-size:14px;color:var(--gold);padding:8px 8px 4px;border-bottom:1px solid var(--border);margin-top:4px;}
+.center-area{flex:1;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+.scene-area{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:10px;}
+.dialogue-box{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,rgba(10,8,18,0.97),rgba(10,8,18,0.88));border-top:2px solid var(--gold-dark);padding:14px 16px;z-index:10;animation:slideUp 0.3s;max-height:55%;}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.dlg-speaker{font-family:'Ma Shan Zheng',cursive;font-size:18px;color:var(--gold);margin-bottom:6px;}
+.dlg-text{font-size:13px;line-height:1.8;color:var(--text);white-space:pre-line;}
+.dlg-choices{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
+.dlg-choice{padding:7px 16px;border:1px solid var(--border-active);border-radius:20px;background:rgba(246,201,78,0.08);color:var(--gold);font-size:12px;cursor:pointer;transition:background 0.2s,transform 0.15s;}
+.dlg-choice:hover{background:rgba(246,201,78,0.2);transform:scale(1.03);}
+.dlg-next{position:absolute;bottom:14px;right:16px;font-size:11px;color:var(--text-dim);animation:blink 1.2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.entity{text-align:center;}
+.entity-avatar{width:72px;height:72px;border-radius:50%;border:3px solid var(--gold-dark);display:flex;align-items:center;justify-content:center;font-size:32px;background:radial-gradient(circle,rgba(123,45,142,0.25),var(--bg-dark));margin:0 auto 4px;box-shadow:0 0 16px rgba(123,45,142,0.25);}
+.entity-name{font-size:11px;font-weight:700;color:var(--gold);}
+.entity-realm{font-size:9px;color:var(--text-dim);}
+.hp-bar-mini{width:65px;height:4px;background:rgba(255,255,255,0.08);border-radius:3px;margin:3px auto;overflow:hidden;}
+.hp-fill{height:100%;transition:width 0.3s;border-radius:3px;}
+.hp-fill.player{background:linear-gradient(90deg,var(--cyan),var(--gold));}
+.hp-fill.enemy{background:linear-gradient(90deg,var(--red),#ff6b6b);}
+.vs-text{font-family:'Ma Shan Zheng',cursive;font-size:36px;color:var(--red);margin:0 24px;text-shadow:0 0 16px var(--red-glow);animation:pulse-vs 1.5s ease-in-out infinite;}
+@keyframes pulse-vs{0%,100%{transform:scale(1);opacity:0.7}50%{transform:scale(1.15);opacity:1}}
+.cultivate-scene{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+.cult-title{font-family:'Ma Shan Zheng',cursive;font-size:26px;color:var(--gold);text-shadow:0 0 12px rgba(255,215,0,0.25);}
+.cult-aura{width:110px;height:110px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;}
+.cult-aura-ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--purple-light);animation:cult-spin 4s linear infinite;opacity:0.4;}
+.cult-aura-ring:nth-child(2){inset:8px;border-color:var(--gold);animation-duration:6s;animation-direction:reverse;}
+.cult-aura-ring:nth-child(3){inset:16px;border-color:var(--cyan);animation-duration:8s;}
+@keyframes cult-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.cult-emoji{font-size:36px;z-index:1;}
+.cult-xp-gain{font-size:14px;font-weight:700;color:var(--cyan);}
+.cult-info{font-size:11px;color:var(--text-dim);}
+.cult-methods{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:320px;}
+.cult-method{padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:10px;cursor:pointer;transition:border-color 0.2s,color 0.2s;color:var(--text-dim);background:rgba(255,255,255,0.02);}
+.cult-method.active{border-color:var(--gold);color:var(--gold);background:rgba(246,201,78,0.08);}
+.cult-method.locked{opacity:0.3;cursor:not-allowed;}
+.log-area{height:70px;background:rgba(0,0,0,0.35);border-top:1px solid var(--border);overflow-y:auto;padding:5px 10px;flex-shrink:0;}
+.log-msg{font-size:10px;line-height:1.5;color:var(--text-dim);animation:fadeInLog 0.3s;}
+.log-msg.gold{color:var(--text-gold);}.log-msg.red{color:var(--red);}.log-msg.green{color:var(--cyan);}.log-msg.purple{color:var(--purple-light);}
+@keyframes fadeInLog{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+.right-panel{width:210px;background:var(--bg-panel);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;}
+.rp-header{padding:8px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.rp-tabs{display:flex;border-bottom:1px solid var(--border);}
+.rp-tab{flex:1;padding:6px 2px;text-align:center;font-size:10px;cursor:pointer;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s;color:var(--text-dim);}
+.rp-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.rp-body{flex:1;overflow-y:auto;padding:3px;}
+.cauldron-card{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:7px;padding:7px;margin:3px 0;transition:border-color 0.2s,background 0.2s;}
+.cauldron-card:hover{border-color:var(--border-active);background:rgba(246,201,78,0.04);}
+.cauldron-card.main-c{border-color:var(--gold);box-shadow:0 0 10px rgba(246,201,78,0.15);}
+.cc-top{display:flex;align-items:center;gap:5px;margin-bottom:3px;}
+.cc-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--crimson));display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid var(--gold-dark);flex-shrink:0;}
+.cc-info{flex:1;min-width:0;}
+.cc-name{font-size:11px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cc-realm{font-size:9px;color:var(--text-dim);}
+.cc-bonus{font-size:8px;color:var(--cyan);margin-top:1px;}
+.cc-actions{display:flex;gap:3px;margin-top:4px;}
+.cc-btn{flex:1;padding:3px;border-radius:4px;border:none;font-size:9px;cursor:pointer;font-weight:700;transition:box-shadow 0.2s;text-align:center;}
+.btn-harvest{background:linear-gradient(135deg,var(--purple),var(--crimson));color:#fff;}
+.btn-dual{background:linear-gradient(135deg,var(--red),var(--gold-dark));color:#fff;}
+.btn-main-set{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#000;font-size:8px;}
+.talent-item{padding:6px 7px;margin:2px 3px;border:1px solid var(--border);border-radius:6px;font-size:10px;display:flex;justify-content:space-between;align-items:center;}
+.talent-item.unlocked{border-color:var(--cyan);background:rgba(6,214,160,0.04);}
+.talent-item.locked{opacity:0.35;}
+.bottom-bar{display:flex;gap:3px;padding:5px 6px;background:linear-gradient(0deg,rgba(12,8,22,0.96),rgba(12,8,22,0.75));border-top:1px solid var(--border);flex-shrink:0;justify-content:center;flex-wrap:wrap;}
+.action-btn{padding:8px 10px;border-radius:10px;border:2px solid var(--border);cursor:pointer;font-family:'Noto Sans SC',sans-serif;font-weight:800;font-size:12px;transition:transform 0.1s;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:62px;position:relative;}
+.action-btn .btn-sub{font-size:8px;font-weight:400;opacity:0.6;}
+.action-btn:active{transform:scale(0.95);}
+.btn-idle{background:linear-gradient(135deg,rgba(45,106,79,0.25),rgba(45,106,79,0.08));color:var(--cyan);border-color:var(--jade);}
+.btn-die{background:linear-gradient(135deg,rgba(230,57,70,0.35),rgba(139,0,0,0.25));color:#fff;border-color:var(--red);box-shadow:0 0 15px rgba(230,57,70,0.25);animation:glow-red 2s ease-in-out infinite;}
+@keyframes glow-red{0%,100%{box-shadow:0 0 12px rgba(230,57,70,0.2)}50%{box-shadow:0 0 25px rgba(230,57,70,0.5)}}
+.btn-cultivate{background:linear-gradient(135deg,rgba(123,45,142,0.25),rgba(6,214,160,0.1));color:var(--cyan);border-color:var(--purple);}
+.btn-harvest-big{background:linear-gradient(135deg,rgba(123,45,142,0.25),rgba(123,45,142,0.08));color:var(--purple-light);border-color:var(--purple);}
+.btn-dual-big{background:linear-gradient(135deg,rgba(246,201,78,0.15),rgba(200,152,42,0.08));color:var(--gold);border-color:var(--gold-dark);}
+.btn-dungeon{background:linear-gradient(135deg,rgba(58,134,255,0.15),rgba(58,134,255,0.06));color:var(--blue);border-color:var(--blue);}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:100;display:flex;align-items:center;justify-content:center;animation:fadeIn 0.3s;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{background:linear-gradient(135deg,#1a1028,#0f0a18);border:2px solid var(--gold-dark);border-radius:14px;padding:20px;max-width:380px;width:92%;text-align:center;animation:scaleIn 0.3s;position:relative;}
+@keyframes scaleIn{from{transform:scale(0.85);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-title{font-family:'Ma Shan Zheng',cursive;font-size:26px;color:var(--gold);margin-bottom:10px;text-shadow:0 0 15px rgba(255,215,0,0.4);}
+.modal-desc{font-size:12px;color:var(--text-dim);margin-bottom:14px;line-height:1.6;}
+.reward-options{display:flex;flex-direction:column;gap:6px;}
+.reward-card{padding:10px;border:2px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color 0.2s,background 0.2s,transform 0.15s;background:rgba(255,255,255,0.02);}
+.reward-card:hover{border-color:var(--gold);background:rgba(246,201,78,0.08);transform:translateY(-1px);}
+.reward-name{font-size:13px;font-weight:700;color:var(--gold);}
+.reward-desc{font-size:10px;color:var(--text-dim);margin-top:3px;}
+
+/* 互动对话专属样式 */
+.interact-box{background:linear-gradient(135deg,#2c1030,#14051a) !important;border:2px solid var(--purple-light) !important;box-shadow:0 0 30px rgba(168,85,247,0.3);}
+.interact-avatar{font-size:56px;margin:10px auto;animation:pulse-avatar 2.5s infinite ease-in-out;text-shadow:0 0 25px rgba(255,105,180,0.6);}
+@keyframes pulse-avatar{0%,100%{transform:scale(1) translateY(0);}50%{transform:scale(1.08) translateY(-5px);}}
+.interact-text{font-size:13px;color:#ffccd5;line-height:1.8;margin-bottom:20px;text-align:left;padding:12px;background:rgba(0,0,0,0.4);border-radius:8px;border-left:3px solid var(--purple-light);font-style:italic;}
+
+.capture-flash{position:fixed;inset:0;z-index:200;pointer-events:none;background:radial-gradient(circle,rgba(246,201,78,0.5),transparent);animation:flash 0.5s forwards;}
+@keyframes flash{0%{opacity:1}100%{opacity:0}}
+.death-screen{position:fixed;inset:0;z-index:150;background:rgba(100,0,0,0.92);display:flex;align-items:center;justify-content:center;flex-direction:column;animation:fadeIn 0.3s;}
+.death-text{font-family:'Ma Shan Zheng',cursive;font-size:48px;color:var(--red);text-shadow:0 0 35px var(--red-glow);animation:pulse-death 1s ease-in-out infinite;}
+@keyframes pulse-death{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.death-sub{font-size:13px;color:#ffaaaa;margin-top:10px;}
+.dmg-number{position:absolute;font-family:'Ma Shan Zheng',cursive;font-size:22px;font-weight:900;pointer-events:none;animation:dmg-fly 1s forwards;z-index:50;text-shadow:0 0 8px currentColor;}
+@keyframes dmg-fly{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-55px) scale(1.4)}}
+.toast{position:fixed;top:50px;left:50%;transform:translateX(-50%);z-index:300;background:linear-gradient(135deg,rgba(20,12,35,0.96),rgba(12,8,22,0.96));border:2px solid var(--gold);border-radius:10px;padding:10px 20px;font-family:'Ma Shan Zheng',cursive;font-size:16px;color:var(--gold);text-shadow:0 0 8px rgba(255,215,0,0.4);box-shadow:0 0 25px rgba(246,201,78,0.25);animation:toastIn 0.3s,toastOut 0.3s 2.2s forwards;white-space:nowrap;max-width:90vw;overflow:hidden;text-overflow:ellipsis;}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-15px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes toastOut{to{opacity:0;transform:translateX(-50%) translateY(-15px)}}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+#modalLayer{position:fixed;inset:0;z-index:100;pointer-events:none;}
+#modalLayer.show{pointer-events:auto;}
+@media(max-width:900px){.left-panel{display:none;}.right-panel{display:none;}}
+@media(max-width:500px){.vs-text{font-size:22px;margin:0 12px;}.entity-avatar{width:50px;height:50px;font-size:22px;}.action-btn{padding:6px 7px;font-size:10px;min-width:50px;}.action-btn .btn-sub{display:none;}}
+</style>
+</head>
+<body>
+<div id="app">
+<div class="bg-layer"></div>
+<div class="game-ui">
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="stat-item"><span class="realm-badge" id="sRealm"></span></div>
+    <div class="stat-item"><span class="stat-label">命数</span><span class="lives-display" id="sLives"></span></div>
+    <div class="stat-item"><span class="stat-label">攻</span><span class="stat-val" id="sAtk"></span></div>
+    <div class="stat-item"><span class="stat-label">防</span><span class="stat-val" id="sDef"></span></div>
+    <div class="stat-item"><span class="stat-label">HP</span><span class="stat-val" id="sHp"></span></div>
+    <div class="stat-item"><span class="stat-label">💎</span><span class="stat-val" id="sStones"></span></div>
+    <div class="stat-item"><span class="stat-label">炉鼎</span><span class="stat-val" id="sCauldN"></span></div>
+    <div class="stat-item"><span class="stat-label">💀</span><span class="stat-val" id="sDeaths" style="color:var(--red)"></span></div>
+    <div class="stat-item" id="sBuffs" style="font-weight:900;font-size:10px;"></div>
+  </div>
+  <div class="xp-bar-wrap"><div class="xp-bar" id="xpBar"></div><div class="xp-text" id="xpText"></div></div>
+
+  <div class="main-area">
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+      <div class="lp-tabs">
+        <div class="lp-tab active" id="ltChapter" onclick="setLeftTab('chapter')">📜剧情</div>
+        <div class="lp-tab" id="ltSect" onclick="setLeftTab('sect')">🏯宗门</div>
+      </div>
+      <div class="lp-body" id="leftBody"></div>
+    </div>
+
+    <!-- CENTER -->
+    <div class="center-area">
+      <div class="scene-area" id="sceneArea"></div>
+      <div id="dlgLayer"></div>
+      <div class="log-area" id="logArea"></div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+      <div class="rp-header"><div style="font-family:'Ma Shan Zheng',cursive;font-size:14px;color:var(--gold);">🔥 炉鼎面板</div><div style="font-size:9px;color:var(--text-dim);" id="rpCount"></div></div>
+      <div class="rp-tabs">
+        <div class="rp-tab active" id="rtCauldron" onclick="setRightTab('cauldron')">炉鼎</div>
+        <div class="rp-tab" id="rtSect" onclick="setRightTab('sect')">女修</div>
+        <div class="rp-tab" id="rtTalent" onclick="setRightTab('talent')">天赋</div>
+      </div>
+      <div class="rp-body" id="rightBody"></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="action-btn btn-idle" id="btnIdle" onclick="toggleIdle()"><span id="btnIdleT">⚔️挂机</span><span class="btn-sub">自动历练</span></div>
+    <div class="action-btn btn-die" onclick="doDeath()">💀送死<span class="btn-sub">越死越强</span></div>
+    <div class="action-btn btn-cultivate" id="btnCult" onclick="toggleCult()"><span id="btnCultT">🧘修炼</span><span class="btn-sub" id="btnCultSub">打坐修行</span></div>
+    <div class="action-btn btn-harvest-big" onclick="harvestAll()">🔮采补<span class="btn-sub">吸尽灵力</span></div>
+    <div class="action-btn btn-dual-big" onclick="doDual()">💫双修<span class="btn-sub">属性翻倍</span></div>
+    <div class="action-btn btn-dungeon" onclick="enterDungeon()">🌀秘境<span class="btn-sub">必死奖励</span></div>
+  </div>
+</div>
+</div>
+<div id="modalLayer"></div>
+
+<script>
+// ====================== DATA ======================
+const REALMS=['凡人','炼气一层','炼气二层','炼气三层','炼气四层','炼气五层','筑基一层','筑基二层','筑基三层','金丹一层','金丹二层','金丹三层','元婴一层','元婴二层','元婴三层','化神一层','化神二层','化神三层','道祖一层','道祖二层','道祖三层','万界主宰'];
+const REALM_XP=[20, 50, 100, 180, 350, 600, 1000, 1800, 3000, 5000, 8500, 14000, 22000, 35000, 60000, 100000, 180000, 350000, 700000, 1500000, 5000000, 0];
+const SECTS={
+  hehuanzong:{name:'合欢宗',emoji:'🌸',desc:'青岚山幻月谷，双修采补立宗',unlockChapter:1,buildings:[{name:'炼情室',emoji:'💜',desc:'回忆觉醒剧情',action:'story'},{name:'灵泉阁',emoji:'🌊',desc:'修炼速度+30%',action:'cultivate',bonus:0.3},{name:'藏经阁',emoji:'📚',desc:'合欢功法',action:'skills'},{name:'弟子殿',emoji:'👥',desc:'查看/收服女修',action:'disciples'}],
+    disciples:[{name:'芸香',realm:1,emoji:'🌷',bonus:'灵石+15%',bonusType:'spirit_stone',bonusVal:.15},{name:'晚翠',realm:2,emoji:'🌿',bonus:'灵石+15%',bonusType:'spirit_stone',bonusVal:.15},{name:'青黛',realm:6,emoji:'💜',bonus:'双修+20%',bonusType:'dual_eff',bonusVal:.2},{name:'红袖',realm:7,emoji:'🎀',bonus:'双修+20%',bonusType:'dual_eff',bonusVal:.2},{name:'媚儿',realm:9,emoji:'💋',bonus:'采补+25%',bonusType:'harvest_eff',bonusVal:.25},{name:'柔儿',realm:10,emoji:'🌹',bonus:'采补+25%',bonusType:'harvest_eff',bonusVal:.25},{name:'月婵',realm:12,emoji:'🌙',bonus:'全属性+10%',bonusType:'all_stat',bonusVal:.1},{name:'灵汐',realm:13,emoji:'🌊',bonus:'全属性+10%',bonusType:'all_stat',bonusVal:.1},{name:'凌霜',realm:15,emoji:'❄️',bonus:'命数+10',bonusType:'lives',bonusVal:10}]},
+  qingyunzong:{name:'青云宗',emoji:'⚔️',desc:'青云山巅，正道之首',unlockChapter:3,buildings:[{name:'青云剑台',emoji:'⚔️',desc:'修炼+25%',action:'cultivate',bonus:.25},{name:'浩然殿',emoji:'☁️',desc:'正气功法',action:'skills'},{name:'弟子殿',emoji:'👥',desc:'查看/收服女修',action:'disciples'}],
+    disciples:[{name:'苏晴',realm:1,emoji:'☀️',bonus:'剑抗+20%',bonusType:'def',bonusVal:.2},{name:'柳如烟',realm:2,emoji:'🍃',bonus:'剑抗+20%',bonusType:'def',bonusVal:.2},{name:'楚瑶',realm:6,emoji:'🗡️',bonus:'攻击+15%',bonusType:'atk',bonusVal:.15},{name:'秦月',realm:7,emoji:'🌕',bonus:'攻击+15%',bonusType:'atk',bonusVal:.15},{name:'林婉清',realm:9,emoji:'✨',bonus:'正气+30%',bonusType:'atk',bonusVal:.3},{name:'苏沐瑶',realm:12,emoji:'🏔️',bonus:'防御+20%',bonusType:'def',bonusVal:.2},{name:'静玄师太',realm:13,emoji:'📿',bonus:'防御+20%',bonusType:'def',bonusVal:.2},{name:'清玄真人',realm:15,emoji:'☁️',bonus:'减伤+15%',bonusType:'def',bonusVal:.15}]},
+  danxiazong:{name:'丹霞宗',emoji:'🔥',desc:'丹霞火山，火系正道',unlockChapter:3,buildings:[{name:'烈火炼台',emoji:'🔥',desc:'修炼+25%',action:'cultivate',bonus:.25},{name:'火系藏经阁',emoji:'📕',desc:'火系功法',action:'skills'},{name:'弟子殿',emoji:'👥',desc:'查看/收服女修',action:'disciples'}],
+    disciples:[{name:'炎儿',realm:1,emoji:'🔥',bonus:'火灵材+20%',bonusType:'spirit_stone',bonusVal:.2},{name:'红绡',realm:2,emoji:'🌺',bonus:'火灵材+20%',bonusType:'spirit_stone',bonusVal:.2},{name:'火灵儿',realm:6,emoji:'💥',bonus:'火伤+15%',bonusType:'atk',bonusVal:.15},{name:'赤婵',realm:7,emoji:'🦋',bonus:'火伤+15%',bonusType:'atk',bonusVal:.15},{name:'苏沐雪',realm:9,emoji:'❤️‍🔥',bonus:'火免疫',bonusType:'atk',bonusVal:.3},{name:'炎灵',realm:12,emoji:'🌋',bonus:'火抗+25%',bonusType:'def',bonusVal:.25},{name:'赤月',realm:13,emoji:'🔴',bonus:'火抗+25%',bonusType:'def',bonusVal:.25},{name:'火舞真人',realm:15,emoji:'💃',bonus:'灼烧附加',bonusType:'atk',bonusVal:.2}]},
+  wanyaogong:{name:'万妖宫',emoji:'🦊',desc:'十万大山，妖界第一宗门',unlockChapter:4,buildings:[{name:'妖灵池',emoji:'🌀',desc:'修炼+30%',action:'cultivate',bonus:.3},{name:'化形殿',emoji:'🦊',desc:'妖族功法',action:'skills'},{name:'弟子殿',emoji:'👥',desc:'查看/收服妖女',action:'disciples'}],
+    disciples:[{name:'萌萌',realm:1,emoji:'🐱',bonus:'妖草+20%',bonusType:'spirit_stone',bonusVal:.2},{name:'小小',realm:2,emoji:'🐰',bonus:'妖草+20%',bonusType:'spirit_stone',bonusVal:.2},{name:'妙妙',realm:6,emoji:'🦋',bonus:'速度+30%',bonusType:'atk',bonusVal:.15},{name:'羽儿',realm:7,emoji:'🪶',bonus:'速度+30%',bonusType:'atk',bonusVal:.15},{name:'青姬',realm:9,emoji:'🐍',bonus:'魅惑免疫',bonusType:'def',bonusVal:.3},{name:'灵儿',realm:10,emoji:'🐇',bonus:'魅惑免疫',bonusType:'def',bonusVal:.3},{name:'碧鳞',realm:12,emoji:'🐉',bonus:'肉身+30%',bonusType:'def',bonusVal:.3},{name:'玉狐',realm:13,emoji:'🦊',bonus:'肉身+30%',bonusType:'def',bonusVal:.3},{name:'苏媚',realm:15,emoji:'🦊',bonus:'暴击+20%',bonusType:'atk',bonusVal:.2}]},
+  xuemogong:{name:'血魔宫',emoji:'💀',desc:'魔域血魂渊，最凶残宗门',unlockChapter:4,buildings:[{name:'血魂阵',emoji:'🩸',desc:'修炼+35%',action:'cultivate',bonus:.35},{name:'魔典殿',emoji:'📖',desc:'魔道功法',action:'skills'},{name:'弟子殿',emoji:'👥',desc:'查看/收服魔女',action:'disciples'}],
+    disciples:[{name:'血儿',realm:1,emoji:'🩸',bonus:'精血+20%',bonusType:'spirit_stone',bonusVal:.2},{name:'魔铃',realm:2,emoji:'🔔',bonus:'精血+20%',bonusType:'spirit_stone',bonusVal:.2},{name:'血蝶',realm:6,emoji:'🦇',bonus:'暗影+15%',bonusType:'atk',bonusVal:.15},{name:'影魅',realm:7,emoji:'👻',bonus:'暗影+15%',bonusType:'atk',bonusVal:.15},{name:'血玲珑',realm:9,emoji:'💎',bonus:'神魂+25%',bonusType:'atk',bonusVal:.25},{name:'魂灵儿',realm:10,emoji:'👁️',bonus:'神魂+25%',bonusType:'atk',bonusVal:.25},{name:'魅魔',realm:12,emoji:'😈',bonus:'吸血+30%',bonusType:'def',bonusVal:.3},{name:'血影',realm:13,emoji:'🌑',bonus:'吸血+30%',bonusType:'def',bonusVal:.3},{name:'血罗刹',realm:15,emoji:'💀',bonus:'暴伤+50%',bonusType:'atk',bonusVal:.5}]},
+  lingxiaozong:{name:'凌霄仙宗',emoji:'🏛️',desc:'九霄凌霄殿，天界顶级仙门',unlockChapter:5,buildings:[{name:'凌霄仙台',emoji:'✨',desc:'修炼+50%',action:'cultivate',bonus:.5},{name:'仙典阁',emoji:'📜',desc:'仙界功法',action:'skills'},{name:'弟子殿',emoji:'👥',desc:'查看/收服仙女',action:'disciples'}],
+    disciples:[{name:'仙娥',realm:12,emoji:'🧚',bonus:'仙石+30%',bonusType:'spirit_stone',bonusVal:.3},{name:'瑶儿',realm:13,emoji:'💎',bonus:'仙石+30%',bonusType:'spirit_stone',bonusVal:.3},{name:'灵仙',realm:15,emoji:'✨',bonus:'仙法+20%',bonusType:'atk',bonusVal:.2},{name:'玉仙',realm:16,emoji:'🌟',bonus:'仙法+20%',bonusType:'atk',bonusVal:.2},{name:'紫霞',realm:16,emoji:'🌸',bonus:'全属性+15%',bonusType:'all_stat',bonusVal:.15},{name:'青霞',realm:17,emoji:'🌊',bonus:'全属性+15%',bonusType:'all_stat',bonusVal:.15},{name:'嫦娥',realm:19,emoji:'🌙',bonus:'仙法免疫',bonusType:'def',bonusVal:.5},{name:'瑶姬',realm:19,emoji:'👑',bonus:'仙法免疫',bonusType:'def',bonusVal:.5},{name:'九天玄女',realm:21,emoji:'🔱',bonus:'全属性翻倍',bonusType:'all_stat',bonusVal:1}]}
+};
+const STORY={'1-1':{speaker:'旁白',text:'你被合欢宗弟子掳走，关入幻月谷深处的炼情室。灵雾弥漫，奇香扑鼻......',next:'1-2'},'1-2':{speaker:'凌霜',emoji:'❄️',text:'「呵，又来了一只炉鼎。看你根骨平平，最多撑三次采补吧。」\n\n她红衣猎猎，冷眸如霜，化神期威压。',next:'1-3'},'1-3':{speaker:'旁白',text:'大师姐凌霜强行采补！灵力被疯狂抽取，经脉寸断——\n\n痛！万蚁噬骨！',next:'1-4'},'1-4':{speaker:'旁白',text:'黑暗中，你听到一个声音......',next:'1-5'},'1-5':{speaker:'⚡越死越强系统',text:'【系统觉醒】\n检测到宿主首次死亡...\n反采补天赋：激活\n初始命数：99\n\n从今以后——每死一次，变得更强。',choices:[{text:'逆袭开始！',next:'1-6'}]},'1-6':{speaker:'旁白',text:'你从死亡中复活！凌霜惊退三步——炉鼎竟然活过来了？！',next:'1-7'},'1-7':{speaker:'凌霜',emoji:'❄️',text:'「你...怎么还活着？！不可能！」',choices:[{text:'「轮到我了。」（战斗）',action:'startBattle',data:{enemy:'芸香',sect:'hehuanzong'}},{text:'「先修炼一下。」',action:'close'}]},
+'2-1':{speaker:'旁白',text:'你在合欢宗一路碾压，收服多名弟子为炉鼎。消息传开，宗门震动——',next:'2-2'},'2-2':{speaker:'月婵',emoji:'🌙',text:'「小小炉鼎竟敢撒野？今日将你重新炼为炉鼎！」',next:'2-3'},'2-3':{speaker:'媚儿',emoji:'💋',text:'「嘻嘻~敢反抗合欢宗，代价可不小哦~」',choices:[{text:'「打不过就送死，送死就变强。」',action:'startBattle',data:{enemy:'青黛',sect:'hehuanzong'}},{text:'先修炼到筑基',action:'close'}]},
+'3-1':{speaker:'旁白',text:'你下山历练，正道女修联手围堵——',next:'3-2'},'3-2':{speaker:'林婉清',emoji:'✨',text:'「合欢宗邪修！青云剑下不留活口！」\n\n白衣胜雪，灵剑嗡鸣。',next:'3-3'},'3-3':{speaker:'苏沐雪',emoji:'❤️‍🔥',text:'「丹霞烈焰焚尽不正之道！」\n\n周身火焰升腾。',choices:[{text:'「你们一起上吧。」',action:'startBattle',data:{enemy:'苏晴',sect:'qingyunzong'}},{text:'先修炼备战',action:'close'}]},
+'4-1':{speaker:'旁白',text:'万妖宫与血魔宫联手围剿——',next:'4-2'},'4-2':{speaker:'苏媚',emoji:'🦊',text:'「小鬼，把系统交出来~本宫留你当宠物？」',next:'4-3'},'4-3':{speaker:'血罗刹',emoji:'💀',text:'「废话！杀了他，吞噬精血！」',choices:[{text:'「今日妖魔两界，一并收下！」',action:'startBattle',data:{enemy:'萌萌',sect:'wanyaogong'}},{text:'继续积蓄力量',action:'close'}]},
+'5-1':{speaker:'旁白',text:'修为巅峰，飞升天界！凌霄殿前，仙女列阵——',next:'5-2'},'5-2':{speaker:'九天玄女',emoji:'🔱',text:'「凡间异类擅闯仙界？天道之下，你不过蝼蚁。」',next:'5-3'},'5-3':{speaker:'嫦娥',emoji:'🌙',text:'「退回凡间吧......这里不是你该来的地方。」',choices:[{text:'「我就是天道。」',action:'startBattle',data:{enemy:'仙娥',sect:'lingxiaozong'}},{text:'先在仙界修炼',action:'close'}]}};
+// 【修复此处】重新补上被不小心删掉的章节配置数据 CHAPTERS
+const CHAPTERS=[{id:1,name:'炉鼎求生·系统觉醒',sect:'hehuanzong',unlockRealm:0,story:'1-1',desc:'被掳合欢宗，觉醒系统'},{id:2,name:'宗门内斗·一统合欢',sect:'hehuanzong',unlockRealm:5,story:'2-1',desc:'长老围攻，以死突破'},{id:3,name:'下山历练·横扫正道',sect:'qingyunzong',unlockRealm:9,story:'3-1',desc:'青云丹霞联手围堵'},{id:4,name:'妖魔大战·霸据两界',sect:'wanyaogong',unlockRealm:13,story:'4-1',desc:'妖魔联合来袭'},{id:5,name:'飞升仙界·终极主宰',sect:'lingxiaozong',unlockRealm:18,story:'5-1',desc:'飞升天界终极之战'}];
+const CULT_METHODS=[{name:'基础打坐',emoji:'🧘',xpMul:1,unlockRealm:0},{name:'灵气吐纳',emoji:'🌀',xpMul:1.5,unlockRealm:3},{name:'炉鼎逆脉功',emoji:'💜',xpMul:2,unlockRealm:6,needCauldron:1},{name:'合欢秘法',emoji:'🌸',xpMul:2.5,unlockRealm:9,needCauldron:3},{name:'万法归一',emoji:'✨',xpMul:3.5,unlockRealm:15,needCauldron:8},{name:'轮回仙诀',emoji:'🔱',xpMul:5,unlockRealm:18,needCauldron:15}];
+const TALENTS=[{name:'不死金身',desc:'死亡复活属性+50%',deathReq:5,unlocked:false},{name:'炉鼎逆脉',desc:'采补反吸双倍',deathReq:12,unlocked:false},{name:'合欢共振',desc:'双修AOE×3',deathReq:20,unlocked:false},{name:'轮回一击',desc:'跨阶秒杀',deathReq:35,unlocked:false}];
+
+// 采补和双修的专属互动文本
+const HARVEST_TEXTS = [
+  "「唔…你慢点，我的灵根都要受不了了……」\n{name}脸颊泛起诱人的红晕，身子软绵绵地倒在你怀里，任由你强硬地抽取灵力。",
+  "「坏蛋，上次的亏空还没补回来呢……今天又要……」\n{name}咬着下唇，眼波流转，虽然嘴上嗔怪，却还是乖乖敞开气海任你采撷。",
+  "随着你的霸道索取，{name}发出一声难耐的轻哼：「真是一头喂不饱的饿狼……你可要对我负责……」",
+  "「啊……灵力……我的灵力要被吸干了……」\n{name}双眼迷离，无力地攀着你的肩膀，灵气源源不断地涌入你的体内，让你舒爽无比。"
+];
+const DUAL_TEXTS = [
+  "两人掌心相对，灵力在彼此体内交融。\n{name}羞涩地低下了头：「主人，别一直盯着我看……我、我心境要乱了。」",
+  "「这次的双修功法，似乎比之前更霸道了些……」\n{name}气喘吁吁，香汗淋漓，眼眸中水波流转，身子紧紧贴靠着你。",
+  "阴阳交汇，水乳交融。\n{name}紧紧抓住你的衣角，声音细若游丝：「带我……带我一起攀登大道的极致吧……」",
+  "「嗯……这种灵魂交融的感觉……」\n{name}闭上美目，神情似痛苦又似极致的愉悦，你们的气息逐渐融为一体，不分彼此。"
+];
+
+// ====================== STATE ======================
+let G={realm:0,xp:0,lives:99,maxLives:99,spiritStones:0,atk:10,def:5,hp:100,maxHp:100,totalDeaths:0,cauldrons:[],mainCauldron:null,chapter:1,chapterSeen:{},idling:false,enemyHp:0,enemyMaxHp:0,enemyName:'',enemyRealm:0,enemyEmoji:'',inBattle:false,dualActive:false,cultivating:false,cultMethod:0,cultXpAccum:0,currentStory:null,logs:[],sectUnlocked:['hehuanzong'],currentSect:'hehuanzong'};
+let leftTab='chapter',rightTab='cauldron',modal=null;
+let battleTimer=null,dualTimer=null,cultTimer=null;
+// Track what scene is rendered to avoid needless redraws
+let _sceneMode='',_leftDirty=true,_rightDirty=true,_logLen=0,_dlgId=null,_modalType=null;
+
+function save(){try{localStorage.setItem('hh4',JSON.stringify(G));}catch(e){}}
+function load(){try{const d=localStorage.getItem('hh4');if(d)Object.assign(G,JSON.parse(d));}catch(e){}}
+
+// ====================== HELPERS ======================
+const $=id=>document.getElementById(id);
+function rn(r){return REALMS[Math.min(Math.max(r,0),REALMS.length-1)];}
+function rp(r){return Math.floor(10*Math.pow(1.65,r));}
+function xpNeed(){return REALM_XP[Math.min(G.realm,REALM_XP.length-1)]||9999999;}
+function fn(n){if(n>=1e8)return(n/1e8).toFixed(1)+'亿';if(n>=1e4)return(n/1e4).toFixed(1)+'万';return Math.floor(n).toLocaleString();}
+function fd(n){for(const k in SECTS){const f=SECTS[k].disciples.find(d=>d.name===n);if(f)return f;}return null;}
+function log(m,c=''){G.logs.unshift({msg:m,cls:c});if(G.logs.length>60)G.logs.length=60;_logLen=-1;}
+function toast(m){const e=document.createElement('div');e.className='toast';e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),2800);}
+
+function calcStats(){
+  let ba=10+G.realm*6+G.totalDeaths*2,bd=5+G.realm*4+G.totalDeaths,bh=100+G.realm*35+G.totalDeaths*8,am=1,dm=1;
+  G.cauldrons.forEach(c=>{const d=fd(c);if(!d)return;const m=c===G.mainCauldron?2:1;
+    if(d.bonusType==='atk')am+=d.bonusVal*m;if(d.bonusType==='def')dm+=d.bonusVal*m;if(d.bonusType==='all_stat'){am+=d.bonusVal*m;dm+=d.bonusVal*m;}});
+  if(TALENTS[0].unlocked){am+=.5;dm+=.5;}
+  if(G.dualActive){am*=2;dm*=1.5;}
+  G.atk=Math.floor(ba*am);G.def=Math.floor(bd*dm);G.maxHp=Math.floor(bh*dm);G.hp=Math.min(G.hp,G.maxHp);
+}
+function addXp(a){G.xp+=a;while(G.xp>=xpNeed()&&G.realm<REALMS.length-1){G.xp-=xpNeed();G.realm++;log(`【突破】${rn(G.realm)}！`,'gold');toast(`突破！${rn(G.realm)}`);unlockSects();_leftDirty=true;}calcStats();}
+function unlockSects(){CHAPTERS.forEach(ch=>{if(G.realm>=ch.unlockRealm){if(ch.sect&&!G.sectUnlocked.includes(ch.sect))G.sectUnlocked.push(ch.sect);const ex={3:'danxiazong',4:'xuemogong'};if(ex[ch.id]&&!G.sectUnlocked.includes(ex[ch.id]))G.sectUnlocked.push(ex[ch.id]);if(ch.id===5&&!G.sectUnlocked.includes('lingxiaozong'))G.sectUnlocked.push('lingxiaozong');}});}
+function stopAll(){if(G.cultivating){G.cultivating=false;if(cultTimer){clearInterval(cultTimer);cultTimer=null;}}if(G.inBattle){clearInterval(battleTimer);G.inBattle=false;}G.idling=false;G.currentStory=null;}
+
+// ====================== GAME ACTIONS ======================
+function doDeath(){if(G.lives<=0){toast('命数不足！');return;}stopAll();G.lives--;G.totalDeaths++;
+  log(`【死亡】累计${G.totalDeaths}次`,'red');
+  TALENTS.forEach(t=>{if(!t.unlocked&&G.totalDeaths>=t.deathReq){t.unlocked=true;log(`【天赋觉醒】${t.name}`,'purple');toast(`天赋觉醒：${t.name}`);_rightDirty=true;}});
+  modal={type:'death'};updateAll();
+  setTimeout(()=>{const n=xpNeed();const pool=[
+    {name:'小幅感悟',desc:`+${fn(Math.floor(n*.06))}修为`,act:()=>addXp(Math.floor(n*.06))},
+    {name:'灵根震动',desc:`+${fn(Math.floor(n*.10))}修为`,act:()=>addXp(Math.floor(n*.10))},
+    {name:'命数+5',desc:'恢复5条命',act:()=>{G.lives=Math.min(G.lives+5,G.maxLives+20);}},
+    {name:`灵石×${fn(300+G.realm*150)}`,desc:'获得灵石',act:()=>{G.spiritStones+=300+G.realm*150;}},
+    {name:'肉身微淬',desc:'生命+20',act:()=>{G.maxHp+=20;G.hp=Math.min(G.hp+20,G.maxHp);}}];
+    if(G.totalDeaths%10===0&&G.realm<REALMS.length-1)pool.push({name:'境界+1！',desc:`第${G.totalDeaths}次特殊奖励`,act:()=>{G.realm=Math.min(G.realm+1,REALMS.length-1);G.xp=0;calcStats();unlockSects();_leftDirty=true;}});
+    modal={type:'reward',data:pool.sort(()=>Math.random()-.5).slice(0,3)};updateAll();},1000);}
+function claimReward(i){modal.data[i].act();log(`【奖励】${modal.data[i].name}`,'gold');modal=null;G.hp=G.maxHp;calcStats();updateAll();save();}
+
+function toggleCult(){if(G.inBattle){toast('战斗中无法修炼');return;}if(G.cultivating){G.cultivating=false;if(cultTimer){clearInterval(cultTimer);cultTimer=null;}if(G.cultXpAccum>0)log(`【修炼结束】+${fn(G.cultXpAccum)}`,'green');updateAll();return;}
+  G.cultivating=true;G.cultXpAccum=0;G.idling=false;log(`【修炼】${CULT_METHODS[G.cultMethod].name}`,'green');cultTimer=setInterval(cultTick,1000);updateAll();}
+function cultTick(){if(!G.cultivating)return;const m=CULT_METHODS[G.cultMethod];let b=Math.floor((3+G.realm*1.8)*m.xpMul);
+  const s=SECTS[G.currentSect];if(s){const cb=s.buildings.find(b=>b.action==='cultivate');if(cb)b=Math.floor(b*(1+cb.bonus*.5));}
+  b=Math.floor(b*(1+G.cauldrons.length*.02));addXp(b);G.cultXpAccum+=b;G.spiritStones+=Math.max(1,Math.floor(b*.08));updateAll();}
+function setCultM(i){const m=CULT_METHODS[i];if(G.realm<m.unlockRealm){toast(`需${rn(m.unlockRealm)}`);return;}if(m.needCauldron&&G.cauldrons.length<m.needCauldron){toast(`需${m.needCauldron}个炉鼎`);return;}G.cultMethod=i;log(`【切换】${m.name}`,'');updateAll();save();}
+
+function harvestOne(n){
+  const d=fd(n);if(!d)return;
+  // 生成互动剧情
+  const text = HARVEST_TEXTS[Math.floor(Math.random()*HARVEST_TEXTS.length)].replace(/\{name\}/g, d.name);
+  modal = {
+    type: 'interact',
+    title: '🔥 强行采补 🔥',
+    emoji: d.emoji,
+    name: d.name,
+    text: text,
+    btnText: '吞噬她的灵力！',
+    action: () => {
+      modal = null;
+      let g=Math.floor(rp(d.realm)*1.2);if(TALENTS[1].unlocked)g*=2;
+      G.cauldrons.forEach(c=>{const dd=fd(c);if(dd&&dd.bonusType==='harvest_eff')g=Math.floor(g*(1+dd.bonusVal));});
+      addXp(g);G.spiritStones+=Math.floor(g*.2);log(`【采补】${d.name} +${fn(g)}`,'green');
+      updateAll();save();
+    }
+  };
+  updateModal();
+}
+
+function harvestAll(){
+  if(!G.cauldrons.length){toast('暂无炉鼎');return;}
+  modal = {
+    type: 'interact',
+    title: '🌪️ 吞天采补诀 🌪️',
+    emoji: '🌀',
+    name: '众炉鼎',
+    text: '你疯狂运转绝世魔功，大殿内娇呼连连。无数纯阴之气从四面八方汇聚而来，众女修皆软倒在地，面带潮红，虚弱不堪，而你体内灵力正如汪洋般咆哮！',
+    btnText: '吸尽天下灵力！',
+    action: () => {
+      modal = null;
+      let t=0;
+      G.cauldrons.forEach(n=>{const d=fd(n);if(!d)return;let g=Math.floor(rp(d.realm)*1.2);if(TALENTS[1].unlocked)g*=2;t+=g;});
+      addXp(t);G.spiritStones+=Math.floor(t*.2);log(`【一键采补】+${fn(t)}`,'green');toast(`一键采补！+${fn(t)}修为`);
+      updateAll();save();
+    }
+  };
+  updateModal();
+}
+
+function doDual(){
+  if(!G.cauldrons.length){toast('暂无炉鼎');return;}
+  const n = G.mainCauldron || G.cauldrons[Math.floor(Math.random()*G.cauldrons.length)];
+  const d = fd(n);
+  const text = DUAL_TEXTS[Math.floor(Math.random()*DUAL_TEXTS.length)].replace(/\{name\}/g, d?d.name:'炉鼎');
+
+  modal = {
+    type: 'interact',
+    title: '💞 阴阳双修 💞',
+    emoji: d?d.emoji:'🌸',
+    name: d?d.name:'众女修',
+    text: G.cauldrons.length > 3 && Math.random() > 0.5 ?
+          "你开启了合欢宗至高秘法，与众炉鼎神交。大殿内春色旖旎，灵气氤氲，所有人的气息水乳交融，共同攀登极乐大道……" : text,
+    btnText: '共赴巫山！',
+    action: () => {
+      modal = null;
+      G.dualActive=true;calcStats();log('【双修爆发】属性翻倍15秒','purple');toast('合欢共振！');
+      if(dualTimer)clearTimeout(dualTimer);
+      dualTimer=setTimeout(()=>{G.dualActive=false;calcStats();updateAll();},15000);
+      updateAll();
+    }
+  };
+  updateModal();
+}
+
+function capture(n){const d=fd(n);if(!d)return;if(G.realm>d.realm){if(G.cauldrons.includes(n)){toast('已是炉鼎');return;}
+  G.cauldrons.push(n);if(!G.mainCauldron)G.mainCauldron=n;log(`【收服】${n}永久化为炉鼎！`,'gold');toast(`${n}已成为炉鼎！`);
+  const fl=document.createElement('div');fl.className='capture-flash';document.body.appendChild(fl);setTimeout(()=>fl.remove(),600);
+  calcStats();_rightDirty=true;updateAll();save();}else toast(`修为不足！需${rn(d.realm+1)}以上`);}
+
+function startBattle(en,sk){stopAll();const sectKey=sk||CHAPTERS[Math.min(G.chapter-1,CHAPTERS.length-1)].sect;const sect=SECTS[sectKey];let enemy;
+  if(en)enemy=sect.disciples.find(d=>d.name===en);
+  if(!enemy){const av=sect.disciples.filter(d=>!G.cauldrons.includes(d.name));enemy=av.length?av[0]:{name:'散修',realm:Math.max(0,G.realm-1+Math.floor(Math.random()*3)),emoji:'👤',bonusType:'',bonusVal:0};}
+  G.enemyName=enemy.name;G.enemyRealm=enemy.realm;G.enemyEmoji=enemy.emoji;G.enemyMaxHp=rp(enemy.realm)*4+40;G.enemyHp=G.enemyMaxHp;G.hp=G.maxHp;G.inBattle=true;
+  log(`【遭遇】${enemy.name}（${rn(enemy.realm)}）`,'red');battleTimer=setInterval(bTick,900);updateAll();}
+function bTick(){if(!G.inBattle)return;
+  let pd=Math.max(1,G.atk-Math.floor(rp(G.enemyRealm)*.25));if(TALENTS[3].unlocked&&G.realm>G.enemyRealm+3)pd*=8;if(TALENTS[2].unlocked&&G.dualActive)pd*=3;
+  pd=Math.floor(pd*(.85+Math.random()*.3));G.enemyHp=Math.max(0,G.enemyHp-pd);showDmg(pd,'enemy');
+  if(G.enemyHp<=0){clearInterval(battleTimer);G.inBattle=false;const xg=Math.floor(rp(G.enemyRealm)*1.5);addXp(xg);G.spiritStones+=Math.floor(xg*.15);
+    log(`【胜利】${G.enemyName} +${fn(xg)}`,'gold');const disc=fd(G.enemyName);if(disc&&G.realm>disc.realm&&!G.cauldrons.includes(disc.name))modal={type:'capture',data:disc.name};
+    updateAll();save();if(G.idling)setTimeout(()=>{if(G.idling)startBattle();},1500);return;}
+  let ed=Math.max(1,rp(G.enemyRealm)-G.def*.4);ed=Math.floor(ed*(.85+Math.random()*.3));G.hp=Math.max(0,G.hp-ed);showDmg(ed,'player');
+  if(G.hp<=0){clearInterval(battleTimer);G.inBattle=false;log(`【战败】被${G.enemyName}击杀`,'red');updateAll();if(G.idling)setTimeout(()=>{if(G.idling)startBattle();},2000);return;}
+  updateTopBar();updateScene();}
+function showDmg(v,t){const s=$('sceneArea');if(!s)return;const el=document.createElement('div');el.className='dmg-number';el.textContent='-'+v;
+  el.style.left=t==='enemy'?'65%':'25%';el.style.top=(30+Math.random()*30)+'%';el.style.color=t==='enemy'?'var(--gold)':'var(--red)';s.appendChild(el);setTimeout(()=>el.remove(),1000);}
+
+function toggleIdle(){stopAll();G.idling=!G.idling;if(G.idling){log('【挂机】自动历练','green');startBattle();}else log('【停止】挂机停止','');updateAll();}
+function enterDungeon(){if(G.lives<=0){toast('命数不足');return;}stopAll();G.lives--;G.totalDeaths++;const g=Math.floor(xpNeed()*.12);addXp(g);G.spiritStones+=500+G.realm*80;
+  log(`【秘境】+${fn(g)}修为`,'purple');toast(`秘境！+${fn(g)}修为`);TALENTS.forEach(t=>{if(!t.unlocked&&G.totalDeaths>=t.deathReq){t.unlocked=true;log(`【天赋】${t.name}`,'purple');_rightDirty=true;}});updateAll();save();}
+
+function openStory(id){stopAll();G.currentStory=id;updateAll();}
+function advStory(){const s=STORY[G.currentStory];if(!s)return;if(s.next){G.currentStory=s.next;updateDlg();}else if(!s.choices){G.currentStory=null;updateDlg();}}
+function storyChoice(i){const s=STORY[G.currentStory];if(!s||!s.choices)return;const c=s.choices[i];if(c.next){G.currentStory=c.next;updateDlg();return;}if(c.action==='close'){G.currentStory=null;updateDlg();return;}if(c.action==='startBattle'){G.currentStory=null;startBattle(c.data.enemy,c.data.sect);}}
+function startChStory(id){const ch=CHAPTERS.find(c=>c.id===id);if(!ch||G.realm<ch.unlockRealm)return;G.chapter=Math.max(G.chapter,id);G.chapterSeen[id]=true;G.currentSect=ch.sect;if(!G.sectUnlocked.includes(ch.sect))G.sectUnlocked.push(ch.sect);_leftDirty=true;openStory(ch.story);}
+function openBuilding(act){if(act==='story'){startChStory(G.chapter);return;}if(act==='disciples'){rightTab='sect';_rightDirty=true;updateRightPanel();return;}if(act==='cultivate'){toggleCult();return;}if(act==='skills'){toast('功法已自动学习');}}
+
+// ====================== TARGETED UPDATES ======================
+function updateAll(){calcStats();updateTopBar();updateScene();updateDlg();updateModal();updateButtons();
+  if(_leftDirty)updateLeftPanel();if(_rightDirty)updateRightPanel();updateLog();}
+
+function updateTopBar(){
+  $('sRealm').textContent=rn(G.realm);$('sLives').textContent='❤️'+G.lives;
+  $('sAtk').textContent=G.atk;$('sDef').textContent=G.def;
+  $('sHp').textContent=G.hp+'/'+G.maxHp;$('sStones').textContent=fn(G.spiritStones);
+  $('sCauldN').textContent=G.cauldrons.length;$('sDeaths').textContent=G.totalDeaths;
+  let buffs='';if(G.dualActive)buffs+='<span style="color:var(--gold)">⚡双修</span> ';if(G.cultivating)buffs+='<span style="color:var(--cyan)">🧘修炼</span>';
+  $('sBuffs').innerHTML=buffs;
+  const p=xpNeed()>0?Math.min(100,(G.xp/xpNeed())*100):100;
+  $('xpBar').style.width=p+'%';$('xpText').textContent=fn(G.xp)+'/'+fn(xpNeed());
+  $('rpCount').textContent=G.cauldrons.length+'位';
+}
+
+function updateScene(){
+  const area=$('sceneArea');
+  let mode=G.inBattle?'battle':G.cultivating?'cult':'idle';
+  if(mode!==_sceneMode){_sceneMode=mode;
+    if(mode==='battle'){area.innerHTML=`<div class="entity"><div class="entity-avatar" id="pAvatar" style="border-color:var(--cyan)">🧑‍🦱</div><div class="entity-name" id="pName">你</div><div class="entity-realm" id="pRealm"></div><div class="hp-bar-mini"><div class="hp-fill player" id="pHp"></div></div></div><div class="vs-text">⚔️</div><div class="entity"><div class="entity-avatar" id="eAvatar" style="border-color:var(--red)"></div><div class="entity-name" id="eName"></div><div class="entity-realm" id="eRealm"></div><div class="hp-bar-mini"><div class="hp-fill enemy" id="eHp"></div></div></div>`;}
+    else if(mode==='cult'){const m=CULT_METHODS[G.cultMethod];area.innerHTML=`<div class="cultivate-scene"><div class="cult-title" id="cultTitle">🧘 ${m.name}</div><div class="cult-aura"><div class="cult-aura-ring"></div><div class="cult-aura-ring"></div><div class="cult-aura-ring"></div><div class="cult-emoji" id="cultEmoji">${m.emoji}</div></div><div class="cult-xp-gain" id="cultRate"></div><div class="cult-info" id="cultAccum"></div><div style="font-size:10px;color:var(--text-dim);margin-top:4px;">切换功法：</div><div class="cult-methods" id="cultMethods"></div></div>`;updateCultMethods();}
+    else{const s=SECTS[G.currentSect];area.innerHTML=`<div style="text-align:center"><div style="font-family:'Ma Shan Zheng',cursive;font-size:26px;color:var(--gold);text-shadow:0 0 12px rgba(255,215,0,0.2);margin-bottom:6px;" id="idleTitle">${G.idling?'⚔️ 自动历练中...':'修 仙 界'}</div><div style="font-size:11px;color:var(--text-dim);margin-bottom:10px;">${s?s.emoji+' '+s.name:''}</div><div style="font-size:10px;color:var(--text-dim);line-height:2;">📜 左侧「剧情」推进主线<br>🏯 左侧「宗门」探索建筑<br>🧘 修炼 — 持续获修为<br>⚔️ 挂机 — 自动战斗<br>💀 送死 — 死亡变强</div></div>`;}}
+  // Update dynamic values within scene
+  if(mode==='battle'){
+    $('pRealm').textContent=rn(G.realm);$('eAvatar').textContent=G.enemyEmoji;$('eName').textContent=G.enemyName;$('eRealm').textContent=rn(G.enemyRealm);
+    $('pHp').style.width=(G.maxHp>0?(G.hp/G.maxHp*100):0)+'%';$('eHp').style.width=(G.enemyMaxHp>0?(G.enemyHp/G.enemyMaxHp*100):0)+'%';
+  }else if(mode==='cult'){
+    const m=CULT_METHODS[G.cultMethod];$('cultRate').textContent='每秒 +'+Math.floor((3+G.realm*1.8)*m.xpMul)+' 修为';
+    $('cultAccum').textContent='本次累计: '+fn(G.cultXpAccum);
+  }
+}
+
+function updateCultMethods(){
+  const el=$('cultMethods');if(!el)return;
+  el.innerHTML=CULT_METHODS.map((cm,i)=>{const ok=G.realm>=cm.unlockRealm&&(!cm.needCauldron||G.cauldrons.length>=cm.needCauldron);
+    return `<div class="cult-method ${i===G.cultMethod?'active':''} ${!ok?'locked':''}" onclick="${ok?`setCultM(${i})`:''}">${cm.emoji}${cm.name}${!ok?' 🔒':''}</div>`;}).join('');
+}
+
+function updateDlg(){
+  const layer=$('dlgLayer');
+  if(!G.currentStory){if(_dlgId!==null){layer.innerHTML='';_dlgId=null;}return;}
+  if(_dlgId===G.currentStory)return;_dlgId=G.currentStory;
+  const s=STORY[G.currentStory];if(!s){layer.innerHTML='';return;}
+  const sc=s.speaker==='⚡越死越强系统'?'var(--cyan)':s.speaker==='旁白'?'var(--text-dim)':'var(--gold)';
+  layer.innerHTML=`<div class="dialogue-box" onclick="${!s.choices?'advStory()':''}"><div class="dlg-speaker" style="color:${sc}">${s.emoji||''} ${s.speaker}</div><div class="dlg-text">${s.text.replace(/\n/g,'<br>')}</div>${s.choices?`<div class="dlg-choices">${s.choices.map((c,i)=>`<div class="dlg-choice" onclick="event.stopPropagation();storyChoice(${i})">${c.text}</div>`).join('')}</div>`:`<div class="dlg-next">点击继续 ▶</div>`}</div>`;
+}
+
+function updateModal(){
+  const layer=$('modalLayer');
+  const type=modal?modal.type:null;
+  if(type===_modalType&&type!=='reward'&&type!=='capture'&&type!=='interact')return; // skip if same
+  _modalType=type;
+  if(!modal){layer.innerHTML='';layer.classList.remove('show');return;}
+  layer.classList.add('show');
+
+  if(modal.type==='death'){layer.innerHTML=`<div class="death-screen"><div class="death-text">你死了</div><div class="death-sub">越死越强·系统激活中...</div></div>`;}
+  else if(modal.type==='reward'){layer.innerHTML=`<div class="modal-overlay"><div class="modal-box"><div class="modal-title">⚡ 死亡奖励 ⚡</div><div class="modal-desc">累计死亡${G.totalDeaths}次 · 三选一</div><div class="reward-options">${modal.data.map((r,i)=>`<div class="reward-card" onclick="claimReward(${i})"><div class="reward-name">${r.name}</div><div class="reward-desc">${r.desc}</div></div>`).join('')}</div></div></div>`;}
+  else if(modal.type==='capture'){const dn=modal.data;const d=fd(dn);
+    layer.innerHTML=`<div class="modal-overlay"><div class="modal-box"><div class="modal-title">🔥 收服炉鼎 🔥</div><div class="modal-desc">${d?d.emoji:''} ${dn}（${d?rn(d.realm):''}）<br>修为碾压，永久归你！</div><div class="reward-options"><div class="reward-card" onclick="capture('${dn}');modal=null;updateAll();"><div class="reward-name">化为炉鼎！</div><div class="reward-desc">永久收服</div></div><div class="reward-card" onclick="modal=null;updateAll();"><div class="reward-name">放过她</div><div class="reward-desc">（下次还能抓）</div></div></div></div></div>`;}
+  else if(modal.type==='interact'){
+    // 采补双修弹窗渲染
+    layer.innerHTML=`<div class="modal-overlay"><div class="modal-box interact-box"><div class="modal-title">${modal.title}</div><div class="interact-avatar">${modal.emoji}</div><div style="color:var(--gold);font-weight:bold;margin-bottom:12px;font-size:14px;">${modal.name}</div><div class="interact-text">${modal.text.replace(/\n/g,'<br>')}</div><div class="reward-options"><div class="reward-card" style="border-color:var(--purple-light);" onclick="if(modal && modal.action) modal.action()"><div class="reward-name">${modal.btnText}</div></div></div></div></div>`;
+  }
+}
+
+function updateButtons(){
+  $('btnIdleT').textContent=G.idling?'⏸️停止':'⚔️挂机';
+  $('btnCultT').textContent=G.cultivating?'⏹️停止':'🧘修炼';
+  $('btnCultSub').textContent=G.cultivating?'修炼中':'打坐修行';
+}
+
+function updateLog(){
+  if(_logLen===G.logs.length)return;_logLen=G.logs.length;
+  const el=$('logArea');
+  el.innerHTML=G.logs.slice(0,20).map(l=>`<div class="log-msg ${l.cls}">${l.msg}</div>`).join('');
+}
+
+function setLeftTab(t){if(leftTab===t)return;leftTab=t;
+  $('ltChapter').className='lp-tab'+(t==='chapter'?' active':'');$('ltSect').className='lp-tab'+(t==='sect'?' active':'');
+  _leftDirty=true;updateLeftPanel();}
+
+function updateLeftPanel(){_leftDirty=false;$('leftBody').innerHTML=leftTab==='chapter'?rChapters():rSectExplore();}
+
+function rChapters(){return CHAPTERS.map(ch=>{const ok=G.realm>=ch.unlockRealm;const seen=G.chapterSeen[ch.id];
+  return `<div class="chapter-item ${ok&&!seen?'active':''} ${!ok?'locked':''}" onclick="${ok?`startChStory(${ch.id})`:''}"><span class="ch-num">${ch.id}</span><span class="ch-name">${ok?ch.name:'???'}<br><span style="font-size:9px;color:var(--text-dim)">${ok?ch.desc:''}</span></span><span class="ch-status" style="color:${seen?'var(--cyan)':ok?'var(--gold)':'var(--text-dim)'}">${seen?'可重看':ok?'▶新':'🔒'}</span></div>`;}).join('');}
+
+function rSectExplore(){let h='';Object.keys(SECTS).forEach(k=>{const s=SECTS[k];const ok=G.sectUnlocked.includes(k);
+  h+=`<div class="building-card ${!ok?'locked':''}" onclick="${ok?`G.currentSect='${k}';_leftDirty=true;_rightDirty=true;updateLeftPanel();updateRightPanel();`:''}" style="${G.currentSect===k?'border-color:var(--border-active);background:rgba(246,201,78,0.06)':''}"><div class="bld-name">${s.emoji} ${ok?s.name:'???'}</div><div class="bld-desc">${ok?s.desc:'未解锁'}</div></div>`;});
+  const sect=SECTS[G.currentSect];if(sect&&G.sectUnlocked.includes(G.currentSect)){h+=`<div class="sect-divider">${sect.emoji} ${sect.name} · 建筑</div>`;
+    sect.buildings.forEach(b=>{h+=`<div class="building-card" onclick="openBuilding('${b.action}')"><div class="bld-name">${b.emoji} ${b.name}</div><div class="bld-desc">${b.desc}</div></div>`;});}return h;}
+
+function setRightTab(t){if(rightTab===t)return;rightTab=t;
+  $('rtCauldron').className='rp-tab'+(t==='cauldron'?' active':'');$('rtSect').className='rp-tab'+(t==='sect'?' active':'');$('rtTalent').className='rp-tab'+(t==='talent'?' active':'');
+  _rightDirty=true;updateRightPanel();}
+
+function updateRightPanel(){_rightDirty=false;$('rightBody').innerHTML=rightTab==='cauldron'?rCauldrons():rightTab==='sect'?rSectDisc():rTalents();}
+
+function rCauldrons(){if(!G.cauldrons.length)return '<div style="padding:14px;text-align:center;color:var(--text-dim);font-size:11px">暂无炉鼎<br>击败女修后收服</div>';
+  return G.cauldrons.map(n=>{const d=fd(n);if(!d)return '';const im=G.mainCauldron===n;
+    return `<div class="cauldron-card ${im?'main-c':''}"><div class="cc-top"><div class="cc-avatar">${d.emoji}</div><div class="cc-info"><div class="cc-name">${im?'👑':''}${d.name}</div><div class="cc-realm">${rn(d.realm)}</div><div class="cc-bonus">${d.bonus}</div></div></div><div class="cc-actions"><div class="cc-btn btn-harvest" onclick="harvestOne('${n}')">采补</div><div class="cc-btn btn-dual" onclick="doDual()">双修</div>${im?'':`<div class="cc-btn btn-main-set" onclick="G.mainCauldron='${n}';_rightDirty=true;updateRightPanel();save();">设主</div>`}</div></div>`;}).join('');}
+
+function rSectDisc(){const sect=SECTS[G.currentSect];if(!sect)return '';
+  return `<div style="padding:4px 6px;font-size:11px;color:var(--gold);font-weight:700">${sect.emoji} ${sect.name}</div>`+
+    sect.disciples.map(d=>{const cap=G.cauldrons.includes(d.name);const can=G.realm>d.realm&&!cap;
+      return `<div class="cauldron-card" style="${cap?'border-color:var(--cyan)':''}"><div class="cc-top"><div class="cc-avatar">${d.emoji}</div><div class="cc-info"><div class="cc-name">${d.name}${cap?' ✅':''}</div><div class="cc-realm">${rn(d.realm)}</div><div class="cc-bonus">${d.bonus}</div></div></div>${cap?`<div class="cc-actions"><div class="cc-btn btn-harvest" onclick="harvestOne('${d.name}')">采补</div><div class="cc-btn btn-dual" onclick="doDual()">双修</div></div>`:can?`<div class="cc-actions"><div class="cc-btn btn-harvest" onclick="capture('${d.name}')">化为炉鼎！</div></div>`:`<div style="font-size:9px;color:var(--text-dim);padding:3px">需${rn(d.realm+1)}以上</div>`}</div>`;}).join('');}
+
+function rTalents(){return `<div style="padding:5px;font-size:9px;color:var(--text-dim)">累计死亡达标自动觉醒</div>`+TALENTS.map(t=>`<div class="talent-item ${t.unlocked?'unlocked':'locked'}"><div><div style="font-size:11px;color:var(--text)">${t.unlocked?'✅':'🔒'} ${t.name}</div><div style="font-size:9px;color:var(--text-dim)">${t.desc}</div></div><div style="font-size:9px;color:${t.unlocked?'var(--cyan)':'var(--text-dim)'}">${t.unlocked?'已觉醒':`死${t.deathReq}次`}</div></div>`).join('');}
+
+// PARTICLES
+function spawnP(){const bg=document.querySelector('.bg-layer');if(!bg)return;for(let i=0;i<2;i++){const p=document.createElement('div');p.className='particle';const s=2+Math.random()*3;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;bottom:-10px;background:${['var(--gold)','var(--purple-light)','var(--cyan)'][Math.floor(Math.random()*3)]};animation-duration:${7+Math.random()*8}s;opacity:${.2+Math.random()*.4}`;bg.appendChild(p);setTimeout(()=>p.remove(),15000);}}
+setInterval(spawnP,2500);
+
+// IDLE INCOME
+setInterval(()=>{if(G.cauldrons.length>0){const i=G.cauldrons.length*2*(1+G.realm*.2);G.spiritStones+=Math.floor(i);addXp(Math.floor(i*.03));updateTopBar();}save();},5000);
+
+// INIT
+load();calcStats();G.hp=G.maxHp;G.inBattle=false;G.cultivating=false;G.idling=false;G.currentStory=null;
+_sceneMode='';_leftDirty=true;_rightDirty=true;_logLen=-1;_dlgId=null;_modalType=null;
+updateAll();spawnP();
+if(!G.chapterSeen[1]&&G.totalDeaths===0)setTimeout(()=>openStory('1-1'),400);
+</script>
+</body>
+</html>
