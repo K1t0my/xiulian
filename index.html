@@ -152,7 +152,8 @@ const SPEND=[
   {id:"concert",icon:"🎵",name:"私人演唱会",desc:"邀请明星在家开唱并且开淫趴",price:200000,morale:6,fanPop:3,repeat:true},
   {id:"fashion",icon:"👔",name:"定制西装",desc:"萨维尔街全套定制",price:20000,morale:2,fanPop:1,repeat:true},
   {id:"wine",icon:"🍷",name:"红酒窖藏",desc:"收购一批顶级年份酒",price:80000,morale:3,fanPop:1,repeat:true},
-  {id:"sex",icon:"❤️",name:"约炮",desc:"和顶级名媛小姐做爱",price:80000,morale:3,fanPop:1,repeat:true},
+  {id:"sex",icon:"❤️",name:"约炮",desc:"和顶级名媛小姐做爱",price:80000,morale:3,fanPop:-2,repeat:true},
+  {id:"sex",icon:"❤️",name:"包养小明星",desc:"高价拍卖下国内明星并包养",price:800000,morale:8,fanPop:8,repeat:true},
 ];
 
 // STATE
@@ -453,7 +454,7 @@ function render(){
   h+=`<div class="hdr"><div class="fb"><div><div class="logo">⚽ 绿茵长路</div><div class="meta">${G.year}.${G.month} W${G.week} S${G.season}</div></div><div style="text-align:right"><div class="bold xxs">${G.isCaptain?"©️":""}${esc(G.name)}</div><div class="xxs dim">${G.club.s}·${pi.n}·${G.age}岁</div><div class="xxs gold">${fmt$(G.savings)}</div></div></div>`;
   if(!G.retired){h+=`<div class="nav">${[["dashboard","总览"],["profile","数据"],["shop","消费"],["history","记录"],["career","生涯"],["train","训练"]].map(([id,lb])=>`<button class="nb ${VIEW===id?'on':''}" onclick="VIEW='${id}';render()">${lb}</button>`).join("")}<button class="nb" onclick="saveGame()">💾</button></div>`;}
   h+=`</div><div class="ct">`;
-  if(G.pendingChoice&&!G.retired){h+=renderChoice(aC);h+=`</div>`;setDOM(h);return;}
+  if(G.pendingChoice&&(!G.retired || G.pendingChoice==="post_retire")){h+=renderChoice(aC);h+=`</div>`;setDOM(h);return;}
 
   // DASHBOARD
   if(VIEW==="dashboard"&&!G.retired){
