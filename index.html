@@ -2,182 +2,634 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>绿茵长路 v4</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>绿茵长路 v5.2</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg0:#060a07;--bg1:#0c140f;--bg2:#132019;--bg3:#1b3024;--accent:#3ddc84;--accent2:#00bfa5;--glow:rgba(61,220,132,0.12);--gold:#ffd700;--red:#ff4757;--blue:#5b9aff;--purple:#a78bfa;--orange:#ff9f43;--text:#dce8df;--dim:#5f9070;--border:#1a2e22;--card:#0e1812}
+:root{--bg0:#060a07;--bg1:#0c140f;--bg2:#132019;--bg3:#1b3024;--a:#3ddc84;--a2:#00bfa5;--glow:rgba(61,220,132,.12);--gold:#ffd700;--red:#ff4757;--blue:#5b9aff;--pink:#f472b6;--text:#dce8df;--dim:#5f9070;--bdr:#1a2e22;--card:#0e1812}
 *{box-sizing:border-box;margin:0;padding:0}html{font-size:14px}
-body{font-family:'Noto Sans SC',sans-serif;background:var(--bg0);color:var(--text);min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 30% 10%,rgba(61,220,132,0.03),transparent 60%),radial-gradient(ellipse 50% 40% at 80% 90%,rgba(0,191,165,0.025),transparent 60%);pointer-events:none;z-index:0}
-::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg0)}::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:3px}
-#app{position:relative;z-index:1;max-width:540px;margin:0 auto;padding-bottom:60px}
-.hdr{position:sticky;top:0;z-index:100;background:linear-gradient(180deg,var(--bg1),rgba(12,20,15,.96));backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:10px 14px 7px}
-.logo{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:900;letter-spacing:2px;background:linear-gradient(135deg,var(--accent),var(--accent2),var(--gold));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:sh 4s ease infinite}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg0);color:var(--text);min-height:100vh}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:2px}
+#app{max-width:540px;margin:0 auto;padding-bottom:60px;position:relative;z-index:1}
+.hdr{position:sticky;top:0;z-index:100;background:rgba(12,20,15,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--bdr);padding:8px 14px 6px}
+.logo{font-family:'Orbitron';font-size:13px;font-weight:900;letter-spacing:2px;background:linear-gradient(135deg,var(--a),var(--a2),var(--gold));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:sh 4s ease infinite}
 @keyframes sh{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.meta{font-size:9px;color:var(--dim);margin-top:1px}
-.nav{display:flex;gap:2px;margin-top:6px;overflow-x:auto;padding-bottom:2px}
-.nb{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;font-size:10px;font-family:inherit;font-weight:500;transition:all .2s;white-space:nowrap}
-.nb:hover{background:var(--bg2);color:var(--text)}.nb.on{background:var(--glow);border-color:var(--accent);color:var(--accent);font-weight:700}
-.ct{padding:12px 12px 0}
-.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 13px;margin-bottom:7px;transition:all .2s}
-.card.ck{cursor:pointer}.card.ck:hover{border-color:var(--accent);background:var(--glow);transform:translateX(3px)}
-.card.gl{border-color:rgba(255,215,0,.3);background:rgba(255,215,0,.03)}
-.card.rl{border-color:rgba(255,71,87,.25);background:rgba(255,71,87,.03)}
-.card.bl{border-color:rgba(91,154,255,.25);background:rgba(91,154,255,.03)}
-.btn{padding:6px 16px;border-radius:7px;border:1px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:11px;font-family:inherit;font-weight:500;transition:all .2s}
-.btn:hover{background:var(--bg3);border-color:var(--accent)}.btn:disabled{opacity:.3;cursor:not-allowed}
-.btn-p{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--bg0);border:none;font-weight:700}
-.btn-p:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 4px 16px rgba(61,220,132,.2)}
-.btn-d{border-color:var(--red);color:var(--red)}.btn-d:hover{background:rgba(255,71,87,.1)}
-.btn-s{border-color:var(--blue);color:var(--blue)}.btn-s:hover{background:rgba(91,154,255,.1)}
-.btn-full{width:100%}.btn-lg{font-size:14px;padding:12px 36px;border-radius:10px}
+.nav{display:flex;gap:2px;margin-top:5px;overflow-x:auto}
+.nb{padding:3px 9px;border-radius:5px;border:1px solid var(--bdr);background:transparent;color:var(--dim);cursor:pointer;font-size:9px;font-family:inherit;font-weight:500;transition:all .15s;white-space:nowrap}
+.nb.on{background:var(--glow);border-color:var(--a);color:var(--a);font-weight:700}
+.ct{padding:10px 12px 0}
+.c{background:var(--card);border:1px solid var(--bdr);border-radius:9px;padding:10px 12px;margin-bottom:6px}
+.c.ck{cursor:pointer}.c.ck:hover{border-color:var(--a);background:var(--glow)}
+.c.gl{border-color:rgba(255,215,0,.3);background:rgba(255,215,0,.03)}
+.c.pk{border-color:rgba(244,114,182,.3);background:rgba(244,114,182,.03)}
+.b{padding:5px 14px;border-radius:6px;border:1px solid var(--bdr);background:var(--bg2);color:var(--text);cursor:pointer;font-size:10px;font-family:inherit;font-weight:500;transition:all .15s}
+.b:hover{background:var(--bg3);border-color:var(--a)}.b:disabled{opacity:.3;cursor:not-allowed}
+.bp{background:linear-gradient(135deg,var(--a),var(--a2));color:var(--bg0);border:none;font-weight:700}
+.bp:hover{opacity:.9}
+.bd{border-color:var(--red);color:var(--red)}
+.bs{border-color:var(--blue);color:var(--blue)}
+.bf{width:100%}
 .fb{display:flex;justify-content:space-between;align-items:center}
-.fc{display:flex;align-items:center;gap:8px}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px}
-.center{text-align:center}.dim{color:var(--dim)}.sm{font-size:11px}.xs{font-size:10px}.xxs{font-size:9px}.bold{font-weight:700}
-.accent{color:var(--accent)}.gold{color:var(--gold)}.red{color:var(--red)}.blue{color:var(--blue)}.purple{color:var(--purple)}.orange{color:var(--orange)}.green{color:#22c55e}
-.mt4{margin-top:4px}.mt6{margin-top:6px}.mt8{margin-top:8px}.mt12{margin-top:12px}.mt16{margin-top:16px}.mt20{margin-top:20px}.mb4{margin-bottom:4px}.mb6{margin-bottom:6px}.mb8{margin-bottom:8px}
-.sec{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:7px}
-.badge{display:inline-block;background:var(--glow);border:1px solid var(--accent);border-radius:5px;padding:1px 8px;font-size:9px;font-weight:600;color:var(--accent);margin-right:3px}
-.badge-g{background:rgba(255,215,0,.1);border-color:var(--gold);color:var(--gold)}
-.badge-r{background:rgba(255,71,87,.1);border-color:var(--red);color:var(--red)}
-.ab{display:flex;align-items:center;gap:4px;margin-bottom:2px;font-size:10px}
-.ab-l{width:34px;text-align:right;color:var(--dim);flex-shrink:0}
-.ab-t{flex:1;height:6px;background:var(--bg2);border-radius:3px;overflow:hidden}
-.ab-f{height:100%;border-radius:3px;transition:width .4s}
-.ab-v{width:18px;font-weight:700;font-size:10px}
-.ab-d{font-size:8px;font-weight:600;margin-left:2px}
-.sg{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
-.sb{background:var(--bg2);border-radius:6px;padding:5px 7px;text-align:center;min-width:48px;flex:1}
-.sb-v{font-size:13px;font-weight:700;margin-top:1px}.sb-l{font-size:7px;color:var(--dim)}
-.ca-t{height:8px;background:var(--bg2);border-radius:4px;position:relative;overflow:hidden;margin-top:3px}
-.ca-pa{position:absolute;height:100%;background:rgba(61,220,132,.12);border-radius:4px}
-.ca-c{position:absolute;height:100%;background:var(--accent);border-radius:4px;transition:width .5s}
-.notif{position:fixed;top:10px;left:50%;transform:translateX(-50%);background:var(--bg2);border:1px solid var(--accent);border-radius:8px;padding:8px 20px;font-size:11px;font-weight:600;z-index:9999;box-shadow:0 6px 24px rgba(0,0,0,.5)}
-@keyframes fup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.anim{animation:fup .25s ease-out both}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}.pulse{animation:pulse 1.5s infinite}
-.cg{display:flex;flex-direction:column;gap:6px;margin-top:8px}
-.cb{background:var(--bg2);border:1.5px solid var(--border);border-radius:9px;padding:11px 13px;cursor:pointer;transition:all .2s;text-align:left}
-.cb:hover{border-color:var(--accent);background:var(--glow);transform:translateX(3px)}
-.cb-t{font-weight:700;font-size:12px;margin-bottom:2px}
-.cb-d{font-size:10px;color:var(--dim);line-height:1.3}
-.tl{position:relative;padding-left:16px;border-left:2px solid var(--border)}
-.tl-d{position:absolute;left:-5px;width:8px;height:8px;border-radius:50%;background:var(--accent);border:2px solid var(--bg0)}
-.tl-i{position:relative;padding-bottom:10px}
-.portrait{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--bg3),var(--accent));display:flex;align-items:center;justify-content:center;font-size:22px;border:2px solid var(--accent);flex-shrink:0}
-.xp-bar{height:4px;background:var(--bg2);border-radius:2px;overflow:hidden;margin-top:3px}
-.xp-fill{height:100%;border-radius:2px;transition:width .5s}
-.cr{display:flex;align-items:flex-end;gap:1px;height:50px;margin-top:4px}
-.cr-b{border-radius:2px 2px 0 0;min-width:5px;flex:1;position:relative}
-.cr-b:hover::after{content:attr(data-t);position:absolute;bottom:105%;left:50%;transform:translateX(-50%);background:var(--bg1);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:8px;white-space:nowrap;color:var(--text);z-index:10}
-.mr{display:flex;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:10px;gap:4px}
+.fc{display:flex;align-items:center;gap:6px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:3px 8px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px}
+.center{text-align:center}.dim{color:var(--dim)}.x{font-size:10px}.xx{font-size:9px}.bold{font-weight:700}
+.ac{color:var(--a)}.gd{color:var(--gold)}.rd{color:var(--red)}.bl{color:var(--blue)}.pk{color:var(--pink)}.gn{color:#22c55e}.orange{color:#f97316}
+.mt4{margin-top:4px}.mt6{margin-top:6px}.mt8{margin-top:8px}.mt12{margin-top:12px}.mb4{margin-bottom:4px}.mb6{margin-bottom:6px}
+.s{font-size:11px;font-weight:700;color:var(--a);margin-bottom:6px}
+.badge{display:inline-block;background:var(--glow);border:1px solid var(--a);border-radius:4px;padding:1px 7px;font-size:8px;font-weight:600;color:var(--a);margin-right:2px}
+.badge.pk{border-color:var(--pink);color:var(--pink);background:rgba(244,114,182,.1)}
+.ab{display:flex;align-items:center;gap:3px;margin-bottom:2px;font-size:9px}
+.ab-l{width:30px;text-align:right;color:var(--dim)}
+.ab-t{flex:1;height:5px;background:var(--bg2);border-radius:3px;overflow:hidden}
+.ab-f{height:100%;border-radius:3px}
+.ab-v{width:16px;font-weight:700;font-size:9px}
+.sg{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+.sb{background:var(--bg2);border-radius:5px;padding:4px 6px;text-align:center;min-width:42px;flex:1}
+.sb-v{font-size:12px;font-weight:700}.sb-l{font-size:6px;color:var(--dim)}
+.ca-t{height:6px;background:var(--bg2);border-radius:3px;position:relative;overflow:hidden;margin-top:2px}
+.ca-f{position:absolute;height:100%;background:var(--a);border-radius:3px;transition:width .4s}
+.ca-p{position:absolute;height:100%;background:rgba(61,220,132,.12);border-radius:3px}
+.notif{position:fixed;top:8px;left:50%;transform:translateX(-50%);background:var(--bg2);border:1px solid var(--a);border-radius:7px;padding:7px 18px;font-size:10px;font-weight:600;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.5)}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.an{animation:fu .2s ease-out both}
+.cg{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.cb{background:var(--bg2);border:1.5px solid var(--bdr);border-radius:8px;padding:9px 11px;cursor:pointer;transition:all .15s;text-align:left}
+.cb:hover{border-color:var(--a);background:var(--glow);transform:translateX(2px)}
+.xp{height:4px;background:var(--bg2);border-radius:2px;overflow:hidden;margin-top:2px}
+.xp-f{height:100%;border-radius:2px;transition:width .4s}
+.tl{position:relative;padding-left:14px;border-left:2px solid var(--bdr)}
+.tl-d{position:absolute;left:-5px;width:7px;height:7px;border-radius:50%;background:var(--a);border:2px solid var(--bg0)}
+.tl-i{position:relative;padding-bottom:8px}
+.mt-tl{padding-left:28px;margin-top:4px;position:relative}
+.mt-r{position:relative;padding:2px 0}
+.mt-m{position:absolute;left:-28px;width:22px;text-align:right;font-size:8px;color:var(--dim);font-weight:600;font-family:'Orbitron'}
+.mt-e{border-left:2px solid var(--bdr);padding-left:7px;font-size:9px;line-height:1.3}
+.mt-e.eg{border-color:var(--gold);color:var(--gold);font-weight:700}
+.mt-e.ea{border-color:var(--a);color:var(--a)}
+.mt-e.eb{border-color:var(--red);color:var(--red)}
+.mt-e.en{color:var(--dim)}
+.sh-i{background:var(--bg2);border:1px solid var(--bdr);border-radius:7px;padding:8px 10px;display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.sh-i:hover{border-color:var(--a)}
+.tc{flex:1;background:var(--bg2);border:1.5px solid var(--bdr);border-radius:7px;padding:6px;text-align:center;cursor:pointer;transition:all .15s;font-size:8px;font-weight:700}
+.tc.on{border-color:var(--a);background:var(--glow)}
+.tp{display:flex;gap:2px;margin-bottom:6px}
+.tpb{padding:2px 8px;border-radius:12px;font-size:8px;border:1px solid var(--bdr);background:transparent;color:var(--dim);cursor:pointer;font-family:inherit}
+.tpb.on{background:var(--a);color:var(--bg0);border-color:var(--a);font-weight:700}
+.dc{flex:1;padding:6px;border-radius:6px;border:1.5px solid var(--bdr);background:var(--bg2);cursor:pointer;text-align:center;font-size:9px}
+.dc.on{border-color:var(--a);background:var(--glow)}
+.mr{display:flex;align-items:center;padding:4px 0;border-bottom:1px solid var(--bdr);font-size:9px;gap:3px}
 .mr:last-child{border:none}
-.tp{display:flex;gap:3px;margin-bottom:8px}
-.tpb{padding:3px 10px;border-radius:16px;font-size:9px;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;font-family:inherit}
-.tpb.on{background:var(--accent);color:var(--bg0);border-color:var(--accent);font-weight:700}
-.tc{flex:1;background:var(--bg2);border:1.5px solid var(--border);border-radius:8px;padding:8px;text-align:center;cursor:pointer;transition:all .2s}
-.tc:hover,.tc.on{border-color:var(--accent);background:var(--glow)}
-.tc .ti{font-size:18px}.tc .tn{font-size:9px;font-weight:700;margin-top:2px}.tc .td{font-size:7px;color:var(--dim);margin-top:1px}
-.mt-tl{position:relative;padding-left:30px;margin-top:6px}
-.mt-tl .mt-r{position:relative;padding:3px 0}
-.mt-tl .mt-m{position:absolute;left:-30px;width:24px;text-align:right;font-size:9px;color:var(--dim);font-weight:600;font-family:'Orbitron',sans-serif}
-.mt-tl .mt-e{border-left:2px solid var(--border);padding-left:8px;font-size:10px;line-height:1.3}
-.mt-tl .mt-e.eg{border-color:var(--gold);color:var(--gold);font-weight:700}
-.mt-tl .mt-e.ea{border-color:var(--accent);color:var(--accent)}
-.mt-tl .mt-e.eb{border-color:var(--red);color:var(--red)}
-.mt-tl .mt-e.en{color:var(--dim)}
-.shop-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px;margin-bottom:6px;transition:all .2s}
-.shop-item:hover{border-color:var(--accent)}
-.shop-icon{font-size:24px;width:36px;text-align:center;flex-shrink:0}
-.shop-info{flex:1}
-.shop-name{font-weight:700;font-size:11px}
-.shop-desc{font-size:9px;color:var(--dim);margin-top:1px}
-.shop-price{font-weight:700;font-size:11px;color:var(--gold);white-space:nowrap}
-.shop-owned{font-size:9px;color:var(--accent);font-weight:600}
-.diff-opt{display:flex;gap:5px}
-.dc{flex:1;padding:8px;border-radius:7px;border:1.5px solid var(--border);background:var(--bg2);cursor:pointer;text-align:center;transition:all .2s;font-size:10px}
-.dc:hover,.dc.on{border-color:var(--accent);background:var(--glow)}
+.cr{display:flex;align-items:flex-end;gap:1px;height:40px;margin-top:3px}
+.cr-b{border-radius:2px 2px 0 0;min-width:4px;flex:1;position:relative}
+.cr-b:hover::after{content:attr(data-t);position:absolute;bottom:105%;left:50%;transform:translateX(-50%);background:var(--bg1);border:1px solid var(--bdr);border-radius:2px;padding:0 4px;font-size:7px;white-space:nowrap;z-index:5}
+.tbl{width:100%;border-collapse:collapse;font-size:8px}
+.tbl th{padding:4px 3px;text-align:left;color:var(--dim);font-weight:500;border-bottom:1px solid var(--bdr)}
+.tbl td{padding:3px;border-bottom:1px solid var(--bdr)}
+.tbl .ce{text-align:center}
+.tbl .hi{background:var(--glow)}
+.portrait{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--bg3),var(--a));display:flex;align-items:center;justify-content:center;font-size:18px;border:2px solid var(--a);flex-shrink:0}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <script>
-// ======================================================================
-//  绿茵长路 v4 — Full Player Career with Lifestyle
-// ======================================================================
-const R=(a,b)=>a+Math.random()*(b-a),RI=(a,b)=>Math.floor(R(a,b+1)),pick=a=>a[Math.floor(Math.random()*a.length)],clamp=(v,l,h)=>Math.max(l,Math.min(h,v));
+"use strict";
+const R=(a,b)=>a+Math.random()*(b-a),RI=(a,b)=>Math.floor(R(a,b+1)),pick=a=>a[Math.floor(Math.random()*a.length)],cl=(v,l,h)=>Math.max(l,Math.min(h,v));
 const fmt$=v=>v>=1e8?`€${(v/1e8).toFixed(1)}亿`:v>=1e6?`€${(v/1e6).toFixed(1)}M`:v>=1e3?`€${(v/1e3)|0}K`:`€${v|0}`;
 const esc=s=>{const d=document.createElement('div');d.textContent=s;return d.innerHTML};
 const ac=v=>v>=17?"#22c55e":v>=13?"#84cc16":v>=9?"#eab308":v>=5?"#f97316":"#ef4444";
 
-// DATA
 const NATIONS=[{id:1,n:"巴西",f:"🇧🇷"},{id:2,n:"阿根廷",f:"🇦🇷"},{id:3,n:"法国",f:"🇫🇷"},{id:4,n:"西班牙",f:"🇪🇸"},{id:5,n:"德国",f:"🇩🇪"},{id:6,n:"英格兰",f:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},{id:7,n:"意大利",f:"🇮🇹"},{id:8,n:"荷兰",f:"🇳🇱"},{id:9,n:"葡萄牙",f:"🇵🇹"},{id:10,n:"日本",f:"🇯🇵"},{id:11,n:"韩国",f:"🇰🇷"},{id:12,n:"中国",f:"🇨🇳"}];
 const POS={GK:{n:"门将",e:"🧤",z:"DEF"},CB:{n:"中后卫",e:"🛡️",z:"DEF"},LB:{n:"左后卫",e:"⬅️",z:"DEF"},RB:{n:"右后卫",e:"➡️",z:"DEF"},CDM:{n:"后腰",e:"🔒",z:"MID"},CM:{n:"中场",e:"⚙️",z:"MID"},CAM:{n:"前腰",e:"🎯",z:"MID"},LW:{n:"左边锋",e:"💨",z:"ATK"},RW:{n:"右边锋",e:"💨",z:"ATK"},ST:{n:"前锋",e:"⚽",z:"ATK"}};
-const CLUBS=[{id:1,n:"皇家马德里",s:"皇马",rep:96,t:1,lg:"西甲"},{id:2,n:"巴塞罗那",s:"巴萨",rep:94,t:1,lg:"西甲"},{id:3,n:"拜仁慕尼黑",s:"拜仁",rep:93,t:1,lg:"德甲"},{id:4,n:"曼彻斯特城",s:"曼城",rep:95,t:1,lg:"英超"},{id:5,n:"利物浦",s:"利物浦",rep:91,t:1,lg:"英超"},{id:6,n:"巴黎圣日耳曼",s:"大巴黎",rep:90,t:1,lg:"法甲"},{id:7,n:"国际米兰",s:"国米",rep:88,t:1,lg:"意甲"},{id:8,n:"多特蒙德",s:"多特",rep:85,t:2,lg:"德甲"},{id:9,n:"马竞",s:"马竞",rep:86,t:2,lg:"西甲"},{id:10,n:"AC米兰",s:"米兰",rep:85,t:2,lg:"意甲"},{id:11,n:"阿森纳",s:"阿森纳",rep:88,t:1,lg:"英超"},{id:12,n:"热刺",s:"热刺",rep:82,t:2,lg:"英超"},{id:13,n:"塞维利亚",s:"塞维利亚",rep:78,t:3,lg:"西甲"},{id:14,n:"里昂",s:"里昂",rep:76,t:3,lg:"法甲"},{id:15,n:"本菲卡",s:"本菲卡",rep:77,t:3,lg:"葡超"},{id:16,n:"阿贾克斯",s:"阿贾克斯",rep:79,t:3,lg:"荷甲"}];
-const YOUTH=[{id:101,n:"拉玛西亚青训营",s:"拉玛西亚",rep:70,t:4,lg:"青年联赛"},{id:102,n:"拜仁青训学院",s:"拜仁青训",rep:68,t:4,lg:"青年联赛"},{id:103,n:"曼城青训学院",s:"曼城青训",rep:66,t:4,lg:"青年联赛"}];
-const LG_OPP={"西甲":["皇家社会","毕尔巴鄂","瓦伦西亚","贝蒂斯","塞尔塔","赫塔费"],"英超":["莱斯特城","西汉姆","纽卡斯尔","维拉","布莱顿","狼队"],"德甲":["沃尔夫斯堡","法兰克福","弗赖堡","门兴","斯图加特"],"法甲":["摩纳哥","朗斯","马赛","尼斯","雷恩"],"意甲":["那不勒斯","罗马","亚特兰大","佛罗伦萨","拉齐奥"],"葡超":["波尔图","布拉加","里斯本竞技"],"荷甲":["费耶诺德","埃因霍温","乌得勒支"],"青年联赛":["青年A队","青年B队","预备队"]};
-const INT_OPP=["巴西","阿根廷","法国","西班牙","德国","英格兰","意大利","荷兰","葡萄牙","比利时","克罗地亚","乌拉圭","丹麦","瑞士","美国","墨西哥","摩洛哥","日本","韩国","塞内加尔"];
-const ENDORSEMENTS=[{n:"Nike",val:5000,req:80},{n:"Adidas",val:8000,req:100},{n:"EA Sports",val:12000,req:120},{n:"百事可乐",val:15000,req:130},{n:"劳力士",val:25000,req:150},{n:"路易威登",val:40000,req:165}];
-const HEADLINES=[
-  g=>`${g.name}本赛季${g.goals}球${g.ast}助，${g.club.s}为之疯狂`,
-  g=>`多家豪门关注${g.name}`,g=>`${g.club.s}主帅盛赞${g.name}`,
-  g=>`${g.name}训练中状态惊人`,g=>`${g.name}社交媒体粉丝暴涨`,
-  g=>g.hp>0?`伤情：${g.name}预计${g.hpW}周复出`:`${g.name}${pick(["参加慈善赛","最新广告曝光","接受专访"])}`,
-];
 
-// SHOP ITEMS
+// Clubs with real leagues
+const CLUBS=[
+  {id:1,n:"皇家马德里",s:"皇马",rep:96,t:1,lg:"西甲"},
+  {id:2,n:"巴塞罗那",s:"巴萨",rep:94,t:1,lg:"西甲"},
+  {id:3,n:"拜仁慕尼黑",s:"拜仁",rep:93,t:1,lg:"德甲"},
+  {id:4,n:"曼彻斯特城",s:"曼城",rep:95,t:1,lg:"英超"},
+  {id:5,n:"利物浦",s:"利物浦",rep:91,t:1,lg:"英超"},
+  {id:6,n:"巴黎圣日耳曼",s:"大巴黎",rep:90,t:1,lg:"法甲"},
+  {id:7,n:"国际米兰",s:"国米",rep:88,t:1,lg:"意甲"},
+  {id:8,n:"多特蒙德",s:"多特",rep:85,t:2,lg:"德甲"},
+  {id:9,n:"马德里竞技",s:"马竞",rep:86,t:2,lg:"西甲"},
+  {id:10,n:"尤文图斯",s:"尤文",rep:85,t:2,lg:"意甲"},
+  {id:11,n:"阿森纳",s:"阿森纳",rep:88,t:1,lg:"英超"},
+  {id:12,n:"切尔西",s:"切尔西",rep:83,t:2,lg:"英超"},
+  {id:13,n:"上海海港",s:"海港",rep:65,t:3,lg:"中超"},
+  {id:14,n:"山东泰山",s:"泰山",rep:64,t:3,lg:"中超"},
+  {id:15,n:"北京国安",s:"国安",rep:63,t:3,lg:"中超"},
+];
+const YOUTH=[{id:101,n:"拉玛西亚",s:"拉玛西亚",rep:70,t:4,lg:"青年"},{id:102,n:"拜仁青训",s:"拜仁青训",rep:68,t:4,lg:"青年"},{id:103,n:"泰山足校",s:"泰山足校",rep:55,t:4,lg:"青年"}];
+
+// Expanded real teams for opponents
+const LG_OPP={
+  "西甲":["马德里竞技","赫罗纳","毕尔巴鄂","皇家社会","贝蒂斯","比利亚雷亚尔","瓦伦西亚","奥萨苏纳","阿拉维斯","塞维利亚","马洛卡","塞尔塔"],
+  "英超":["阿斯顿维拉","热刺","纽卡斯尔","曼联","西汉姆联","水晶宫","布莱顿","狼队","埃弗顿","布伦特福德","富勒姆","伯恩茅斯"],
+  "德甲":["勒沃库森","斯图加特","RB莱比锡","多特蒙德","法兰克福","霍芬海姆","海登海姆","不莱梅","弗赖堡","奥格斯堡","沃尔夫斯堡"],
+  "法甲":["摩纳哥","里尔","布雷斯特","尼斯","里昂","朗斯","马赛","雷恩","图卢兹","斯特拉斯堡","蒙彼利埃"],
+  "意甲":["AC米兰","尤文图斯","亚特兰大","博洛尼亚","罗马","拉齐奥","佛罗伦萨","都灵","那不勒斯","热那亚","蒙扎"],
+  "中超":["上海申花","浙江队","成都蓉城","武汉三镇","天津津门虎","河南队","长春亚泰","青岛海牛","沧州雄狮","梅州客家"],
+  "青年":["青年队A","青年队B","预备队红","预备队蓝"]
+};
+
+// Real player stars for top scorer charts
+const STARS={
+  "西甲":["维尼修斯","莱万多夫斯基","贝林厄姆","格列兹曼","莫拉塔","罗德里戈","拉菲尼亚","索尔洛特","阿斯帕斯","亚马尔"],
+  "英超":["哈兰德","萨拉赫","帕尔默","伊萨克","福登","沃特金斯","萨卡","孙兴慜","鲍文","德布劳内"],
+  "德甲":["凯恩","吉拉西","奥蓬达","翁达夫","马尔穆什","博尼费斯","萨内","穆西亚拉","弗林蓬","维尔茨"],
+  "意甲":["劳塔罗","弗拉霍维奇","吉鲁","奥斯梅恩","迪巴拉","图拉姆","莱奥","卢卡库","卡瓦拉茨赫利亚","普利西奇"],
+  "法甲":["姆巴佩","戴维","拉卡泽特","奥巴梅扬","本耶德尔","贡萨洛-拉莫斯","登贝莱","巴尔科拉"],
+  "中超":["武磊","克雷桑","马莱莱","孔帕尼奥","莱昂纳多","法比奥","费南多","特谢拉","韦世豪","奥斯卡"],
+  "青年":["青年队天才","新星前锋","梯队射手王","试训神童"]
+};
+
+const INT_OPP=["巴西","阿根廷","法国","西班牙","德国","英格兰","意大利","荷兰","葡萄牙","比利时","克罗地亚","乌拉圭","丹麦","美国","墨西哥","摩洛哥","日本","韩国","塞内加尔","澳大利亚"];
+const ENDORSEMENTS=[{n:"Nike",v:5000,r:80},{n:"Adidas",v:8000,r:100},{n:"EA Sports",v:12000,r:120},{n:"百事",v:15000,r:130},{n:"劳力士",v:25000,r:150},{n:"LV",v:40000,r:165}];
 const SHOP=[
-  {id:"apt",icon:"🏠",name:"市区公寓",desc:"城中心一套精装公寓",price:500000,cat:"房产",morale:3,fanPop:1},
-  {id:"villa",icon:"🏡",name:"海景别墅",desc:"海边豪华别墅，带私人泳池",price:3000000,cat:"房产",morale:5,fanPop:3},
-  {id:"mansion",icon:"🏰",name:"庄园豪宅",desc:"占地10英亩的私人庄园",price:15000000,cat:"房产",morale:8,fanPop:5},
-  {id:"car1",icon:"🚗",name:"保时捷911",desc:"经典跑车",price:200000,cat:"座驾",morale:2,fanPop:1},
-  {id:"car2",icon:"🏎️",name:"兰博基尼",desc:"超级跑车，街上最亮的仔",price:800000,cat:"座驾",morale:4,fanPop:3},
-  {id:"car3",icon:"🚘",name:"劳斯莱斯幻影",desc:"顶级奢华座驾",price:2000000,cat:"座驾",morale:5,fanPop:4},
-  {id:"yacht",icon:"🛥️",name:"私人游艇",desc:"50英尺豪华游艇",price:5000000,cat:"座驾",morale:6,fanPop:5},
-  {id:"jet",icon:"✈️",name:"私人飞机",desc:"湾流G650，全球飞行",price:30000000,cat:"座驾",morale:10,fanPop:8},
-  {id:"watch1",icon:"⌚",name:"百达翡丽",desc:"鹦鹉螺系列",price:150000,cat:"收藏",morale:2,fanPop:1},
-  {id:"watch2",icon:"⌚",name:"理查德米尔",desc:"限量版陀飞轮",price:1000000,cat:"收藏",morale:3,fanPop:2},
-  {id:"art",icon:"🖼️",name:"名画收藏",desc:"一幅当代艺术大师作品",price:2000000,cat:"收藏",morale:3,fanPop:2},
-  {id:"island",icon:"🏝️",name:"私人海岛",desc:"加勒比海的专属天堂",price:50000000,cat:"房产",morale:12,fanPop:10},
+  {id:"apt",i:"🏠",n:"市区公寓",d:"精装公寓",p:500000,m:3,f:1},
+  {id:"villa",i:"🏡",n:"海景别墅",d:"私人泳池",p:3e6,m:5,f:3},
+  {id:"mansion",i:"🏰",n:"庄园豪宅",d:"10英亩庄园",p:15e6,m:8,f:5},
+  {id:"car1",i:"🚗",n:"保时捷911",d:"经典跑车",p:200000,m:2,f:1},
+  {id:"car2",i:"🏎️",n:"兰博基尼",d:"超级跑车",p:800000,m:4,f:3},
+  {id:"car3",i:"🚘",n:"劳斯莱斯",d:"顶级座驾",p:2e6,m:5,f:4},
+  {id:"yacht",i:"🛥️",n:"私人游艇",d:"50尺游艇",p:5e6,m:6,f:5},
+  {id:"jet",i:"✈️",n:"私人飞机",d:"湾流G650",p:30e6,m:10,f:8},
+  {id:"watch",i:"⌚",n:"百达翡丽",d:"鹦鹉螺",p:150000,m:2,f:1},
+  {id:"art",i:"🖼️",n:"名画收藏",d:"大师作品",p:2e6,m:3,f:2},
+  {id:"island",i:"🏝️",n:"私人海岛",d:"加勒比天堂",p:50e6,m:12,f:10},
 ];
 const SPEND=[
-  {id:"vacation",icon:"🌴",name:"奢华度假",desc:"马尔代夫两周假期",price:50000,morale:8,fanPop:1,repeat:true},
-  {id:"party",icon:"🎉",name:"夜店派对",desc:"在顶级夜店包场庆祝",price:30000,morale:5,fanPop:2,repeat:true},
-  {id:"dinner",icon:"🍽️",name:"米其林晚宴",desc:"三星餐厅私人晚宴",price:10000,morale:3,fanPop:0,repeat:true},
-  {id:"charity",icon:"💝",name:"慈善捐款",desc:"向儿童基金会捐款",price:100000,morale:5,fanPop:8,repeat:true},
-  {id:"casino",icon:"🎰",name:"赌场之夜",desc:"蒙特卡洛赌场试试手气",price:50000,morale:0,fanPop:-2,repeat:true,gamble:true},
-  {id:"concert",icon:"🎵",name:"私人演唱会",desc:"邀请明星在家开唱并且开淫趴",price:200000,morale:6,fanPop:3,repeat:true},
-  {id:"fashion",icon:"👔",name:"定制西装",desc:"萨维尔街全套定制",price:20000,morale:2,fanPop:1,repeat:true},
-  {id:"wine",icon:"🍷",name:"红酒窖藏",desc:"收购一批顶级年份酒",price:80000,morale:3,fanPop:1,repeat:true},
-  {id:"sex",icon:"❤️",name:"约炮",desc:"和顶级名媛小姐做爱",price:80000,morale:3,fanPop:-2,repeat:true},
-  {id:"sex",icon:"❤️",name:"包养小明星",desc:"高价拍卖下国内明星并包养",price:800000,morale:8,fanPop:8,repeat:true},
+  {id:"vacation",i:"🌴",n:"奢华度假",d:"马尔代夫两周",p:50000,m:8,f:1},
+  {id:"party",i:"🎉",n:"夜店包场",d:"顶级派对",p:30000,m:5,f:2},
+  {id:"dinner",i:"🍽️",n:"米其林晚宴",d:"三星私宴",p:10000,m:3,f:0},
+  {id:"charity",i:"💝",n:"慈善捐款",d:"儿童基金会",p:100000,m:5,f:8},
+  {id:"casino",i:"🎰",n:"赌场之夜",d:"蒙特卡洛",p:50000,m:0,f:-2,gamble:1},
+  {id:"concert",i:"🎵",n:"私人演唱会",d:"明星驻唱",p:200000,m:6,f:3},
+  {id:"wine",i:"🍷",n:"红酒窖藏",d:"顶级年份酒",p:80000,m:3,f:1},
+  {id:"sex",i:"❤️",n:"保养小明星",d:"年轻貌美小明星",p:80000,m:3,f:8},
 ];
 
-// STATE
-let G=null,VIEW="create",NT=null,ST="season",TACTIC="balanced";
-let L_VIEW=null,L_ST=null,L_CHOICE=null; // 新增：用于记录上一次的视图状态，避免重复触发动画
+const LOVERS=[
+  {id:"lx",name:"刘亦菲",age:22,job:"演员",emoji:"👩‍🎤",desc:"新晋影后，气质清冷",charm:85},
+  {id:"sy",name:"邓紫棋",age:24,job:"歌手",emoji:"🎤",desc:"天籁之音，性格开朗",charm:80},
+  {id:"qm",name:"宋祖儿",age:21,job:"演员",emoji:"👗",desc:"国际超模，高冷御姐",charm:90},
+  {id:"zy",name:"关晓彤",age:23,job:"主持人",emoji:"📺",desc:"综艺女王，幽默风趣",charm:75},
+  {id:"hw",name:"徐梦洁",age:20,job:"练习生",emoji:"💃",desc:"舞蹈天才，甜美可爱",charm:70},
+  {id:"cm",name:"三岁小宝宝",age:25,job:"福利姬",emoji:"🎨",desc:"推特萝莉福利姬",charm:78},
+  {id:"aw",name:"luna",age:23,job:"留学生",emoji:"👱‍♀️",desc:"日本福利姬",charm:82},
+];
+const GIFTS=[
+  {n:"玫瑰花束",p:500,love:3,emoji:"🌹"},
+  {n:"名牌包包",p:20000,love:8,emoji:"👜"},
+  {n:"钻石项链",p:100000,love:15,emoji:"💎"},
+  {n:"跑车钥匙",p:500000,love:25,emoji:"🔑"},
+  {n:"海岛度假",p:200000,love:20,emoji:"🏝️"},
+];
+
+let G=null,VIEW="create",NT=null,ST="season",TAC="balanced";
 let CC={name:"",nation:12,pos:"ST",diff:1,yci:0};
 const roleN={youth:"青训",squad:"替补",starter:"主力",star:"核心",legend:"传奇"};
 
-function notify(m){clearTimeout(NT);const e=document.getElementById('notif');if(e){e.textContent=m;e.style.display='block';}NT=setTimeout(()=>{const e2=document.getElementById('notif');if(e2)e2.style.display='none';},2500);}
-function saveGame(){if(!G)return;try{localStorage.setItem('gp_save',JSON.stringify(G));notify("💾 已保存");}catch(e){notify("失败");}}
-function loadGame(){try{const s=localStorage.getItem('gp_save');if(s){G=JSON.parse(s);VIEW="dashboard";render();notify("📂 已加载");}else notify("无存档");}catch(e){notify("失败");}}
+function notify(m){clearTimeout(NT);const e=document.getElementById('notif');if(e){e.textContent=m;e.style.display='block';}NT=setTimeout(()=>{const e2=document.getElementById('notif');if(e2)e2.style.display='none';},2200);}
+function saveGame(){if(!G)return;try{localStorage.setItem('gp5_2',JSON.stringify(G));notify("💾 已保存");}catch(e){notify("失败");}}
+function loadGame(){try{const s=localStorage.getItem('gp5_2');if(s){G=JSON.parse(s);VIEW="dashboard";render();notify("📂 已加载");}else notify("无存档");}catch(e){notify("失败");}}
 
-function leagueOpp(){return pick(LG_OPP[G.club.lg]||LG_OPP["青年联赛"]);}
-function genNextOpp(){return{opp:leagueOpp(),type:pick(["league","league","league","cup","derby"])};}
-function genRival(){return{name:pick(["马丁内斯","席尔瓦","穆勒","史密斯","迪亚斯","罗西","德容","姆巴佩"]),ca:Math.round(G.ca*R(.85,1.15)),goals:RI(0,5),nation:pick(NATIONS)};}
+function leagueOpp(){return pick(LG_OPP[G.club.lg]||LG_OPP["青年"]);}
+function genNextOpp(){return{opp:leagueOpp(),type:pick(["lg","lg","lg","lg","lg","cup","derby"])};}
+function genRival(){return{n:pick(["马丁内斯","席尔瓦","穆勒","迪亚斯","罗西","姆巴佩","哈兰德","贝林厄姆"]),ca:Math.round(G.ca*R(.85,1.15)),g:0,na:pick(NATIONS)};}
 
-function checkEndorsements(){
-  if(!G.endorse)G.endorse=[];
-  ENDORSEMENTS.forEach(e=>{if(G.ca>=e.req&&!G.endorse.find(x=>x.n===e.n)&&Math.random()>.6){G.endorse.push({n:e.n,val:e.val,y:G.year});G.wage+=e.val;G.events.push({y:G.year,t:`💰 签下${e.n}代言！+${fmt$(e.val)}/周`,icon:"💰"});}});
+// === LEAGUE TABLE ===
+function initLeague(){
+  const teams=LG_OPP[G.club.lg]||LG_OPP["青年"];
+  const all=[G.club.s,...teams];
+  G.league=all.map(t=>({n:t,pts:0,w:0,d:0,l:0,gf:0,ga:0,mp:0,isMe:t===G.club.s}));
+  G.leagueScorers=[];
+  const pool = STARS[G.club.lg] || STARS["青年"];
+  pool.forEach(n => G.leagueScorers.push({n, g: 0, isMe: false}));
+  G.leagueAssists=[];
+}
+function simLeagueWeek(){
+  if(!G.league)initLeague();
+  G.league.forEach(t=>{
+    if(t.isMe)return;
+    t.mp++;
+    const r=Math.random();
+    if(r<.4){t.w++;t.pts+=3;const gf=RI(1,3),ga=RI(0,gf-1);t.gf+=gf;t.ga+=ga;}
+    else if(r<.7){t.d++;t.pts+=1;const g=RI(0,2);t.gf+=g;t.ga+=g;}
+    else{t.l++;const ga=RI(1,3),gf=RI(0,ga-1);t.gf+=gf;t.ga+=ga;}
+  });
+  // Realistically accumulate goals for AI stars
+  G.leagueScorers.filter(s=>!s.isMe).forEach(s=>{
+    if(Math.random()<0.45) s.g += RI(1, 2);
+  });
+}
+function updateMyLeague(result,tg,og,goals,assists){
+  if(!G.league)initLeague();
+  const me=G.league.find(t=>t.isMe);
+  if(!me)return;
+  me.mp++;me.gf+=tg;me.ga+=og;
+  if(result==="胜"){me.w++;me.pts+=3;}else if(result==="平"){me.d++;me.pts+=1;}else me.l++;
+  let ms=G.leagueScorers.find(s=>s.isMe);
+  if(!ms){ms={n:G.name,g:0,a:0,isMe:true};G.leagueScorers.push(ms);}
+  ms.g+=goals;ms.a=(ms.a||0)+assists;
 }
 
-// INIT
+// === MATCH ENGINE ===
+function simMatch(isDerby,isCup,intMatch){
+  const oppName = intMatch ? pick(INT_OPP.filter(x=>x!==G.nation.n)) : (G.nextOpp?.opp || leagueOpp());
+
+  let played = false, started = false, subbed = false, reason = "";
+  if (G.hp > 0) {
+      reason = "伤病缺阵";
+  } else {
+      const rc = G.teamRole==="legend"?0.95:G.teamRole==="star"?0.9:G.teamRole==="starter"?0.82:G.teamRole==="squad"?0.5:0.22;
+      started = Math.random() < rc;
+      subbed = !started && Math.random() < 0.4;
+      if (!started && !subbed) reason = "未进大名单";
+      else played = true;
+  }
+
+  let tg = 0, og = 0, result = "平", rating = 6, goals = 0, assists = 0, events = [], isMotm = false, ycc = 0;
+  const ts = G.club.rep / 100 * (intMatch ? 0.8 : 1);
+  let teamOtherGoals = Math.round(R(0, 2.5) * ts);
+  og = Math.round(R(0, 3) * R(0.4, 1));
+
+  if (played) {
+      const tm=TAC==="aggressive"?{a:1.2,d:0.85,i:1.3}:TAC==="defensive"?{a:0.75,d:1.2,i:0.8}:{a:1,d:1,i:1};
+      const pz=POS[G.pos].z;
+      const pb=(G.ca/200)*(G.form/100)*(G.morale/100)*R(0.7,1.3);
+      if(isDerby)rating+=0.3;rating+=pb*3;
+      const chances=started?RI(2,7):RI(1,3);
+      const usedM=new Set();const rm=()=>{let m;do{m=RI(1,90);}while(usedM.has(m)&&usedM.size<85);usedM.add(m);return m;};
+
+      for(let i=0;i<chances;i++){
+        const roll=Math.random(),min=rm();
+        if(pz==="ATK"){const sk=(G.shot+G.drib+G.mental)/60*tm.a;
+          if(roll<sk*0.35){goals++;rating+=1.2;events.push({t:"G",min,txt:`⚽${G.name}${pick(["破门！","推射入网！","抢点得分！","远射死角！","头球！","凌空抽射！"])}`});}
+          else if(roll<sk*0.5){assists++;rating+=0.6;events.push({t:"A",min,txt:`🅰️${G.name}${pick(["直塞助攻！","过顶球助攻！","横传造成进球！"])}`});}
+          else if(roll<sk*0.65){events.push({t:"C",min,txt:`💨${G.name}${pick(["射门被扑！","击中门柱！","单刀打偏！"])}`});rating+=0.2;}
+        }else if(pz==="MID"){const sk=(G.pass+G.mental+G.drib)/60*tm.a;
+          if(roll<sk*0.2){goals++;rating+=1.5;events.push({t:"G",min,txt:`⚽${G.name}${pick(["远射破门！","世界波！","后插上破门！"])}`});}
+          else if(roll<sk*0.45){assists++;rating+=0.6;events.push({t:"A",min,txt:`🅰️${G.name}${pick(["过顶球助攻！","直塞助攻！","斜传造进球！"])}`});}
+          else if(roll<sk*0.6){events.push({t:"K",min,txt:`🔑${G.name}${pick(["控制节奏","关键拦截","精彩长传"])}`});rating+=0.3;}
+        }else if(pz==="DEF"){const sk=(G.def+G.phys+G.mental)/60*tm.d;
+          if(roll<sk*0.08){goals++;rating+=1.8;events.push({t:"G",min,txt:`⚽${G.name}${pick(["角球头球！","定位球远射！","压上破门！"])}`});}
+          else if(roll<sk*0.2){assists++;rating+=0.5;events.push({t:"A",min,txt:`🅰️${G.name}长传助攻！`});}
+          else if(roll<sk*0.5){events.push({t:"D",min,txt:`🛡️${G.name}${pick(["关键铲球！","门线救险！","完美盯人","飞身封堵！"])}`});rating+=0.4;}
+        }else{const sk=(G.def+G.mental+G.phys)/60*tm.d;
+          if(roll<sk*0.4){events.push({t:"S",min,txt:`🧤${G.name}${pick(["飞身扑救！","扑出单刀！","连续扑救！"])}`});rating+=0.5;}
+        }
+        if(Math.random()<0.07){const m2=rm();if(Math.random()<0.3){ycc++;events.push({t:"Y",min:m2,txt:`🟨${G.name}黄牌！`});rating-=0.3;}else{events.push({t:"B",min:m2,txt:`😤${G.name}${pick(["传球失误","被过掉","低级失误"])}`});rating-=0.5;}}
+      }
+      if(ycc>=2){events.push({t:"R",min:rm(),txt:`🟥两黄一红！`});rating-=2;}
+      if(Math.random()<0.04*tm.i){const sv=Math.random()>0.6;G.hp=sv?2:1;G.hpW=sv?RI(4,10):RI(1,3);events.push({t:"I",min:rm(),txt:`🏥${sv?"重伤缺"+G.hpW+"周":"轻伤"+G.hpW+"周"}`});rating-=1;}
+
+      rating=cl(Math.round(rating*10)/10,3,10);
+      isMotm=rating>=8&&Math.random()>0.3;
+      tg=goals+teamOtherGoals;
+      if(tg<=og&&rating>=8&&Math.random()>0.5)tg=og+1;
+
+      for(let i=0;i<teamOtherGoals;i++) events.push({t:"TG",min:rm(),txt:`⚽ 队友破门！`});
+      for(let i=0;i<og;i++) events.push({t:"OG",min:rm(),txt:`⚽ 对手进球...`});
+      events.sort((a,b)=>a.min-b.min);
+
+      G.apps++;G.cApps++;G.goals+=goals;G.cGoals+=goals;G.ast+=assists;G.cAst+=assists;
+      G.totR+=rating;G.avgR=Math.round(G.totR/G.apps*10)/10;
+      if(isMotm){G.motm++;G.cMotm++;}
+      G.stam=cl(G.stam-R(15,30),0,100);G.form=cl(G.form+(rating-6.5)*5,20,100);
+      if(goals>=3){G.cHatTricks++;events.push({t:"H",min:91,txt:`🎩帽子戏法！`});G.events.push({y:G.year,t:`🎩 帽子戏法！`,ic:"🎩"});}
+
+      [[G.cApps===1,"🎒首秀！"],[G.cGoals===1,"⚽首球！"],[G.cApps===100,"💯百场！"],[G.cGoals===100,"💯百球！"],[G.cApps===500,"🐐500场！"]].forEach(([c,t])=>{if(c&&!G._ms[t]){G._ms[t]=1;G.events.push({y:G.year,t,ic:t[0]});}});
+
+  } else {
+      tg = teamOtherGoals;
+      const rm=()=>RI(1,90);
+      for(let i=0;i<tg;i++) events.push({t:"TG",min:rm(),txt:`⚽ 队友破门！`});
+      for(let i=0;i<og;i++) events.push({t:"OG",min:rm(),txt:`⚽ 对手进球...`});
+      events.sort((a,b)=>a.min-b.min);
+  }
+
+  result=tg>og?"胜":tg<og?"负":"平";
+
+  if (played) {
+      if(result==="胜"){G.consecW++;G.consecL=0;if(G.consecW>G.bestStreak)G.bestStreak=G.consecW;}
+      else if(result==="负"){G.consecL++;G.consecW=0;}else{G.consecW=0;G.consecL=0;}
+      if(result==="胜"&&goals>0&&tg-og===1&&Math.random()>0.4){G.events.push({y:G.year,t:`🔥 绝杀！`,ic:"🔥"});G.fanPop=cl(G.fanPop+5,0,100);}
+      if(rating>=7.5)G.managerRel=cl(G.managerRel+R(1,3),0,100);
+      else if(rating<5.5)G.managerRel=cl(G.managerRel-R(2,5),0,100);
+      if(goals>0)G.fanPop=cl(G.fanPop+R(1.5,4),0,100);
+      if(isMotm)G.fanPop=cl(G.fanPop+R(1,3),0,100);
+  }
+
+  if(!intMatch && !isCup) {
+      updateMyLeague(result, tg, og, goals, assists);
+      simLeagueWeek();
+  }
+
+  G.lastMatch={played,reason,started,subbed,rating,goals,assists,isMotm,events,result,tg,og,opp:oppName,isDerby,isCup,intMatch};
+  G.matchLog.push({r:played?rating:"-",g:goals,a:assists,res:result,opp:oppName,tg,og,motm:isMotm,type:intMatch?"int":isCup?"cup":isDerby?"derby":"lg",played});
+
+  if(G.rival) G.rival.g+=RI(0,1);
+  if(!intMatch) G.nextOpp = genNextOpp();
+}
+
+// === SEASON END ===
+function seasonEnd(){
+  G.caHistory.push({a:G.age,c:Math.round(G.ca)});
+  const atk=["ST","LW","RW","CAM"].includes(G.pos);
+  if(G.goals>=25&&G.club.t<=2){G.awards.push({y:G.year,n:"联赛金靴"});}
+  if(G.avgR>=7.8&&G.apps>=20){G.awards.push({y:G.year,n:"最佳阵容"});}
+  if(G.ca>=160&&((atk&&G.goals>=18)||(!atk&&G.avgR>=7.5))&&G.club.t===1&&Math.random()>0.35){G.awards.push({y:G.year,n:"金球奖"});G.events.push({y:G.year,t:`🏆 金球奖！`,ic:"🏆"});}
+  if(G.age<=21&&G.avgR>=7&&G.apps>=15){G.awards.push({y:G.year,n:"最佳新秀"});}
+  if(!G.intTeam&&G.ca>=80&&G.avgR>=6.8){G.intTeam=true;G.events.push({y:G.year,t:`${G.nation.f} 入选国家队！`,ic:G.nation.f});}
+  if(G.intTeam){G.intCaps+=RI(4,12);G.intGoals+=RI(0,atk?6:2);}
+
+  if(G.league){
+    G.league.sort((a,b)=>b.pts-a.pts||(b.gf-b.ga)-(a.gf-a.ga));
+    const pos=G.league.findIndex(t=>t.isMe)+1;
+    G.leaguePos=pos;
+    if(pos===1){G.awards.push({y:G.year,n:`${G.club.lg}冠军`});G.events.push({y:G.year,t:`🏆 联赛冠军！`,ic:"🏆"});}
+  }
+
+  if(G.club.t<=2&&G.leaguePos<=3){
+    const rounds=["小组赛","十六强","八强","四强","决赛","冠军🏆"];
+    let rd=0;
+    while(rd<rounds.length-1){
+      const chance=0.55+G.ca/500;
+      if(Math.random()<chance)rd++;else break;
+    }
+    G.uclResult=rounds[rd];
+    G.events.push({y:G.year,t:`🌍 欧冠${G.uclResult}`,ic:"🌍"});
+    if(rd===rounds.length-1)G.awards.push({y:G.year,n:"欧冠冠军"});
+  }
+
+  if(G.year%4===2&&G.intTeam){
+    G.worldCupA++;
+    const ns=G.nation.id<=3?0.8:G.nation.id<=9?0.6:0.35;
+    const rounds=["小组赛出局","十六强","八强","四强","决赛亚军","🏆 冠军！"];
+    let rd=0;
+    while(rd<rounds.length-1){
+      const chance=(ns+G.ca/400)*0.5;
+      if(Math.random()<chance)rd++;else break;
+    }
+    G.wcResult=rounds[rd];
+    G.events.push({y:G.year,t:`🌍 世界杯${G.wcResult}`,ic:"🌍"});
+    if(rd===rounds.length-1){G.worldCupW++;G.awards.push({y:G.year,n:"世界杯冠军"});}
+    G.lastWC={year:G.year,group:[pick(INT_OPP),pick(INT_OPP),pick(INT_OPP)],result:G.wcResult};
+  }
+
+  if(!G.endorse)G.endorse=[];
+  ENDORSEMENTS.forEach(e=>{if(G.ca>=e.r&&!G.endorse.find(x=>x.n===e.n)&&Math.random()>0.6){G.endorse.push({n:e.n,v:e.v,y:G.year});G.wage+=e.v;}});
+
+  G.seasonLog.push({s:G.season,g:G.goals,a:G.ast,ap:G.apps,ar:G.avgR,cl:G.club.s,p:G.leaguePos||"-",ca:Math.round(G.ca)});
+  if(G.rival){G.rival.ca=cl(G.rival.ca+R(-2,3),40,195);G.rival.g=RI(5,30);}
+  G.league=null;
+}
+
+function genOffers(){
+  G.offers=[];if(G.ca<60||G.age>34)return;
+  const n=G.transferReq?RI(3,5):G.avgR>=7.5?RI(2,4):RI(0,2);
+  const el=CLUBS.filter(c=>c.id!==G.club.id&&c.rep>=G.club.rep-15);
+  for(let i=0;i<n&&el.length;i++){const c=el.splice(RI(0,el.length-1),1)[0];G.offers.push({club:c,wage:Math.round(G.wage*R(1.2,2.8)),years:RI(2,5),fee:Math.round(G.value*R(0.8,1.3))});}
+  G.transferReq=false;
+}
+
+function calcValue(){const m=G.age<22?1.8:G.age<26?2.2:G.age<29?2:G.age<32?1.2:0.5;G.value=Math.round(G.ca*G.ca*m*R(30,60));}
+function updateRole(){
+  if(G.ca>=155&&G.cApps>200)G.teamRole="legend";
+  else if(G.ca>=125&&G.apps>10&&G.avgR>=7.2)G.teamRole="star";
+  else if(G.ca>=90&&G.apps>5)G.teamRole="starter";
+  else if(G.ca>=60)G.teamRole="squad";
+  else G.teamRole="youth";
+  if(!G.isCaptain&&G.teamRole==="star"&&G.managerRel>=75&&G.cApps>=80&&Math.random()>0.7){G.isCaptain=true;G.events.push({y:G.year,t:`©️ 成为队长！`,ic:"©️"});}
+}
+
+function weeklyGrowth(){
+  const age=G.age;let g=age<=18?1.8:age<=22?1.4:age<=25?0.8:age<=28?0.3:-0.2-(age-29)*0.12;
+  if(g>0){
+    const gap=Math.max(0,(G.pa-G.ca)/120),tm=G.trainFocus==="balanced"?0.7:0.55,mm=G.apps>0?0.8:0.3,cm=G.club.rep/100;
+    G.ca=cl(G.ca+gap*(mm*(G.form/100)+tm)*g*cm,0,G.pa);
+    const gr=(a,v)=>{G[a]=cl(G[a]+v,1,20);},s=()=>R(0,0.25)*g;
+    if(G.trainFocus==="attack"){gr("shot",s());gr("drib",s());}
+    else if(G.trainFocus==="defense"){gr("def",s());gr("phys",s());}
+    else if(G.trainFocus==="physical"){gr("pace",s());gr("phys",s());}
+    else if(G.trainFocus==="technical"){gr("pass",s());gr("drib",s());gr("mental",s());}
+    else{["pace","shot","pass","drib","def","phys","mental"].forEach(a=>gr(a,s()*0.5));}
+  }else{
+    if(age>=30){const d=Math.log(age-28)*0.08;G.pace=cl(G.pace-d*R(0.3,0.6),1,20);G.phys=cl(G.phys-d*R(0.2,0.4),1,20);if(Math.random()>0.6){G.pass=cl(G.pass+R(0,0.15),1,20);G.mental=cl(G.mental+R(0,0.15),1,20);}}
+    G.ca=cl(G.ca+g*0.3,30,200);
+  }
+  G.stam=cl(G.stam+R(5,15),0,100);
+  if(G.hp>0){G.hpW--;if(G.hpW<=0){G.hp=0;G.hpW=0;if(G.cApps>5)G.events.push({y:G.year,t:`💪 伤愈复出！`,ic:"💪"});}}
+  G.morale=cl(G.morale+R(-3,3),20,100);G.form=cl(G.form+R(-4,4),20,100);
+  G.totalEarnings+=G.wage;G.savings+=G.wage;
+  calcValue();
+  if(G.rival)G.rival.ca=cl(G.rival.ca+R(-0.3,0.5),40,195);
+}
+
+// === ADVANCE ===
+function doAdvance(){
+  if(G.retired||G.pendingChoice)return false;
+
+  if(!G.nextOpp) G.nextOpp = genNextOpp();
+  const hm = Math.random() < 0.82;
+
+  if(hm) {
+    const intMatch = (G.intTeam && G.month % 3 === 0 && G.week === 2);
+    if(intMatch) {
+      simMatch(false, false, true);
+    } else {
+      simMatch(G.nextOpp.type==="derby", G.nextOpp.type==="cup", false);
+    }
+  } else {
+    G.lastMatch = null;
+  }
+
+  weeklyGrowth();updateRole();
+  G.week++;if(G.week>4){G.week=1;G.month++;if(G.month>12){G.month=1;G.year++;}}
+
+  // Random Events
+  if(Math.random()<0.045 && !G.pendingChoice){
+    const choices = ["interview","wage"];
+    if(G.intTeam && G.month>=3 && G.month<=4) choices.push("intl");
+    if(G.age>=18) choices.push("romance_encounter");
+    if(G.romance && G.romance.partners.length > 0) choices.push("romance_event", "romance_event");
+
+    G.pendingChoice = pick(choices);
+    if(G.pendingChoice==="romance_event") {
+        const p = pick(G.romance.partners);
+        G.romance_event_partner_id = p.id;
+        if(p.status === "已婚" && Math.random() < 0.15 && G.romance.children.length < 3) {
+            G.romance_event_type = "pregnant";
+        } else if (p.status === "地下情" && Math.random() < 0.3) {
+            G.romance_event_type = "scandal";
+        } else {
+            G.romance_event_type = pick(["gift", "date"]);
+        }
+    }
+  }
+
+  if(G.month===6&&G.week===1){
+    seasonEnd();genOffers();G.pendingChoice="season_end";G.season++;G.age++;
+    G.goals=0;G.ast=0;G.apps=0;G.avgR=0;G.totR=0;G.motm=0;G.matchLog=[];
+    G.consecL=0;G.consecW=0;G._lN=false;G._wN=false;
+    G.contract--;
+    if(G.contract<=0)G.pendingChoice="free_agent";
+    if(G.age>=35&&G.ca<80)G.pendingChoice="retire_ask";
+    return false;
+  }
+  return !G.pendingChoice;
+}
+function advanceWeek(){doAdvance();render();}
+function advance4(){let i=0;while(i<4&&doAdvance())i++;render();}
+function simSeason(){let s=200;while(s-->0&&doAdvance());render();}
+
+function acceptOffer(i){const o=G.offers[i];G.clubHist[G.clubHist.length-1].t=G.year;G.club=o.club;G.wage=o.wage;G.contract=o.years;G.clubHist.push({c:o.club.n,f:G.year,t:null});G.events.push({y:G.year,t:`✈️ 转会${o.club.n}`,ic:"✈️"});G.teamRole="squad";G.managerRel=60;G.fanPop=20;G.isCaptain=false;G.offers=[];G.pendingChoice=null;G.nextOpp=genNextOpp();G.league=null;render();}
+function stayAtClub(){if(G.contract<=0){G.contract=RI(1,3);G.wage=Math.round(G.wage*R(1.1,1.5));}G.offers=[];G.pendingChoice=null;render();}
+function retirePlayer(){G.retired=true;G.retireAge=G.age;G.clubHist[G.clubHist.length-1].t=G.year;G.pendingChoice="post_retire";render();}
+function handleInterview(c){if(c==="h"){G.fanPop=cl(G.fanPop+5,0,100);G.managerRel=cl(G.managerRel+3,0,100);}else if(c==="b"){G.fanPop=cl(G.fanPop+8,0,100);G.managerRel=cl(G.managerRel-3,0,100);}else G.managerRel=cl(G.managerRel+5,0,100);G.pendingChoice=null;render();}
+function handleIntl(c){if(c==="play")simMatch(false,false,true);G.pendingChoice=null;render();}
+function requestTransfer(){G.transferReq=true;G.managerRel=cl(G.managerRel-15,0,100);notify("已申请");render();}
+function handleWage(c){if(c==="ask"){if(Math.random()<0.6+G.managerRel/200){G.wage=Math.round(G.wage*R(1.15,1.4));notify("加薪！"+fmt$(G.wage)+"/周");}else notify("被拒");}G.pendingChoice=null;render();}
+function choosePostRetire(c){G.postRetire=c;G.pendingChoice=null;VIEW="retire";render();}
+function buyItem(id){const it=SHOP.find(x=>x.id===id);if(!it||G.savings<it.p||G.owned.includes(id))return;G.savings-=it.p;G.totalSpent+=it.p;G.owned.push(id);G.morale=cl(G.morale+it.m,20,100);G.fanPop=cl(G.fanPop+it.f,0,100);notify(it.i+" "+it.n);render();}
+function spendOn(id){const it=SPEND.find(x=>x.id===id);if(!it||G.savings<it.p)return;G.savings-=it.p;G.totalSpent+=it.p;if(it.gamble){if(Math.random()<0.4){const w=Math.round(it.p*R(1.5,3));G.savings+=w;G.morale=cl(G.morale+8,20,100);notify("🎰赢"+fmt$(w));}else{G.morale=cl(G.morale-5,20,100);notify("🎰输了");}}else{G.morale=cl(G.morale+it.m,20,100);G.fanPop=cl(G.fanPop+it.f,0,100);notify(it.i+it.n);}render();}
+
+// === ROMANCE ===
+function initRomance(){if(!G.romance)G.romance={partners:[],active:null,married:false,children:[]};}
+function meetLover(id){
+  initRomance();
+  const l=LOVERS.find(x=>x.id===id);if(!l)return;
+  if(G.romance.partners.find(x=>x.id===id)){notify("你们已经认识了");G.pendingChoice=null;render();return;}
+  let status = "约会中";
+  G.romance.partners.push({id:l.id,name:l.name,love:20,status,gifts:[],ugCount:0});
+  G.romance.active=l.id;
+  G.events.push({y:G.year,t:`💕 ${G.name}与${l.name}开始${status}！`,ic:"💕"});
+  notify(`💕 认识了 `+l.name);
+  G.pendingChoice=null;render();
+}
+function giveGift(giftIdx){
+  initRomance();
+  const gift=GIFTS[giftIdx];if(!gift||G.savings<gift.p)return;
+  const p=G.romance.partners.find(x=>x.id===G.romance.active);
+  if(!p)return;
+  G.savings-=gift.p;G.totalSpent+=gift.p;
+  p.love=cl(p.love+gift.love,0,100);
+  p.gifts.push(gift.n);
+  notify(gift.emoji+" 送出"+gift.n+"给"+p.name);
+  render();
+}
+function setActiveLover(id){initRomance();G.romance.active=id;render();}
+function proposeTo(){
+  initRomance();
+  const p=G.romance.partners.find(x=>x.id===G.romance.active);
+  if(!p||p.love<60){notify("好感度不够（需≥60）");return;}
+  if(G.romance.married){notify("你已经结婚了！");return;}
+  if(Math.random()<p.love/100){
+    p.status="已婚"; G.romance.married=true;
+    G.events.push({y:G.year,t:`💍 ${G.name}与${p.name}结婚了！`,ic:"💍"});
+    G.morale=cl(G.morale+15,20,100);G.fanPop=cl(G.fanPop+10,0,100);
+    notify("💍 恭喜结婚！");
+  }else{
+    p.love=cl(p.love-10,0,100);
+    notify("😢 对方拒绝了求婚...");
+  }
+  render();
+}
+function doUnderground(){
+  initRomance();
+  const p=G.romance.partners.find(x=>x.id===G.romance.active);
+  if(!p){notify("请先选择对象");return;}
+  if(G.savings<10000){notify("需要€10K来掩人耳目");return;}
+  G.savings-=10000;
+  p.status = "地下情";
+  p.ugCount = (p.ugCount || 0) + 1;
+  p.love = cl(p.love+RI(5,15), 0, 100);
+  notify("🤫 秘密幽会成功...");
+  if (Math.random() < 0.15) {
+      G.pendingChoice = "romance_event";
+      G.romance_event_partner_id = p.id;
+      G.romance_event_type = "scandal";
+  }
+  render();
+}
+function haveChild(){
+  initRomance();
+  const p=G.romance.partners.find(x=>x.id===G.romance.active);
+  if(!p){return;}
+  const names=["小明","小美","乐乐","安安","天天","星星","果果","豆豆"];
+  const child={name:pick(names),year:G.year,parent:p.name};
+  G.romance.children.push(child);
+  G.events.push({y:G.year,t:`👶 ${G.name}和${p.name}迎来了宝宝${child.name}！`,ic:"👶"});
+  G.morale=cl(G.morale+10,20,100);G.fanPop=cl(G.fanPop+5,0,100);
+  notify("👶 宝宝"+child.name+"出生了！");
+  render();
+}
+function goDate(){
+  initRomance();
+  const p=G.romance.partners.find(x=>x.id===G.romance.active);
+  if(!p){notify("请先选择对象");return;}
+  if(G.savings<5000){notify("需要€5K");return;}
+  G.savings-=5000;
+  p.love=cl(p.love+RI(3,8),0,100);
+  const dates=["一起看电影","海边散步","高级餐厅约会","主题公园","艺术展览","音乐会"];
+  notify("❤️ "+pick(dates)+" love+");
+  render();
+}
+function handleRomanceEvent(action) {
+    const p = G.romance.partners.find(x => x.id === G.romance_event_partner_id);
+    if(action === 'pregnant') {
+        const names=["小明","小美","乐乐","安安","天天","星星","果果","豆豆"];
+        const child={name:pick(names),year:G.year,parent:p.name};
+        G.romance.children.push(child);
+        G.events.push({y:G.year,t:`👶 ${G.name}和${p.name}迎来了宝宝${child.name}！`,ic:"👶"});
+        G.morale=cl(G.morale+10,20,100); G.fanPop=cl(G.fanPop+5,0,100);
+        notify("👶 恭喜当爸爸了！");
+    } else if (action === 'pay_scandal') {
+        if (G.savings >= 100000) {
+            G.savings -= 100000;
+            notify("已支付封口费，躲过一劫");
+        } else {
+            notify("钱不够！丑闻曝光！");
+            G.fanPop = cl(G.fanPop - 20, 0, 100);
+            const wife = G.romance.partners.find(x => x.status === "已婚");
+            if (wife) wife.love = cl(wife.love - 30, 0, 100);
+        }
+    } else if (action === 'ignore_scandal') {
+        notify("地下情曝光！");
+        G.fanPop = cl(G.fanPop - 20, 0, 100);
+        const wife = G.romance.partners.find(x => x.status === "已婚");
+        if (wife) wife.love = cl(wife.love - 30, 0, 100);
+    } else if (action === 'buy_gift') {
+        if (G.savings >= 10000) {
+            G.savings -= 10000;
+            p.love = cl(p.love + 8, 0, 100);
+            notify("送出礼物，好感上升");
+        } else {
+            notify("钱不够！");
+            p.love = cl(p.love - 5, 0, 100);
+        }
+    } else if (action === 'refuse_gift' || action === 'refuse_date') {
+        p.love = cl(p.love - 5, 0, 100);
+        notify("对方有些失落");
+    } else if (action === 'go_date') {
+        if (G.savings >= 2000) {
+            G.savings -= 2000;
+            p.love = cl(p.love + 5, 0, 100);
+            notify("浪漫约会，好感上升");
+        } else {
+            notify("钱不够！");
+            p.love = cl(p.love - 5, 0, 100);
+        }
+    }
+    G.pendingChoice = null;
+    render();
+}
+
+// === INIT ===
 function startGame(){
-  if(!CC.name.trim()){notify("请输入名字");return;}
+  if(!CC.name.trim()){notify("输入名字");return;}
   const nation=NATIONS.find(n=>n.id===CC.nation),pos=POS[CC.pos],yc=YOUTH[CC.yci];
   const paR=[[165,200],[148,185],[120,165]][CC.diff],pa=RI(paR[0],paR[1]),ca=RI(35,50);
   G={name:CC.name.trim(),nation,pos:CC.pos,age:16,ca,pa,
@@ -189,7 +641,7 @@ function startGame(){
     goals:0,ast:0,apps:0,avgR:0,totR:0,motm:0,
     cGoals:0,cAst:0,cApps:0,cMotm:0,cHatTricks:0,
     awards:[],offers:[],year:2026,month:8,week:1,season:1,
-    events:[{y:2026,t:`${CC.name.trim()}在${yc.n}开始了足球生涯。`,icon:"🌟"}],
+    events:[{y:2026,t:`在${yc.n}开启生涯。`,ic:"🌟"}],
     leaguePos:null,retired:false,retireAge:null,
     trainFocus:"balanced",teamRole:"youth",isCaptain:false,
     managerRel:60,fanPop:10,
@@ -200,426 +652,311 @@ function startGame(){
     transferReq:false,totalEarnings:0,savings:0,
     worldCupW:0,worldCupA:0,
     rival:null,endorse:[],_ms:{},
-    postRetire:null,nextOpp:null, // 修改点1：在此处初始化为null避免报错
-    // LIFESTYLE
-    owned:[],// ids of purchased items
-    spendLog:[],// {name,price,year}
-    totalSpent:0,
-    diff:CC.diff,
+    postRetire:null,nextOpp:null,
+    owned:[],spendLog:[],totalSpent:0,diff:CC.diff,
+    league:null,leagueScorers:[],leagueAssists:[],
+    uclResult:null,wcResult:null,lastWC:null,
+    romance:{partners:[],active:null,married:false,children:[]},
   };
-  G.nextOpp=genNextOpp(); // 修改点2：在G对象初始化完成后生成对手
+  G.nextOpp=genNextOpp();
   G.rival=genRival();
+  initLeague();
   VIEW="dashboard";render();
 }
 
-// CORE
-function calcValue(){const m=G.age<22?1.8:G.age<26?2.2:G.age<29?2:G.age<32?1.2:0.5;G.value=Math.round(G.ca*G.ca*m*R(30,60));}
-function updateRole(){
-  if(G.ca>=155&&G.cApps>200)G.teamRole="legend";
-  else if(G.ca>=125&&G.apps>10&&G.avgR>=7.2)G.teamRole="star";
-  else if(G.ca>=90&&G.apps>5)G.teamRole="starter";
-  else if(G.ca>=60)G.teamRole="squad";
-  else G.teamRole="youth";
-  if(!G.isCaptain&&G.teamRole==="star"&&G.managerRel>=75&&G.cApps>=80&&Math.random()>.7){G.isCaptain=true;G.events.push({y:G.year,t:`©️ 成为队长！`,icon:"©️"});}
-}
-
-function weeklyGrowth(){
-  const age=G.age;let g=age<=18?1.8:age<=22?1.4:age<=25?0.8:age<=28?0.3:-0.2-(age-29)*0.12;
-  if(g>0){
-    const gap=Math.max(0,(G.pa-G.ca)/120),tm=G.trainFocus==="balanced"?0.7:0.55,mm=G.apps>0?0.8:0.3,cm=G.club.rep/100;
-    G.ca=clamp(G.ca+gap*(mm*(G.form/100)+tm)*g*cm,0,G.pa);
-    const gr=(a,v)=>{G[a]=clamp(G[a]+v,1,20);},s=()=>R(0,0.25)*g;
-    if(G.trainFocus==="attack"){gr("shot",s());gr("drib",s());}
-    else if(G.trainFocus==="defense"){gr("def",s());gr("phys",s());}
-    else if(G.trainFocus==="physical"){gr("pace",s());gr("phys",s());}
-    else if(G.trainFocus==="technical"){gr("pass",s());gr("drib",s());gr("mental",s());}
-    else{["pace","shot","pass","drib","def","phys","mental"].forEach(a=>gr(a,s()*0.5));}
-  }else{
-    if(age>=30){const d=Math.log(age-28)*0.08;G.pace=clamp(G.pace-d*R(.3,.6),1,20);G.phys=clamp(G.phys-d*R(.2,.4),1,20);if(Math.random()>.6){G.pass=clamp(G.pass+R(0,.15),1,20);G.mental=clamp(G.mental+R(0,.15),1,20);}}
-    G.ca=clamp(G.ca+g*.3,30,200);
-  }
-  G.stam=clamp(G.stam+R(5,15),0,100);
-  if(G.hp>0){G.hpW--;if(G.hpW<=0){G.hp=0;G.hpW=0;if(G.cApps>5)G.events.push({y:G.year,t:`💪 伤愈复出！`,icon:"💪"});}}
-  G.morale=clamp(G.morale+R(-3,3),20,100);G.form=clamp(G.form+R(-4,4),20,100);
-  G.totalEarnings+=G.wage;G.savings+=G.wage;
-  calcValue();
-  if(G.rival)G.rival.ca=clamp(G.rival.ca+R(-.3,.5),40,195);
-}
-
-function simMatch(isDerby,isCup,intMatch){
-  if(G.hp>0){G.lastMatch={played:false,reason:"伤病缺阵"};return null;}
-  const rc=G.teamRole==="legend"?0.95:G.teamRole==="star"?0.9:G.teamRole==="starter"?0.82:G.teamRole==="squad"?0.5:0.22; // 修改点3：补齐小数前面的0，避免部分解析器报错
-  let started=Math.random()<rc,subbed=!started&&Math.random()<.4;
-  if(!started&&!subbed){G.lastMatch={played:false,reason:"未进大名单"};return null;}
-  const tacMod=TACTIC==="aggressive"?{a:1.2,d:.85,i:1.3}:TACTIC==="defensive"?{a:.75,d:1.2,i:.8}:{a:1,d:1,i:1};
-  const pz=POS[G.pos].z;let rating=6,events=[],goals=0,assists=0,ycc=0;
-  const pb=(G.ca/200)*(G.form/100)*(G.morale/100)*R(.7,1.3);
-  if(isDerby)rating+=.3;rating+=pb*3;
-  const chances=started?RI(2,7):RI(1,3);
-  const usedM=new Set();const rm=()=>{let m;do{m=RI(1,90);}while(usedM.has(m)&&usedM.size<85);usedM.add(m);return m;};
-
-  for(let i=0;i<chances;i++){
-    const roll=Math.random(),min=rm();
-    if(pz==="ATK"){const sk=(G.shot+G.drib+G.mental)/60*tacMod.a;
-      if(roll<sk*.35){goals++;rating+=1.2;events.push({t:"GOAL",min,txt:`⚽${G.name}${pick(["精彩破门！","冷静推射！","抢点破门！","远射死角！","挑射入网！","头球得分！","凌空抽射！"])}`});}
-      else if(roll<sk*.5){assists++;rating+=.6;events.push({t:"AST",min,txt:`🅰️${G.name}${pick(["直塞助攻！","过顶球助攻！","横传造成进球！"])}`});}
-      else if(roll<sk*.65){events.push({t:"CHA",min,txt:`💨${G.name}${pick(["射门被扑！","击中门柱！","单刀打偏！"])}`});rating+=.2;}
-    }else if(pz==="MID"){const sk=(G.pass+G.mental+G.drib)/60*tacMod.a;
-      if(roll<sk*.2){goals++;rating+=1.5;events.push({t:"GOAL",min,txt:`⚽${G.name}${pick(["远射破门！","世界波！","后插上破门！"])}`});}
-      else if(roll<sk*.45){assists++;rating+=.6;events.push({t:"AST",min,txt:`🅰️${G.name}${pick(["过顶球助攻！","直塞撕防线！","斜传造进球！"])}`});}
-      else if(roll<sk*.6){events.push({t:"KEY",min,txt:`🔑${G.name}${pick(["控制节奏","关键拦截","精彩长传"])}`});rating+=.3;}
-    }else if(pz==="DEF"){const sk=(G.def+G.phys+G.mental)/60*tacMod.d;
-      if(roll<sk*.08){goals++;rating+=1.8;events.push({t:"GOAL",min,txt:`⚽${G.name}${pick(["角球头球！","定位球远射！","压上破门！"])}`});}
-      else if(roll<sk*.2){assists++;rating+=.5;events.push({t:"AST",min,txt:`🅰️${G.name}长传助攻！`});}
-      else if(roll<sk*.5){events.push({t:"DEF",min,txt:`🛡️${G.name}${pick(["关键铲球！","门线救险！","完美盯人","飞身封堵！"])}`});rating+=.4;}
-    }else{const sk=(G.def+G.mental+G.phys)/60*tacMod.d;
-      if(roll<sk*.4){events.push({t:"SAVE",min,txt:`🧤${G.name}${pick(["飞身扑救！","扑出单刀！","连续扑救！"])}`});rating+=.5;}
-    }
-    if(Math.random()<.07){const m2=rm();if(Math.random()<.3){ycc++;events.push({t:"YEL",min:m2,txt:`🟨${G.name}黄牌！`});rating-=.3;}else{events.push({t:"BAD",min:m2,txt:`😤${G.name}${pick(["传球失误","被过掉","低级失误"])}`});rating-=.5;}}
-  }
-  if(ycc>=2){events.push({t:"RED",min:rm(),txt:`🟥两黄一红！`});rating-=2;}
-  if(Math.random()<.04*tacMod.i){const sv=Math.random()>.6;G.hp=sv?2:1;G.hpW=sv?RI(4,10):RI(1,3);events.push({t:"INJ",min:rm(),txt:`🏥${sv?"重伤！缺"+G.hpW+"周":"轻伤"+G.hpW+"周"}`});rating-=1;}
-  events.sort((a,b)=>a.min-b.min);
-  rating=clamp(Math.round(rating*10)/10,3,10);
-  const isMotm=rating>=8&&Math.random()>.3;
-  G.apps++;G.cApps++;G.goals+=goals;G.cGoals+=goals;G.ast+=assists;G.cAst+=assists;
-  G.totR+=rating;G.avgR=Math.round(G.totR/G.apps*10)/10;
-  if(isMotm){G.motm++;G.cMotm++;}
-  G.stam=clamp(G.stam-R(15,30),0,100);G.form=clamp(G.form+(rating-6.5)*5,20,100);
-  if(goals>=3){G.cHatTricks++;events.push({t:"HAT",min:91,txt:`🎩帽子戏法！${goals}球！`});G.events.push({y:G.year,t:`🎩 帽子戏法！`,icon:"🎩"});}
-  const ts=G.club.rep/100*(intMatch?.8:1),os=R(.4,1);
-  let tg=goals+Math.round(R(0,2.5)*ts),og=Math.round(R(0,3)*os);
-  if(tg<=og&&rating>=8&&Math.random()>.5)tg=og+1;
-  const result=tg>og?"胜":tg<og?"负":"平";
-  if(result==="胜"){G.consecW++;G.consecL=0;if(G.consecW>G.bestStreak)G.bestStreak=G.consecW;}else if(result==="负"){G.consecL++;G.consecW=0;}else{G.consecW=0;G.consecL=0;}
-  if(result==="胜"&&goals>0&&tg-og===1&&Math.random()>.4){events.push({t:"CLUTCH",min:92,txt:`🔥绝杀！`});G.events.push({y:G.year,t:`🔥 绝杀！`,icon:"🔥"});G.fanPop=clamp(G.fanPop+5,0,100);}
-  if(G.consecL>=3&&!G._lN){G.events.push({y:G.year,t:`📉 ${G.consecL}连败...`,icon:"📉"});G.morale=clamp(G.morale-10,20,100);G._lN=true;}
-  if(G.consecW>=5&&!G._wN){G.events.push({y:G.year,t:`🔥 ${G.consecW}连胜！`,icon:"🔥"});G._wN=true;}
-  const opp=intMatch?pick(INT_OPP.filter(x=>x!==G.nation.n)):G.nextOpp?.opp||leagueOpp();
-  G.lastMatch={played:true,started,subbed,rating,goals,assists,isMotm,events,result,tg,og,opp,isDerby,isCup,intMatch};
-  G.matchLog.push({r:rating,g:goals,a:assists,res:result,opp,tg,og,motm:isMotm,type:intMatch?"int":isCup?"cup":isDerby?"derby":"lg"});
-  if(rating>=7.5)G.managerRel=clamp(G.managerRel+R(1,3),0,100);else if(rating<5.5)G.managerRel=clamp(G.managerRel-R(2,5),0,100);
-  if(goals>0)G.fanPop=clamp(G.fanPop+R(1.5,4),0,100);if(isMotm)G.fanPop=clamp(G.fanPop+R(1,3),0,100);
-  // milestones
-  const mck=[[G.cApps===1,"🎒 首秀！"],[G.cGoals===1,"⚽ 首球！"],[G.cApps===100,"💯 百场！"],[G.cGoals===100,"💯 百球！"],[G.cApps===500,"🐐 500场！"]];
-  mck.forEach(([c,t])=>{if(c&&!G._ms[t]){G._ms[t]=1;G.events.push({y:G.year,t,icon:t[0]});}});
-  if(G.rival)G.rival.goals+=RI(0,1);
-  G.nextOpp=genNextOpp();
-  return G.lastMatch;
-}
-
-function seasonEnd(){
-  G.caHistory.push({a:G.age,c:Math.round(G.ca)});
-  const atk=["ST","LW","RW","CAM"].includes(G.pos);
-  if(G.goals>=25&&G.club.t<=2){G.awards.push({y:G.year,n:"联赛金靴"});G.events.push({y:G.year,t:`🏅 ${G.goals}球金靴！`,icon:"🏅"});}
-  if(G.avgR>=7.8&&G.apps>=20){G.awards.push({y:G.year,n:"最佳阵容"});G.events.push({y:G.year,t:`⭐ 入选最佳！`,icon:"⭐"});}
-  if(G.ca>=160&&((atk&&G.goals>=18)||(!atk&&G.avgR>=7.5))&&G.club.t===1&&Math.random()>.35){G.awards.push({y:G.year,n:"金球奖"});G.events.push({y:G.year,t:`🏆 金球奖！`,icon:"🏆"});}
-  if(G.age<=21&&G.avgR>=7&&G.apps>=15){G.awards.push({y:G.year,n:"最佳新秀"});G.events.push({y:G.year,t:`🌟 最佳新秀！`,icon:"🌟"});}
-  if(!G.intTeam&&G.ca>=80&&G.avgR>=6.8){G.intTeam=true;G.events.push({y:G.year,t:`${G.nation.f} 入选国家队！`,icon:G.nation.f});}
-  if(G.intTeam){G.intCaps+=RI(4,12);G.intGoals+=RI(0,atk?6:2);}
-  const base=G.club.t===1?RI(1,4):G.club.t===2?RI(3,8):G.club.t===3?RI(5,12):RI(8,16);
-  G.leaguePos=clamp(Math.round(base-(G.avgR||6)/10*3),1,20);
-  if(G.leaguePos===1){G.awards.push({y:G.year,n:`${G.club.lg}冠军`});G.events.push({y:G.year,t:`🏆 联赛冠军！`,icon:"🏆"});}
-  if(G.club.t<=2&&G.leaguePos<=3){const r=R(0,1);if(r>.75){G.awards.push({y:G.year,n:"欧冠冠军"});G.events.push({y:G.year,t:`🏆 欧冠！`,icon:"🏆"});}else if(r>.4)G.events.push({y:G.year,t:`🌍 欧冠${pick(["决赛","四强"])}`,icon:"🌍"});}
-  if(G.year%4===2&&G.intTeam){G.worldCupA++;const ns=G.nation.id<=3?.8:G.nation.id<=9?.6:.35;if(Math.random()<(ns+G.ca/200*.2)*.25){G.worldCupW++;G.awards.push({y:G.year,n:"世界杯冠军"});G.events.push({y:G.year,t:`🌍🏆 世界杯！`,icon:"🌍"});}else G.events.push({y:G.year,t:`🌍 世界杯${pick(["出局","十六强","八强","四强"])}`,icon:"🌍"});}
-  checkEndorsements();
-  G.seasonLog.push({s:G.season,g:G.goals,a:G.ast,ap:G.apps,ar:G.avgR,cl:G.club.s,p:G.leaguePos,ca:Math.round(G.ca)});
-  if(G.rival){G.rival.ca=clamp(G.rival.ca+R(-2,3),40,195);G.rival.goals=RI(5,30);}
-}
-
-function genOffers(){
-  G.offers=[];if(G.ca<60||G.age>34)return;
-  const n=G.transferReq?RI(3,5):G.avgR>=7.5?RI(2,4):RI(0,2);
-  const el=CLUBS.filter(c=>c.id!==G.club.id&&c.rep>=G.club.rep-15);
-  for(let i=0;i<n&&el.length;i++){const c=el.splice(RI(0,el.length-1),1)[0];G.offers.push({club:c,wage:Math.round(G.wage*R(1.2,2.8)),years:RI(2,5),fee:Math.round(G.value*R(.8,1.3))});}
-  G.transferReq=false;
-}
-
-function doAdvance(){
-  if(G.retired||G.pendingChoice)return false;
-  const hm=Math.random()<.6,isDerby=hm&&G.nextOpp?.type==="derby",isCup=hm&&G.nextOpp?.type==="cup";
-  if(hm)simMatch(isDerby,isCup,false);else G.lastMatch=null;
-  weeklyGrowth();updateRole();
-  G.week++;if(G.week>4){G.week=1;G.month++;if(G.month>12){G.month=1;G.year++;}}
-  if(Math.random()<.025&&!G.pendingChoice){
-    const et=pick(["interview","interview","intl","wage"]);
-    if(et==="interview")G.pendingChoice="interview";
-    else if(et==="intl"&&G.intTeam&&G.month>=3&&G.month<=4)G.pendingChoice="intl";
-    else if(et==="wage"&&G.teamRole!=="youth"&&G.avgR>=7&&Math.random()>.5)G.pendingChoice="wage";
-  }
-  if(G.month===6&&G.week===1){
-    seasonEnd();genOffers();G.pendingChoice="season_end";G.season++;G.age++;
-    G.goals=0;G.ast=0;G.apps=0;G.avgR=0;G.totR=0;G.motm=0;G.matchLog=[];
-    G.consecL=0;G.consecW=0;G._lN=false;G._wN=false;
-    G.contract--;
-    if(G.contract<=0){G.events.push({y:G.year,t:`📋 合同到期`,icon:"📋"});G.pendingChoice="free_agent";}
-    if(G.age>=35&&G.ca<80)G.pendingChoice="retire_ask";
-    return false;
-  }
-  return !G.pendingChoice;
-}
-
-function advanceWeek(){doAdvance();render();}
-function advance4(){let i=0;while(i<4&&doAdvance())i++;render();}
-function simSeason(){let s=200;while(s-->0&&doAdvance());render();}
-function acceptOffer(i){const o=G.offers[i];G.clubHist[G.clubHist.length-1].t=G.year;G.club=o.club;G.wage=o.wage;G.contract=o.years;G.clubHist.push({c:o.club.n,f:G.year,t:null});G.events.push({y:G.year,t:`✈️ 转会${o.club.n}！`,icon:"✈️"});G.teamRole="squad";G.managerRel=60;G.fanPop=20;G.isCaptain=false;G.offers=[];G.pendingChoice=null;G.nextOpp=genNextOpp();render();}
-function stayAtClub(){if(G.contract<=0){G.contract=RI(1,3);G.wage=Math.round(G.wage*R(1.1,1.5));G.events.push({y:G.year,t:`📝 续约${G.contract}年`,icon:"📝"});}G.offers=[];G.pendingChoice=null;render();}
-function retirePlayer(){G.retired=true;G.retireAge=G.age;G.clubHist[G.clubHist.length-1].t=G.year;G.events.push({y:G.year,t:`👋 退役。${G.cApps}场。`,icon:"👋"});G.pendingChoice="post_retire";render();}
-function handleInterview(c){if(c==="h"){G.fanPop=clamp(G.fanPop+5,0,100);G.managerRel=clamp(G.managerRel+3,0,100);}else if(c==="b"){G.fanPop=clamp(G.fanPop+8,0,100);G.managerRel=clamp(G.managerRel-3,0,100);}else G.managerRel=clamp(G.managerRel+5,0,100);G.pendingChoice=null;render();}
-function handleIntl(c){if(c==="play")simMatch(false,false,true);G.pendingChoice=null;render();}
-function requestTransfer(){G.transferReq=true;G.managerRel=clamp(G.managerRel-15,0,100);notify("已申请转会");render();}
-function handleWage(c){if(c==="ask"){if(Math.random()<.6+G.managerRel/200){G.wage=Math.round(G.wage*R(1.15,1.4));notify("加薪成功！"+fmt$(G.wage)+"/周");}else{G.managerRel=clamp(G.managerRel-5,0,100);notify("被拒绝");}}G.pendingChoice=null;render();}
-function choosePostRetire(c){G.postRetire=c;G.pendingChoice=null;VIEW="retire";render();}
-
-// SHOP
-function buyItem(id){
-  const item=SHOP.find(x=>x.id===id);
-  if(!item||G.savings<item.price||G.owned.includes(id))return;
-  G.savings-=item.price;G.totalSpent+=item.price;G.owned.push(id);
-  G.morale=clamp(G.morale+item.morale,20,100);G.fanPop=clamp(G.fanPop+item.fanPop,0,100);
-  G.events.push({y:G.year,t:`🛒 购入${item.name}！${fmt$(item.price)}`,icon:item.icon});
-  notify(`${item.icon} 已购入 ${item.name}！`);render();
-}
-function spendOn(id){
-  const item=SPEND.find(x=>x.id===id);
-  if(!item||G.savings<item.price)return;
-  G.savings-=item.price;G.totalSpent+=item.price;
-  G.spendLog.push({n:item.name,p:item.price,y:G.year});
-  if(item.gamble){
-    // gambling: 40% chance to win 2x, 60% lose
-    if(Math.random()<.4){
-      const win=Math.round(item.price*R(1.5,3));
-      G.savings+=win;
-      G.morale=clamp(G.morale+8,20,100);
-      notify(`🎰 赢了！${fmt$(win)}`);
-      G.events.push({y:G.year,t:`🎰 赌场大赢${fmt$(win)}！`,icon:"🎰"});
-    }else{
-      G.morale=clamp(G.morale-5,20,100);
-      notify(`🎰 输了 ${fmt$(item.price)}`);
-      G.events.push({y:G.year,t:`🎰 赌场输了${fmt$(item.price)}...`,icon:"🎰"});
-    }
-  }else{
-    G.morale=clamp(G.morale+item.morale,20,100);G.fanPop=clamp(G.fanPop+item.fanPop,0,100);
-    notify(`${item.icon} ${item.name}！`);
-  }
-  render();
-}
-
-// RENDER
+// === RENDER HELPERS ===
 function aB(l,v){const c=ac(v);return`<div class="ab"><span class="ab-l">${l}</span><div class="ab-t"><div class="ab-f" style="width:${(v/20)*100}%;background:${c}"></div></div><span class="ab-v" style="color:${c}">${Math.round(v)}</span></div>`;}
 
 function render(){
-  // 判断是否进行了"大页面切换"，如果是，则应用动画
-  let isNew = L_VIEW !== VIEW || L_ST !== ST || (G && L_CHOICE !== G.pendingChoice);
-  L_VIEW = VIEW; L_ST = ST; if(G) L_CHOICE = G.pendingChoice;
-  let aC = isNew ? "anim" : ""; // 动态动画类名
+  const scrollPos = window.scrollY || document.documentElement.scrollTop || 0; // preserve scroll
+  let h=`<div class="notif" id="notif" style="display:none"></div>`;
+  // CREATE
+  if(VIEW==="create"){
+    h+=`<div style="padding:14px" class="an"><div class="center mt8 mb6"><div style="font-size:40px">⚽</div><div class="logo" style="font-size:18px;margin-top:6px">绿茵长路</div><div class="dim xx mt4">v5.2 · 真实数据+地下情增强版</div></div>`;
+    h+=`<div class="c mt8"><div class="s">创建球员</div>`;
+    h+=`<div class="mb6"><div class="dim xx mb4">姓名</div><input type="text" placeholder="名字" value="${esc(CC.name)}" style="width:100%;padding:7px 10px;border-radius:6px;border:1px solid var(--bdr);background:var(--bg2);color:var(--text);font-size:12px;font-family:inherit;outline:none" oninput="CC.name=this.value"></div>`;
+    h+=`<div class="mb6"><div class="dim xx mb4">国籍</div><div style="display:flex;flex-wrap:wrap;gap:3px">`;
+    NATIONS.forEach(n=>{h+=`<button class="b ${CC.nation===n.id?'bp':''}" style="padding:2px 6px;font-size:9px" onclick="CC.nation=${n.id};render()">${n.f}${n.n}</button>`;});
+    h+=`</div></div><div class="mb6"><div class="dim xx mb4">位置</div><div style="display:flex;flex-wrap:wrap;gap:3px">`;
+    Object.entries(POS).forEach(([k,v])=>{h+=`<button class="b ${CC.pos===k?'bp':''}" style="padding:2px 6px;font-size:9px" onclick="CC.pos='${k}';render()">${v.e}${v.n}</button>`;});
+    h+=`</div></div><div class="mb6"><div class="dim xx mb4">青训</div><div style="display:flex;gap:3px">`;
+    YOUTH.forEach((y,i)=>{h+=`<button class="b ${CC.yci===i?'bp':''}" style="padding:2px 6px;font-size:9px;flex:1" onclick="CC.yci=${i};render()">${y.s}</button>`;});
+    h+=`</div></div><div class="mb6"><div class="dim xx mb4">难度</div><div style="display:flex;gap:3px">`;
+    [{n:"🌟天才"},{n:"⚖️普通"},{n:"🔥困难"}].forEach((d,i)=>{h+=`<div class="dc ${CC.diff===i?'on':''}" onclick="CC.diff=${i};render()">${d.n}</div>`;});
+    h+=`</div></div><button class="b bp bf" style="padding:10px;font-size:13px" onclick="startGame()">🚀 开启生涯</button>`;
+    h+=`<div class="g2 mt4"><button class="b bf bs" onclick="loadGame()">📂读档</button><button class="b bf" onclick="localStorage.removeItem('gp5_2');notify('已删')">🗑️</button></div>`;
+    h+=`</div></div>`;
+    document.getElementById('app').innerHTML=h;
+    window.scrollTo(0, scrollPos);
+    return;
+  }
+  if(!G){document.getElementById('app').innerHTML='';return;}
+  const pi=POS[G.pos];
 
-  // 记录当前的滚动位置
-  let nav = document.querySelector('.nav');
-  let navScroll = nav ? nav.scrollLeft : 0;
-  let pageScroll = window.scrollY;
+  // HEADER
+  h+=`<div class="hdr"><div class="fb"><div><div class="logo">⚽ 绿茵长路</div><div class="xx dim">${G.year}.${G.month} W${G.week} S${G.season}</div></div><div style="text-align:right"><div class="bold xx">${G.isCaptain?"©️":""}${esc(G.name)}</div><div class="xx dim">${G.club.s}·${pi.n}·${G.age}岁</div><div class="xx gd">${fmt$(G.savings)}</div></div></div>`;
+  if(!G.retired){
+    const tabs=[["dashboard","总览"],["league","联赛"],["profile","数据"],["shop","消费"],["love","恋爱"],["history","记录"],["career","生涯"],["train","训练"]];
+    h+=`<div class="nav">${tabs.map(([id,lb])=>`<button class="nb ${VIEW===id?'on':''}" onclick="VIEW='${id}';render()">${lb}</button>`).join("")}<button class="nb" onclick="saveGame()">💾</button></div>`;
+  }
+  h+=`</div><div class="ct">`;
 
-  // 统一的 DOM 更新函数，用于恢复滚动位置
-  const setDOM = (html) => {
-    document.getElementById('app').innerHTML = html;
-    if (!isNew) {
-      requestAnimationFrame(() => {
-        window.scrollTo(0, pageScroll);
-        const nNav = document.querySelector('.nav');
-        if (nNav) nNav.scrollLeft = navScroll;
+  if(G.pendingChoice&&(!G.retired||G.pendingChoice==="post_retire")){
+    h+=renderChoice();h+=`</div>`;
+    document.getElementById('app').innerHTML=h;
+    window.scrollTo(0, scrollPos);
+    return;
+  }
+
+  // === DASHBOARD ===
+  if(VIEW==="dashboard"&&!G.retired){
+    h+=`<div class="an">`;
+    h+=`<div class="c"><div class="fb"><div class="fc"><div class="portrait">${pi.e}</div><div><div class="bold x">${G.nation.f} ${esc(G.name)}</div><div class="dim xx">${G.club.n}</div><div class="mt4">${G.hp>0?`<span class="badge" style="border-color:var(--red);color:var(--red)">${G.hp===1?"伤":"重伤"}${G.hpW}w</span>`:`<span class="badge">${roleN[G.teamRole]}</span>`}</div></div></div><div style="text-align:right"><div class="ac bold" style="font-size:15px">${Math.round(G.ca)}</div><div class="gd bold xx">${fmt$(G.value)}</div></div></div>`;
+    h+=`<div class="mt4"><div class="ca-t"><div class="ca-p" style="width:${(G.pa/200)*100}%"></div><div class="ca-f" style="width:${(G.ca/200)*100}%"></div></div></div>`;
+    h+=`<div class="sg">${[{l:"⚽",v:G.goals},{l:"🅰️",v:G.ast},{l:"📊",v:G.apps},{l:"⭐",v:G.avgR||"-"},{l:"💪",v:Math.round(G.morale)},{l:"🔥",v:Math.round(G.form)}].map(s=>`<div class="sb"><div class="sb-v">${s.v}</div><div class="sb-l">${s.l}</div></div>`).join("")}</div></div>`;
+
+    if(G.nextOpp){h+=`<div class="c" style="padding:6px 10px"><div class="fb xx"><span class="ac bold">下一场</span><span class="bold">${G.club.s} vs ${G.nextOpp.opp}</span><span class="dim">${G.nextOpp.type==="derby"?"🔥德比":G.nextOpp.type==="cup"?"🏆杯赛":"⚽联赛"}</span></div></div>`;}
+    h+=`<div style="display:flex;gap:3px">`;
+    [{id:"defensive",n:"🛡️防守"},{id:"balanced",n:"⚖️均衡"},{id:"aggressive",n:"⚔️进攻"}].forEach(t=>{h+=`<div class="tc ${TAC===t.id?'on':''}" onclick="TAC='${t.id}';render()">${t.n}</div>`;});
+    h+=`</div>`;
+
+    if(G.lastMatch){
+      const m=G.lastMatch;
+      h+=`<div class="c ${m.rating>=8&&m.played?'gl':m.rating<5&&m.played?'rl':''} mt4"><div class="fb"><div class="xx bold">${m.intMatch?"🌍":m.isCup?"🏆":m.isDerby?"🔥":"⚽"} vs ${m.opp}</div><div class="xx bold ${m.result==="胜"?"ac":m.result==="负"?"rd":""}">${m.tg}-${m.og}</div></div>`;
+      if(m.played){
+        h+=`<div class="fb mt4"><div class="xx">评分 <span class="bold ${m.rating>=8?'gd':m.rating>=7?'ac':m.rating<5.5?'rd':''}" style="font-size:13px">${m.rating}</span>${m.isMotm?' <span class="gd">⭐</span>':''}</div><div class="xx dim">⚽${m.goals} 🅰️${m.assists}</div></div>`;
+      }else{
+        h+=`<div class="mt4 xx dim">${m.reason}，未能登场</div>`;
+      }
+      if(m.events.length){h+=`<div class="mt-tl">`;m.events.forEach(e=>{const cls=["G","H","TG"].includes(e.t)?"eg":e.t==="A"?"ea":["B","I","R","Y","OG"].includes(e.t)?"eb":"en";h+=`<div class="mt-r"><div class="mt-m">${e.min}'</div><div class="mt-e ${cls}">${esc(e.txt)}</div></div>`;});h+=`</div>`;}
+      h+=`</div>`;
+    }
+
+    h+=`<div class="c mt4"><div class="fb xx"><span class="dim">教练${Math.round(G.managerRel)}</span><span class="dim">人气${Math.round(G.fanPop)}</span></div><div class="g2 mt4"><div class="xp"><div class="xp-f" style="width:${G.managerRel}%;background:var(--a)"></div></div><div class="xp"><div class="xp-f" style="width:${G.fanPop}%;background:var(--blue)"></div></div></div></div>`;
+
+    h+=`<div class="g3 mt8"><button class="b bp bf" onclick="advanceWeek()">⏭1周</button><button class="b bs bf" onclick="advance4()">⏭4周</button><button class="b bf" style="border-color:var(--purple);color:var(--purple)" onclick="simSeason()">⏩赛季</button></div>`;
+    if(!G.transferReq&&G.teamRole!=="youth"&&G.club.t>=2){h+=`<button class="b bd bf mt4 xx" onclick="requestTransfer()">📢 申请转会</button>`;}
+    h+=`</div>`;
+  }
+
+  // === LEAGUE TABLE ===
+  if(VIEW==="league"){
+    h+=`<div class="an">`;
+    if(G.league){
+      const sorted=[...G.league].sort((a,b)=>b.pts-a.pts||(b.gf-b.ga)-(a.gf-a.ga));
+      h+=`<div class="s">📊 ${G.club.lg} 积分榜</div>`;
+      h+=`<div class="c" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>#</th><th>球队</th><th class="ce">赛</th><th class="ce">胜</th><th class="ce">平</th><th class="ce">负</th><th class="ce">净胜</th><th class="ce" style="color:var(--a)">积分</th></tr></thead><tbody>`;
+      sorted.forEach((t,i)=>{h+=`<tr class="${t.isMe?'hi':''}"><td class="bold">${i+1}</td><td ${t.isMe?'class="bold"':''}>${t.n}</td><td class="ce">${t.mp}</td><td class="ce gn">${t.w}</td><td class="ce">${t.d}</td><td class="ce rd">${t.l}</td><td class="ce">${t.gf-t.ga}</td><td class="ce bold ac">${t.pts}</td></tr>`;});
+      h+=`</tbody></table></div>`;
+      if(G.leagueScorers.length){
+        const sc=[...G.leagueScorers].sort((a,b)=>b.g-a.g).slice(0,8);
+        h+=`<div class="s mt12">🏅 射手榜</div><div class="c">`;
+        sc.forEach((s,i)=>{h+=`<div class="fb xx" style="padding:2px 0;${i<sc.length-1?'border-bottom:1px solid var(--bdr)':''}"><span ${s.isMe?'class="bold ac"':''}>${i+1}. ${s.n}</span><span class="bold gd">⚽${s.g}</span></div>`;});
+        h+=`</div>`;
+      }
+    }else{h+=`<div class="c dim xx center">赛季初将生成联赛数据</div>`;}
+    h+=`</div>`;
+  }
+
+  // === PROFILE ===
+  if(VIEW==="profile"){
+    h+=`<div class="an"><div class="c"><div class="fb"><div><div class="bold x">${G.nation.f} ${esc(G.name)}</div><div class="dim xx">${pi.n}·${G.age}岁</div></div><div class="ac bold" style="font-size:17px">${Math.round(G.ca)}</div></div>`;
+    h+=`<div class="mt6 g2">${aB("速度",G.pace)}${aB("射门",G.shot)}${aB("传球",G.pass)}${aB("盘带",G.drib)}${aB("防守",G.def)}${aB("体能",G.phys)}${aB("心理",G.mental)}</div></div>`;
+    h+=`<div class="c"><div class="sg" style="margin:0">${[{l:"⚽",v:G.goals},{l:"🅰️",v:G.ast},{l:"📊",v:G.apps},{l:"⭐",v:G.avgR||"-"},{l:"🏅",v:G.motm}].map(s=>`<div class="sb"><div class="sb-v">${s.v}</div><div class="sb-l">${s.l}</div></div>`).join("")}</div></div>`;
+    h+=`<div class="c"><div class="sg" style="margin:0">${[{l:"总场",v:G.cApps},{l:"总球",v:G.cGoals},{l:"总助",v:G.cAst},{l:"🎩",v:G.cHatTricks},{l:"🏆",v:G.awards.length},{l:"🌍",v:G.intCaps}].map(s=>`<div class="sb"><div class="sb-v">${s.v}</div><div class="sb-l">${s.l}</div></div>`).join("")}</div></div>`;
+    if(G.caHistory.length>1){const mx=Math.max(...G.caHistory.map(x=>x.c));h+=`<div class="c"><div class="xx bold mb4">📈 曲线</div><div class="cr">`;G.caHistory.forEach(p=>{h+=`<div class="cr-b" style="height:${Math.max(5,(p.c/mx)*100)}%;background:${p.c>=150?'var(--gold)':p.c>=100?'var(--a)':'var(--a2)'}" data-t="${p.a}岁:${p.c}"></div>`;});h+=`</div></div>`;}
+    h+=`<div class="c xx"><div class="fb mb4"><span class="dim">周薪</span><span class="ac bold">${fmt$(G.wage)}</span></div><div class="fb mb4"><span class="dim">身价</span><span class="gd bold">${fmt$(G.value)}</span></div><div class="fb mb4"><span class="dim">存款</span><span class="gd">${fmt$(G.savings)}</span></div><div class="fb"><span class="dim">总消费</span><span class="orange">${fmt$(G.totalSpent)}</span></div></div>`;
+    h+=`</div>`;
+  }
+
+  // === SHOP ===
+  if(VIEW==="shop"){
+    h+=`<div class="an"><div class="fb mb6"><div class="s" style="margin:0">🛍️ 消费</div><div class="gd bold xx">${fmt$(G.savings)}</div></div>`;
+    h+=`<div class="s mt6">🏠 资产</div>`;
+    SHOP.forEach(it=>{
+      const owned=G.owned.includes(it.id),can=G.savings>=it.p&&!owned;
+      h+=`<div class="sh-i" style="${owned?'opacity:.5':''}"><div style="font-size:20px;width:28px;text-align:center">${it.i}</div><div style="flex:1"><div class="bold xx">${it.n}</div><div class="xx dim">${it.d}</div></div>${owned?'<div class="xx ac">✓</div>':`<div><div class="xx gd bold">${fmt$(it.p)}</div><button class="b bp" style="padding:2px 8px;font-size:8px;margin-top:2px" ${can?`onclick="buyItem('${it.id}')"`:'disabled'}>买</button></div>`}</div>`;
+    });
+    h+=`<div class="s mt12">🎉 体验</div>`;
+    SPEND.forEach(it=>{
+      const can=G.savings>=it.p;
+      h+=`<div class="sh-i"><div style="font-size:20px;width:28px;text-align:center">${it.i}</div><div style="flex:1"><div class="bold xx">${it.n}${it.gamble?' <span class="orange">赌</span>':''}</div><div class="xx dim">${it.d}</div></div><div><div class="xx gd bold">${fmt$(it.p)}</div><button class="b bp" style="padding:2px 8px;font-size:8px;margin-top:2px" ${can?`onclick="spendOn('${it.id}')"`:'disabled'}>${it.gamble?'赌':'用'}</button></div></div>`;
+    });
+    h+=`</div>`;
+  }
+
+  // === ROMANCE ===
+  if(VIEW==="love"){
+    initRomance();
+    h+=`<div class="an"><div class="s">💕 恋爱关系</div>`;
+    if(G.romance.partners.length){
+      G.romance.partners.forEach(p=>{
+        const l=LOVERS.find(x=>x.id===p.id);
+        const isActive=G.romance.active===p.id;
+        h+=`<div class="c ${isActive?'pk':''}" onclick="setActiveLover('${p.id}')" style="cursor:pointer"><div class="fb"><div class="fc"><div style="font-size:20px">${l?.emoji||"💕"}</div><div><div class="bold xx">${p.name} <span class="dim xx">${l?.job}</span></div><div class="xx dim">${p.status==="地下情"?`<span class="rd">🤫 地下情</span>`:p.status} · 好感${Math.round(p.love)}</div></div></div><div class="xp" style="width:50px"><div class="xp-f" style="width:${p.love}%;background:var(--pink)"></div></div></div>`;
+        if(isActive){
+          h+=`<div class="g2 mt6"><button class="b bf" onclick="goDate()">❤️约会 €5K</button>`;
+          if(!G.romance.married && p.status!=="已婚"){h+=`<button class="b bf" onclick="proposeTo()">💍求婚</button>`;}
+          if(G.romance.married && p.status!=="已婚"){h+=`<button class="b bf bd" onclick="doUnderground()">🤫 发展地下情</button>`;}
+          if(p.status==="已婚"){h+=`<button class="b bf" onclick="haveChild()">👶生宝宝</button>`;}
+          h+=`</div>`;
+          if (p.ugCount > 0) {
+            h+=`<div class="xx mt4"><span class="rd bold">🤫 做爱潮喷次数：${p.ugCount} 次</span></div>`;
+          }
+          h+=`<div class="xx dim mt4">🎁 送礼：</div><div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:3px">`;
+          GIFTS.forEach((g,gi)=>{h+=`<button class="b" style="padding:2px 6px;font-size:8px" ${G.savings>=g.p?`onclick="giveGift(${gi})"`:'disabled'}>${g.emoji}${g.n} ${fmt$(g.p)}</button>`;});
+          h+=`</div>`;
+        }
+        h+=`</div>`;
       });
     }
-  };
 
-  let h=`<div class="notif" id="notif" style="display:none"></div>`;
-  if(VIEW==="create"){
-    h+=`<div style="padding:16px" class="${aC}"><div class="center mt20 mb8"><div style="font-size:44px">⚽</div><div class="logo" style="font-size:20px;margin-top:8px">绿茵长路</div><div class="dim xxs mt4">v4 · 球员生涯</div></div>`;
-    h+=`<div class="card mt12"><div class="sec">创建球员</div>`;
-    h+=`<div class="mb8"><div class="dim xxs mb4">姓名</div><input type="text" placeholder="名字" value="${esc(CC.name)}" style="width:100%;padding:8px 12px;border-radius:7px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:13px;font-family:inherit;outline:none" oninput="CC.name=this.value"></div>`;
-    h+=`<div class="mb8"><div class="dim xxs mb4">国籍</div><div style="display:flex;flex-wrap:wrap;gap:4px">`;
-    NATIONS.forEach(n=>{h+=`<button class="btn ${CC.nation===n.id?'btn-p':''}" style="padding:3px 7px;font-size:10px" onclick="CC.nation=${n.id};render()">${n.f}${n.n}</button>`;});
-    h+=`</div></div><div class="mb8"><div class="dim xxs mb4">位置</div><div style="display:flex;flex-wrap:wrap;gap:4px">`;
-    Object.entries(POS).forEach(([k,v])=>{h+=`<button class="btn ${CC.pos===k?'btn-p':''}" style="padding:3px 7px;font-size:10px" onclick="CC.pos='${k}';render()">${v.e}${v.n}</button>`;});
-    h+=`</div></div><div class="mb8"><div class="dim xxs mb4">青训营</div><div style="display:flex;gap:4px">`;
-    YOUTH.forEach((y,i)=>{h+=`<button class="btn ${CC.yci===i?'btn-p':''}" style="padding:3px 7px;font-size:10px;flex:1" onclick="CC.yci=${i};render()">${y.s}</button>`;});
-    h+=`</div></div><div class="mb8"><div class="dim xxs mb4">难度</div><div class="diff-opt">`;
-    [{n:"🌟天才",d:"PA高"},{n:"⚖️普通",d:"PA中"},{n:"🔥困难",d:"PA低"}].forEach((d,i)=>{h+=`<div class="dc ${CC.diff===i?'on':''}" onclick="CC.diff=${i};render()"><div class="bold">${d.n}</div><div class="xxs dim">${d.d}</div></div>`;});
-    h+=`</div></div><button class="btn btn-p btn-full btn-lg mt8" onclick="startGame()">🚀 开启生涯</button>`;
-    h+=`<div class="g2 mt6"><button class="btn btn-full btn-s" onclick="loadGame()">📂 读档</button><button class="btn btn-full" onclick="localStorage.removeItem('gp_save');notify('已删')">🗑️</button></div>`;
-    h+=`</div></div>`;setDOM(h);return;
-  }
-  if(!G){setDOM('');return;}
-  const pi=POS[G.pos];
-  // HEADER
-  h+=`<div class="hdr"><div class="fb"><div><div class="logo">⚽ 绿茵长路</div><div class="meta">${G.year}.${G.month} W${G.week} S${G.season}</div></div><div style="text-align:right"><div class="bold xxs">${G.isCaptain?"©️":""}${esc(G.name)}</div><div class="xxs dim">${G.club.s}·${pi.n}·${G.age}岁</div><div class="xxs gold">${fmt$(G.savings)}</div></div></div>`;
-  if(!G.retired){h+=`<div class="nav">${[["dashboard","总览"],["profile","数据"],["shop","消费"],["history","记录"],["career","生涯"],["train","训练"]].map(([id,lb])=>`<button class="nb ${VIEW===id?'on':''}" onclick="VIEW='${id}';render()">${lb}</button>`).join("")}<button class="nb" onclick="saveGame()">💾</button></div>`;}
-  h+=`</div><div class="ct">`;
-  if(G.pendingChoice&&(!G.retired || G.pendingChoice==="post_retire")){h+=renderChoice(aC);h+=`</div>`;setDOM(h);return;}
-
-  // DASHBOARD
-  if(VIEW==="dashboard"&&!G.retired){
-    h+=`<div class="${aC}">`;
-    // news
-    h+=`<div style="background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:6px 10px 6px 28px;margin-bottom:6px;position:relative;overflow:hidden"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:10px">📰</span><div class="xxs dim">${esc(pick(HEADLINES)(G))}</div></div>`;
-    // player
-    h+=`<div class="card"><div class="fb"><div class="fc"><div class="portrait">${pi.e}</div><div><div class="bold xs">${G.nation.f} ${esc(G.name)}</div><div class="dim xxs">${G.club.n}</div><div class="mt4">${G.hp>0?`<span class="badge badge-r">${G.hp===1?"伤":"重伤"}${G.hpW}w</span>`:`<span class="badge">${roleN[G.teamRole]}</span>`}${G.intTeam?`<span class="badge" style="border-color:var(--blue);color:var(--blue)">${G.nation.f}</span>`:""}</div></div></div><div style="text-align:right"><div class="accent bold" style="font-size:16px">${Math.round(G.ca)}</div><div class="xxs dim">CA</div><div class="gold bold mt4 xxs">${fmt$(G.value)}</div></div></div>`;
-    h+=`<div class="mt4"><div class="ca-t"><div class="ca-pa" style="width:${(G.pa/200)*100}%"></div><div class="ca-c" style="width:${(G.ca/200)*100}%"></div></div></div>`;
-    h+=`<div class="sg">${[{l:"⚽",v:G.goals},{l:"🅰️",v:G.ast},{l:"📊",v:G.apps},{l:"⭐",v:G.avgR||"-"},{l:"💪",v:Math.round(G.morale)},{l:"🔥",v:Math.round(G.form)}].map(s=>`<div class="sb"><div class="sb-v">${s.v}</div><div class="sb-l">${s.l}</div></div>`).join("")}</div></div>`;
-    // next match
-    if(G.nextOpp){h+=`<div style="display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:7px 10px;margin-bottom:6px"><span class="xxs bold accent" style="background:var(--glow);padding:2px 6px;border-radius:4px">下一场</span><span class="xxs bold" style="flex:1">${G.club.s} vs ${G.nextOpp.opp}</span><span class="xxs dim">${G.nextOpp.type==="derby"?"🔥德比":G.nextOpp.type==="cup"?"🏆杯赛":"⚽联赛"}</span></div>`;}
-    // tactics
-    h+=`<div style="display:flex;gap:4px">`;
-    [{id:"defensive",n:"🛡️防守"},{id:"balanced",n:"⚖️均衡"},{id:"aggressive",n:"⚔️进攻"}].forEach(t=>{h+=`<div class="tc ${TACTIC===t.id?'on':''}" onclick="TACTIC='${t.id}';render()"><div class="tn">${t.n}</div></div>`;});
-    h+=`</div>`;
-    // last match
-    if(G.lastMatch){
-      if(!G.lastMatch.played){h+=`<div class="card dim xxs mt6">${G.lastMatch.reason}</div>`;}
-      else{const m=G.lastMatch;
-        h+=`<div class="card ${m.rating>=8?'gl':m.rating<5?'rl':''} mt6"><div class="fb"><div class="xxs bold">${m.intMatch?"🌍":m.isCup?"🏆":m.isDerby?"🔥":"⚽"} vs ${m.opp} <span class="dim">${m.started?"首发":"替补"}</span></div><div class="xxs bold ${m.result==="胜"?"accent":m.result==="负"?"red":""}">${m.tg}-${m.og}</div></div>`;
-        h+=`<div class="fb mt4"><div class="xxs">评分 <span class="bold ${m.rating>=8?'gold':m.rating>=7?'accent':m.rating<5.5?'red':''}" style="font-size:14px">${m.rating}</span>${m.isMotm?' <span class="gold">⭐</span>':''}</div><div class="xxs dim">⚽${m.goals} 🅰️${m.assists}</div></div>`;
-        if(m.events.length){h+=`<div class="mt-tl">`;m.events.forEach(e=>{const cls=["GOAL","HAT","CLUTCH"].includes(e.t)?"eg":["AST"].includes(e.t)?"ea":["BAD","INJ","RED","YEL"].includes(e.t)?"eb":"en";h+=`<div class="mt-r"><div class="mt-m">${e.min}'</div><div class="mt-e ${cls}">${esc(e.txt)}</div></div>`;});h+=`</div>`;}
-        h+=`</div>`;}
+    const unmet=LOVERS.filter(l=>!G.romance.partners.find(p=>p.id===l.id));
+    if(unmet.length&&G.age>=18){
+      h+=`<div class="s mt8">🔍 认识新的人</div>`;
+      unmet.forEach(l=>{
+        h+=`<div class="c ck" onclick="meetLover('${l.id}')"><div class="fc"><div style="font-size:18px">${l.emoji}</div><div><div class="bold xx">${l.name} <span class="dim">${l.age}岁·${l.job}</span></div><div class="xx dim">${l.desc}</div></div></div></div>`;
+      });
     }
-    // relations
-    h+=`<div class="card mt6"><div class="fb xxs"><span class="dim">教练 ${Math.round(G.managerRel)}</span><span class="dim">人气 ${Math.round(G.fanPop)}</span></div><div class="g2 mt4"><div class="xp-bar"><div class="xp-fill" style="width:${G.managerRel}%;background:var(--accent)"></div></div><div class="xp-bar"><div class="xp-fill" style="width:${G.fanPop}%;background:var(--blue)"></div></div></div></div>`;
-    // rival
-    if(G.rival&&G.ca>=70){h+=`<div class="card"><div style="display:flex;align-items:center;gap:8px"><div style="width:24px;height:24px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:10px">${G.rival.nation.f}</div><div style="flex:1"><div class="bold xxs">🤺 ${G.rival.name} <span class="dim">CA${Math.round(G.rival.ca)}</span></div></div><div class="xxs ${G.ca>G.rival.ca?'accent':'red'} bold">${G.ca>G.rival.ca?'领先':'落后'}${Math.abs(Math.round(G.ca-G.rival.ca))}</div></div></div>`;}
-    // events
-    if(G.events.length>1){G.events.slice(-2).reverse().forEach(e=>{h+=`<div class="card xxs">${e.icon||""} ${esc(e.t)} <span class="dim">${e.y}</span></div>`;});}
-    // buttons
-    h+=`<div class="g3 mt12"><button class="btn btn-p btn-full" onclick="advanceWeek()">⏭1周</button><button class="btn btn-s btn-full" onclick="advance4()">⏭4周</button><button class="btn btn-full" style="border-color:var(--purple);color:var(--purple)" onclick="simSeason()">⏩赛季</button></div>`;
-    if(!G.transferReq&&G.teamRole!=="youth"&&G.club.t>=2){h+=`<button class="btn btn-d btn-full mt4 xxs" onclick="requestTransfer()">📢 申请转会</button>`;}
-    h+=`</div>`;
-  }
 
-  // PROFILE
-  if(VIEW==="profile"){
-    h+=`<div class="${aC}"><div class="card"><div class="fb"><div><div class="bold" style="font-size:15px">${G.nation.f} ${esc(G.name)}</div><div class="dim xxs mt4">${pi.n}·${G.age}岁</div></div><div class="accent bold" style="font-size:18px">${Math.round(G.ca)}</div></div>`;
-    h+=`<div class="mt8 g2">${aB("速度",G.pace)}${aB("射门",G.shot)}${aB("传球",G.pass)}${aB("盘带",G.drib)}${aB("防守",G.def)}${aB("体能",G.phys)}${aB("心理",G.mental)}</div></div>`;
-    h+=`<div class="card"><div class="sec" style="margin:0 0 4px">本赛季</div><div class="sg" style="margin:0">${[{l:"⚽",v:G.goals},{l:"🅰️",v:G.ast},{l:"📊",v:G.apps},{l:"⭐",v:G.avgR||"-"},{l:"🏅",v:G.motm}].map(s=>`<div class="sb"><div class="sb-v">${s.v}</div><div class="sb-l">${s.l}</div></div>`).join("")}</div></div>`;
-    h+=`<div class="card"><div class="sec" style="margin:0 0 4px">生涯</div><div class="sg" style="margin:0">${[{l:"出场",v:G.cApps},{l:"进球",v:G.cGoals},{l:"助攻",v:G.cAst},{l:"🏅",v:G.cMotm},{l:"🎩",v:G.cHatTricks},{l:"🏆",v:G.awards.length},{l:"🌍",v:G.intCaps},{l:"🌍⚽",v:G.intGoals}].map(s=>`<div class="sb"><div class="sb-v">${s.v}</div><div class="sb-l">${s.l}</div></div>`).join("")}</div></div>`;
-    if(G.caHistory.length>1){const mx=Math.max(...G.caHistory.map(x=>x.c));h+=`<div class="card"><div class="sec" style="margin:0 0 4px">📈 曲线</div><div class="cr">`;G.caHistory.forEach(p=>{h+=`<div class="cr-b" style="height:${Math.max(5,(p.c/mx)*100)}%;background:${p.c>=150?'var(--gold)':p.c>=100?'var(--accent)':'var(--accent2)'}" data-t="${p.a}岁:${p.c}"></div>`;});h+=`</div></div>`;}
-    h+=`<div class="card xxs"><div class="fb mb4"><span class="dim">俱乐部</span><span class="bold">${G.club.n}</span></div><div class="fb mb4"><span class="dim">周薪</span><span class="accent bold">${fmt$(G.wage)}</span></div><div class="fb mb4"><span class="dim">合同</span><span>${G.contract}年</span></div><div class="fb mb4"><span class="dim">身价</span><span class="gold bold">${fmt$(G.value)}</span></div><div class="fb mb4"><span class="dim">总收入</span><span>${fmt$(G.totalEarnings)}</span></div><div class="fb mb4"><span class="dim">存款</span><span class="gold bold">${fmt$(G.savings)}</span></div><div class="fb"><span class="dim">总消费</span><span class="orange">${fmt$(G.totalSpent)}</span></div></div>`;
-    if(G.endorse?.length){h+=`<div class="card"><div class="sec" style="margin:0 0 4px">💼 代言</div>`;G.endorse.forEach(e=>{h+=`<div class="xxs fb" style="padding:2px 0"><span class="bold">${e.n}</span><span class="dim">${fmt$(e.val)}/周</span></div>`;});h+=`</div>`;}
-    h+=`</div>`;
-  }
-
-  // SHOP
-  if(VIEW==="shop"){
-    h+=`<div class="${aC}"><div class="fb mb8"><div class="sec" style="margin:0">🛍️ 消费</div><div class="gold bold xs">余额 ${fmt$(G.savings)}</div></div>`;
-    // Assets
-    h+=`<div class="sec mt8">🏠 资产购买</div>`;
-    SHOP.forEach(item=>{
-      const owned=G.owned.includes(item.id);const canBuy=G.savings>=item.price&&!owned;
-      h+=`<div class="shop-item" style="${owned?'opacity:.5':''}"><div class="shop-icon">${item.icon}</div><div class="shop-info"><div class="shop-name">${item.name}</div><div class="shop-desc">${item.desc}</div></div>`;
-      if(owned){h+=`<div class="shop-owned">✓ 已拥有</div>`;}
-      else{h+=`<div><div class="shop-price">${fmt$(item.price)}</div><button class="btn btn-p" style="padding:3px 10px;font-size:9px;margin-top:3px" ${canBuy?`onclick="buyItem('${item.id}')"`:'disabled'}>购买</button></div>`;}
-      h+=`</div>`;
-    });
-    // Experiences
-    h+=`<div class="sec mt16">🎉 消费体验</div>`;
-    SPEND.forEach(item=>{
-      const canBuy=G.savings>=item.price;
-      h+=`<div class="shop-item"><div class="shop-icon">${item.icon}</div><div class="shop-info"><div class="shop-name">${item.name}${item.gamble?' <span class="orange xxs">赌博</span>':''}</div><div class="shop-desc">${item.desc}${item.morale>0?` · 💪+${item.morale}`:''}${item.fanPop>0?` · ❤️+${item.fanPop}`:item.fanPop<0?` · ❤️${item.fanPop}`:''}</div></div><div><div class="shop-price">${fmt$(item.price)}</div><button class="btn btn-p" style="padding:3px 10px;font-size:9px;margin-top:3px" ${canBuy?`onclick="spendOn('${item.id}')"`:'disabled'}>${item.gamble?'赌一把':'消费'}</button></div></div>`;
-    });
-    // Owned summary
-    if(G.owned.length){
-      h+=`<div class="sec mt16">🏆 我的资产</div><div class="card">`;
-      G.owned.forEach(id=>{const item=SHOP.find(x=>x.id===id);if(item)h+=`<div class="xxs" style="padding:2px 0">${item.icon} ${item.name} <span class="dim">${fmt$(item.price)}</span></div>`;});
-      h+=`</div>`;
-    }
-    if(G.spendLog.length){
-      h+=`<div class="sec mt12">📋 消费记录 (近10笔)</div><div class="card">`;
-      G.spendLog.slice(-10).reverse().forEach(s=>{h+=`<div class="xxs fb" style="padding:2px 0"><span>${s.n}</span><span class="dim">${fmt$(s.p)} · ${s.y}</span></div>`;});
+    if(G.romance.children.length){
+      h+=`<div class="s mt8">👨‍👩‍👧‍👦 家庭</div><div class="c">`;
+      G.romance.children.forEach(c=>{h+=`<div class="xx" style="padding:2px 0">👶 ${c.name} (${c.year}年) — 母亲：${c.parent}</div>`;});
       h+=`</div>`;
     }
     h+=`</div>`;
   }
 
-  // HISTORY
+  // === HISTORY ===
   if(VIEW==="history"){
-    h+=`<div class="${aC}"><div class="tp"><button class="tpb ${ST==='season'?'on':''}" onclick="ST='season';render()">赛季</button><button class="tpb ${ST==='matches'?'on':''}" onclick="ST='matches';render()">比赛</button></div>`;
+    h+=`<div class="an"><div class="tp"><button class="tpb ${ST==='season'?'on':''}" onclick="ST='season';render()">赛季</button><button class="tpb ${ST==='matches'?'on':''}" onclick="ST='matches';render()">比赛</button></div>`;
     if(ST==="season"){
-      if(G.seasonLog.length){h+=`<div class="card" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:9px"><thead><tr style="border-bottom:1px solid var(--border)"><th style="padding:5px 4px;text-align:left;color:var(--dim)">S</th><th style="padding:5px 4px;text-align:left;color:var(--dim)">队</th><th style="padding:5px;text-align:center;color:var(--dim)">场</th><th style="padding:5px;text-align:center;color:var(--dim)">⚽</th><th style="padding:5px;text-align:center;color:var(--dim)">🅰️</th><th style="padding:5px;text-align:center;color:var(--dim)">⭐</th><th style="padding:5px;text-align:center;color:var(--accent);font-weight:700">CA</th><th style="padding:5px;text-align:center;color:var(--dim)">#</th></tr></thead><tbody>`;G.seasonLog.slice().reverse().forEach(s=>{h+=`<tr style="border-bottom:1px solid var(--border)"><td style="padding:4px">${s.s}</td><td style="padding:4px">${s.cl}</td><td style="padding:4px;text-align:center">${s.ap}</td><td style="padding:4px;text-align:center">${s.g}</td><td style="padding:4px;text-align:center">${s.a}</td><td style="padding:4px;text-align:center">${s.ar}</td><td style="padding:4px;text-align:center;color:var(--accent);font-weight:700">${s.ca}</td><td style="padding:4px;text-align:center">${s.p||"-"}</td></tr>`;});h+=`</tbody></table></div>`;}else h+=`<div class="card dim xxs center">暂无</div>`;}
-    if(ST==="matches"){if(!G.matchLog.length)h+=`<div class="card dim xxs center">暂无</div>`;else{h+=`<div class="card" style="padding:5px 8px">`;G.matchLog.slice().reverse().forEach(m=>{const rc=m.res==="胜"?"accent":m.res==="负"?"red":"dim";const ti=m.type==="int"?"🌍":m.type==="cup"?"🏆":m.type==="derby"?"🔥":"⚽";h+=`<div class="mr"><span class="xxs">${ti}</span><span style="flex:1" class="xxs">vs ${m.opp}</span><span class="bold ${rc} xxs" style="min-width:26px;text-align:center">${m.tg}-${m.og}</span><span class="xxs bold" style="min-width:20px;text-align:center;color:${m.r>=8?'var(--gold)':m.r>=7?'var(--accent)':m.r<5.5?'var(--red)':'var(--text)'}">${m.r}</span><span class="xxs dim">⚽${m.g}</span>${m.motm?'<span class="gold xxs">⭐</span>':''}</div>`;});h+=`</div>`;}}
+      if(G.seasonLog.length){h+=`<div class="c" style="padding:0;overflow-x:auto"><table class="tbl"><thead><tr><th>S</th><th>队</th><th class="ce">场</th><th class="ce">⚽</th><th class="ce">🅰️</th><th class="ce">⭐</th><th class="ce" style="color:var(--a)">CA</th><th class="ce">#</th></tr></thead><tbody>`;G.seasonLog.slice().reverse().forEach(s=>{h+=`<tr><td>${s.s}</td><td>${s.cl}</td><td class="ce">${s.ap}</td><td class="ce">${s.g}</td><td class="ce">${s.a}</td><td class="ce">${s.ar}</td><td class="ce ac bold">${s.ca}</td><td class="ce">${s.p}</td></tr>`;});h+=`</tbody></table></div>`;}else h+=`<div class="c dim xx center">暂无</div>`;}
+    if(ST==="matches"){if(!G.matchLog.length)h+=`<div class="c dim xx center">暂无</div>`;else{h+=`<div class="c" style="padding:4px 6px">`;G.matchLog.slice().reverse().forEach(m=>{const rc=m.res==="胜"?"ac":m.res==="负"?"rd":"dim";const ti=m.type==="int"?"🌍":m.type==="cup"?"🏆":m.type==="derby"?"🔥":"⚽";h+=`<div class="mr"><span class="xx">${ti}</span><span style="flex:1" class="xx">vs ${m.opp}</span><span class="bold ${rc} xx" style="min-width:24px;text-align:center">${m.tg}-${m.og}</span><span class="xx bold" style="min-width:18px;text-align:center;color:${m.r>=8?'var(--gold)':m.r>=7?'var(--a)':m.r<5.5?'var(--red)':'var(--text)'}">${m.r}</span><span class="xx dim">${m.played?`⚽${m.g}`:"未上场"}</span>${m.motm?'<span class="gd xx">⭐</span>':''}</div>`;});h+=`</div>`;}}
     h+=`</div>`;
   }
 
-  // CAREER
+  // === CAREER ===
   if(VIEW==="career"){
-    h+=`<div class="${aC}"><div class="sec">📖 履历</div><div class="card">`;G.clubHist.forEach(c=>{h+=`<div class="fb xxs" style="padding:3px 0;border-bottom:1px solid var(--border)"><span class="bold">${esc(c.c)}</span><span class="dim">${c.f}${c.t?'-'+c.t:'-至今'}</span></div>`;});h+=`</div>`;
-    if(G.awards.length){h+=`<div class="sec mt12">🏆 荣誉 (${G.awards.length})</div><div class="card">`;G.awards.forEach(a=>{h+=`<div class="xxs gold">${a.n} <span class="dim">${a.y}</span></div>`;});h+=`</div>`;}
-    h+=`<div class="sec mt12">📰 大事记</div><div class="tl" style="margin-left:6px">`;G.events.slice(-25).reverse().forEach(e=>{h+=`<div class="tl-i"><div class="tl-d"></div><div class="xxs" style="padding-left:8px"><span class="dim">${e.y}</span> ${e.icon||""} ${esc(e.t)}</div></div>`;});h+=`</div></div>`;
+    h+=`<div class="an"><div class="s">📖 履历</div><div class="c">`;
+    G.clubHist.forEach(c=>{h+=`<div class="fb xx" style="padding:2px 0;border-bottom:1px solid var(--bdr)"><span class="bold">${esc(c.c)}</span><span class="dim">${c.f}${c.t?'-'+c.t:'-至今'}</span></div>`;});
+    h+=`</div>`;
+    if(G.awards.length){
+      h+=`<div class="s mt8">🏆 荣誉 (${G.awards.length})</div><div class="c">`;
+      const grouped={};
+      G.awards.forEach(a=>{if(!grouped[a.n])grouped[a.n]=[];grouped[a.n].push(a.y);});
+      Object.entries(grouped).forEach(([name,years])=>{
+        h+=`<div class="fb xx" style="padding:2px 0;border-bottom:1px solid var(--bdr)"><span class="gd bold">${name} ×${years.length}</span><span class="dim">${years.join(', ')}</span></div>`;
+      });
+      h+=`</div>`;
+    }
+    h+=`<div class="s mt8">📰 大事记</div><div class="tl" style="margin-left:5px">`;
+    G.events.slice(-15).reverse().forEach(e=>{h+=`<div class="tl-i"><div class="tl-d"></div><div class="xx" style="padding-left:6px"><span class="dim">${e.y}</span> ${e.ic||""} ${esc(e.t)}</div></div>`;});
+    h+=`</div></div>`;
   }
 
-  // TRAINING
+  // === TRAINING ===
   if(VIEW==="train"){
-    h+=`<div class="${aC}"><div class="sec">🏋️ 训练</div><div class="cg">`;
-    [{id:"balanced",n:"均衡",d:"全面",icon:"⚖️"},{id:"attack",n:"进攻",d:"射门+盘带",icon:"⚽"},{id:"technical",n:"技术",d:"传球+心理",icon:"🎯"},{id:"physical",n:"体能",d:"速度+体能",icon:"💪"},{id:"defense",n:"防守",d:"防守+体能",icon:"🛡️"}].forEach(o=>{const on=G.trainFocus===o.id;h+=`<div class="cb" style="${on?'border-color:var(--accent);background:var(--glow)':''}" onclick="G.trainFocus='${o.id}';render()"><div class="cb-t">${o.icon} ${o.n} ${on?'<span class="accent">✓</span>':''}</div><div class="cb-d">${o.d}</div></div>`;});
-    h+=`</div><div class="sec mt12">属性</div><div class="card"><div class="g2">${aB("速度",G.pace)}${aB("射门",G.shot)}${aB("传球",G.pass)}${aB("盘带",G.drib)}${aB("防守",G.def)}${aB("体能",G.phys)}${aB("心理",G.mental)}</div></div>`;
+    h+=`<div class="an"><div class="s">🏋️ 训练</div><div class="cg">`;
+    [{id:"balanced",n:"均衡",d:"全面",i:"⚖️"},{id:"attack",n:"进攻",d:"射门+盘带",i:"⚽"},{id:"technical",n:"技术",d:"传球+心理",i:"🎯"},{id:"physical",n:"体能",d:"速度+体能",i:"💪"},{id:"defense",n:"防守",d:"防守+体能",i:"🛡️"}].forEach(o=>{const on=G.trainFocus===o.id;h+=`<div class="cb" style="${on?'border-color:var(--a);background:var(--glow)':''}" onclick="G.trainFocus='${o.id}';render()"><div class="bold xx">${o.i} ${o.n} ${on?'<span class="ac">✓</span>':''}</div><div class="xx dim">${o.d}</div></div>`;});
+    h+=`</div><div class="s mt8">属性</div><div class="c"><div class="g2">${aB("速度",G.pace)}${aB("射门",G.shot)}${aB("传球",G.pass)}${aB("盘带",G.drib)}${aB("防守",G.def)}${aB("体能",G.phys)}${aB("心理",G.mental)}</div></div>`;
     const gl=G.age<=18?"🚀爆发":G.age<=22?"📈快速":G.age<=25?"📊稳定":G.age<=28?"⏸巅峰":"📉衰退";
-    h+=`<div class="card xxs"><div class="fb"><span class="dim">阶段</span><span class="bold">${gl}</span></div><div class="fb mt4"><span class="dim">空间</span><span class="accent bold">${Math.round(G.pa-G.ca)}</span></div><div class="fb mt4"><span class="dim">体能</span><span>${Math.round(G.stam)}</span></div><div class="fb mt4"><span class="dim">健康</span><span>${G.hp===0?"✅":"🤕"+G.hpW+"周"}</span></div></div></div>`;
+    h+=`<div class="c xx"><div class="fb"><span class="dim">阶段</span><span class="bold">${gl}</span></div><div class="fb mt4"><span class="dim">空间</span><span class="ac bold">${Math.round(G.pa-G.ca)}</span></div></div></div>`;
   }
 
-  // RETIRE
+  // === RETIRE ===
   if(VIEW==="retire"){
-    h+=`<div class="${aC} center"><div style="font-size:48px;margin-top:20px">👋</div><div class="logo" style="font-size:18px;margin-top:8px">传奇谢幕</div><div class="dim xxs mt4">${esc(G.name)}·${G.retireAge}岁·${G.year}</div>`;
-    h+=`<div class="card mt12" style="text-align:left"><div class="sg" style="margin:0">${[{l:"出场",v:G.cApps},{l:"进球",v:G.cGoals},{l:"助攻",v:G.cAst},{l:"🏅",v:G.cMotm},{l:"🎩",v:G.cHatTricks},{l:"🏆",v:G.awards.length},{l:"🌍",v:G.intCaps},{l:"💰",v:fmt$(G.totalEarnings)}].map(s=>`<div class="sb"><div class="sb-v">${s.v}</div><div class="sb-l">${s.l}</div></div>`).join("")}</div></div>`;
-    if(G.owned.length){h+=`<div class="card mt6" style="text-align:left"><div class="bold xxs mb4">🏠 资产</div>`;G.owned.forEach(id=>{const it=SHOP.find(x=>x.id===id);if(it)h+=`<div class="xxs">${it.icon} ${it.name}</div>`;});h+=`</div>`;}
-    if(G.awards.length){h+=`<div class="card mt6" style="text-align:left"><div class="bold xxs mb4">🏆 荣誉</div>`;G.awards.forEach(a=>{h+=`<div class="xxs gold">${a.n}(${a.y})</div>`;});h+=`</div>`;}
+    h+=`<div class="an center"><div style="font-size:44px;margin-top:16px">👋</div><div class="logo" style="font-size:16px;margin-top:6px">传奇谢幕</div><div class="dim xx mt4">${esc(G.name)}·${G.retireAge}岁·${G.year}</div>`;
+    h+=`<div class="c mt8" style="text-align:left"><div class="sg" style="margin:0">${[{l:"场",v:G.cApps},{l:"球",v:G.cGoals},{l:"助",v:G.cAst},{l:"🎩",v:G.cHatTricks},{l:"🏆",v:G.awards.length},{l:"🌍",v:G.intCaps},{l:"💰",v:fmt$(G.totalEarnings)}].map(s=>`<div class="sb"><div class="sb-v">${s.v}</div><div class="sb-l">${s.l}</div></div>`).join("")}</div></div>`;
+    if(G.awards.length){h+=`<div class="c mt4" style="text-align:left"><div class="bold xx mb4">🏆 荣誉</div>`;const gr={};G.awards.forEach(a=>{if(!gr[a.n])gr[a.n]=[];gr[a.n].push(a.y);});Object.entries(gr).forEach(([n,y])=>{h+=`<div class="xx gd">${n} ×${y.length}</div>`;});h+=`</div>`;}
+    if(G.romance?.children?.length){h+=`<div class="c mt4" style="text-align:left"><div class="bold xx mb4">👨‍👩‍👧‍👦 家庭</div>`;G.romance.children.forEach(c=>{h+=`<div class="xx">👶 ${c.name} (${c.year})</div>`;});h+=`</div>`;}
     let leg=G.cApps>=500&&G.awards.length>=8?"⭐⭐⭐⭐⭐ 球王":G.cApps>=350&&G.awards.length>=5?"⭐⭐⭐⭐ 巨星":G.cApps>=200&&G.awards.length>=2?"⭐⭐⭐ 世界级":G.cApps>=100?"⭐⭐ 优秀":"⭐ 职业";
-    h+=`<div class="card mt6 gl"><div class="xxs dim">评级</div><div class="gold bold" style="font-size:16px;margin-top:2px">${leg}</div></div>`;
-    if(G.postRetire){h+=`<div class="card mt6 bl"><div class="bold xxs">${G.postRetire==="coach"?"🧑‍🏫 主教练":G.postRetire==="pundit"?"🎙️ 评论员":"🏢 体育总监"}</div></div>`;}
-    h+=`<button class="btn btn-p btn-lg mt12" onclick="CC={name:'',nation:12,pos:'ST',diff:1,yci:0};G=null;VIEW='create';render()">🔄 重新开始</button></div>`;
+    h+=`<div class="c mt4 gl"><div class="xx dim">评级</div><div class="gd bold" style="font-size:15px;margin-top:2px">${leg}</div></div>`;
+    if(G.postRetire){h+=`<div class="c mt4"><div class="bold xx">${G.postRetire==="coach"?"🧑‍🏫 主教练":G.postRetire==="pundit"?"🎙️ 评论员":"🏢 总监"}</div></div>`;}
+    h+=`<button class="b bp" style="padding:10px 30px;font-size:12px;margin-top:10px" onclick="CC={name:'',nation:12,pos:'ST',diff:1,yci:0};G=null;VIEW='create';render()">🔄 重新开始</button></div>`;
   }
 
   h+=`</div>`;
-  setDOM(h); // 更新并保持滚动状态
+  document.getElementById('app').innerHTML=h;
+  window.scrollTo(0, scrollPos); // preserve scroll
 }
 
-function renderChoice(aC){
-  let h=`<div class="${aC}">`;
+function renderChoice(){
+  let h=`<div class="an">`;
   if(G.pendingChoice==="season_end"){
-    h+=`<div class="card gl center"><div style="font-size:28px">📅</div><div class="bold mt4 xs">S${G.season-1} 结束</div>`;
-    if(G.leaguePos)h+=`<div class="xxs mt4">${G.club.n} ${G.club.lg} 第${G.leaguePos}</div>`;
+    h+=`<div class="c gl center"><div style="font-size:24px">📅</div><div class="bold mt4 x">S${G.season-1} 结束</div>`;
+    if(G.leaguePos)h+=`<div class="xx mt4">${G.club.n} ${G.club.lg} 第${G.leaguePos}</div>`;
+    if(G.uclResult)h+=`<div class="xx">欧冠：${G.uclResult}</div>`;
+    if(G.wcResult)h+=`<div class="xx">世界杯：${G.wcResult}</div>`;
     const sl=G.seasonLog[G.seasonLog.length-1];
     if(sl){h+=`<div class="sg mt4">${[{l:"⚽",v:sl.g},{l:"🅰️",v:sl.a},{l:"📊",v:sl.ap},{l:"⭐",v:sl.ar},{l:"CA",v:sl.ca}].map(s=>`<div class="sb"><div class="sb-v">${s.v}</div><div class="sb-l">${s.l}</div></div>`).join("")}</div>`;}
     h+=`</div>`;
-    if(G.offers.length){h+=`<div class="sec mt12">📨 邀约</div>`;G.offers.forEach((o,i)=>{const up=o.club.rep>G.club.rep;h+=`<div class="card ck" onclick="acceptOffer(${i})"><div class="fb"><div><div class="bold xxs">${o.club.n} ${up?'<span class="green">↑</span>':''}</div><div class="dim xxs">${o.club.lg}·${o.club.rep}</div></div><div style="text-align:right"><div class="accent bold xxs">${fmt$(o.wage)}/周${o.wage>G.wage?' <span class="green">↑'+Math.round((o.wage/G.wage-1)*100)+'%</span>':''}</div><div class="xxs dim">${o.years}年·${fmt$(o.fee)}</div></div></div></div>`;});}
-    h+=`<button class="btn btn-full mt8" onclick="stayAtClub()">${G.contract>0?`留在${G.club.s}`:`续约`}</button>`;
-    if(G.age>=32)h+=`<button class="btn btn-d btn-full mt4" onclick="retirePlayer()">👋 退役</button>`;
+    G.uclResult=null;G.wcResult=null;
+    if(G.offers.length){h+=`<div class="s mt8">📨 邀约</div>`;G.offers.forEach((o,i)=>{const up=o.club.rep>G.club.rep;h+=`<div class="c ck" onclick="acceptOffer(${i})"><div class="fb"><div><div class="bold xx">${o.club.n}${up?' <span class="gn">↑</span>':''}</div><div class="dim xx">${o.club.lg}·${o.club.rep}</div></div><div style="text-align:right"><div class="ac bold xx">${fmt$(o.wage)}/周</div><div class="xx dim">${o.years}年</div></div></div></div>`;});}
+    h+=`<button class="b bf mt6" onclick="stayAtClub()">${G.contract>0?`留在${G.club.s}`:'续约'}</button>`;
+    if(G.age>=32)h+=`<button class="b bd bf mt4" onclick="retirePlayer()">👋 退役</button>`;
   }else if(G.pendingChoice==="free_agent"){
-    h+=`<div class="card gl center"><div style="font-size:28px">📋</div><div class="bold mt4">合同到期</div></div>`;
-    if(G.offers.length){G.offers.forEach((o,i)=>{h+=`<div class="card ck" onclick="acceptOffer(${i})"><div class="fb"><div class="bold xxs">${o.club.n}</div><div class="accent bold xxs">${fmt$(o.wage)}/周 ${o.years}年</div></div></div>`;});}
-    h+=`<button class="btn btn-full mt4" onclick="stayAtClub()">续约</button>`;
-    if(G.age>=30)h+=`<button class="btn btn-d btn-full mt4" onclick="retirePlayer()">👋</button>`;
+    h+=`<div class="c gl center"><div style="font-size:24px">📋</div><div class="bold mt4">合同到期</div></div>`;
+    if(G.offers.length){G.offers.forEach((o,i)=>{h+=`<div class="c ck" onclick="acceptOffer(${i})"><div class="fb"><div class="bold xx">${o.club.n}</div><div class="ac bold xx">${fmt$(o.wage)}/周 ${o.years}年</div></div></div>`;});}
+    h+=`<button class="b bf mt4" onclick="stayAtClub()">续约</button>`;
+    if(G.age>=30)h+=`<button class="b bd bf mt4" onclick="retirePlayer()">👋</button>`;
   }else if(G.pendingChoice==="retire_ask"){
-    h+=`<div class="card gl center"><div style="font-size:28px">🤔</div><div class="bold mt4">退役？</div></div>`;
-    h+=`<button class="btn btn-p btn-full mt8" onclick="G.pendingChoice=null;render()">💪 继续</button><button class="btn btn-d btn-full mt4" onclick="retirePlayer()">👋 退役</button>`;
+    h+=`<div class="c gl center"><div style="font-size:24px">🤔</div><div class="bold mt4">退役？</div></div>`;
+    h+=`<button class="b bp bf mt6" onclick="G.pendingChoice=null;render()">💪继续</button><button class="b bd bf mt4" onclick="retirePlayer()">👋退役</button>`;
   }else if(G.pendingChoice==="interview"){
-    h+=`<div class="card center"><div style="font-size:24px">🎤</div><div class="bold mt4 xxs">采访</div></div><div class="cg">`;
-    h+=`<div class="cb" onclick="handleInterview('h')"><div class="cb-t">🙏 谦虚</div><div class="cb-d">+教练+球迷</div></div>`;
-    h+=`<div class="cb" onclick="handleInterview('b')"><div class="cb-t">🔥 霸气</div><div class="cb-d">+人气-教练</div></div>`;
-    h+=`<div class="cb" onclick="handleInterview('c')"><div class="cb-t">🤝 挺教练</div><div class="cb-d">+教练</div></div></div>`;
+    h+=`<div class="c center"><div style="font-size:20px">🎤</div><div class="bold mt4 xx">采访</div></div><div class="cg">`;
+    h+=`<div class="cb" onclick="handleInterview('h')"><div class="bold xx">🙏 谦虚</div></div>`;
+    h+=`<div class="cb" onclick="handleInterview('b')"><div class="bold xx">🔥 霸气</div></div>`;
+    h+=`<div class="cb" onclick="handleInterview('c')"><div class="bold xx">🤝 挺教练</div></div></div>`;
   }else if(G.pendingChoice==="intl"){
-    h+=`<div class="card center"><div style="font-size:24px">${G.nation.f}</div><div class="bold mt4 xxs">国家队</div></div><div class="cg">`;
-    h+=`<div class="cb" onclick="handleIntl('play')"><div class="cb-t">${G.nation.f} 出战</div></div>`;
-    h+=`<div class="cb" onclick="handleIntl('skip')"><div class="cb-t">🏠 休整</div></div></div>`;
+    h+=`<div class="c center"><div style="font-size:20px">${G.nation.f}</div><div class="bold mt4 xx">国家队征召</div></div><div class="cg">`;
+    h+=`<div class="cb" onclick="handleIntl('play')"><div class="bold xx">${G.nation.f} 出战</div></div>`;
+    h+=`<div class="cb" onclick="handleIntl('skip')"><div class="bold xx">🏠 留守休整</div></div></div>`;
   }else if(G.pendingChoice==="wage"){
-    h+=`<div class="card center"><div style="font-size:24px">💰</div><div class="bold mt4 xxs">谈薪</div></div><div class="cg">`;
-    h+=`<div class="cb" onclick="handleWage('ask')"><div class="cb-t">💰 加薪</div></div>`;
-    h+=`<div class="cb" onclick="handleWage('skip')"><div class="cb-t">🤝 算了</div></div></div>`;
+    h+=`<div class="c center"><div style="font-size:20px">💰</div><div class="bold mt4 xx">续约谈判</div></div><div class="cg">`;
+    h+=`<div class="cb" onclick="handleWage('ask')"><div class="bold xx">💰 要求加薪</div></div>`;
+    h+=`<div class="cb" onclick="handleWage('skip')"><div class="bold xx">🤝 维持现状</div></div></div>`;
+  }else if(G.pendingChoice==="romance_encounter"){
+    const unmet=LOVERS.filter(l=>!(G.romance?.partners||[]).find(p=>p.id===l.id));
+    if(unmet.length){
+      const l=pick(unmet);
+      h+=`<div class="c pk center"><div style="font-size:24px">${l.emoji}</div><div class="bold mt4 xx">偶遇 ${l.name}</div><div class="xx dim mt4">${l.age}岁·${l.job}·${l.desc}</div></div><div class="cg">`;
+      h+=`<div class="cb" onclick="meetLover('${l.id}')"><div class="bold xx">💕 搭讪认识</div></div>`;
+      h+=`<div class="cb" onclick="G.pendingChoice=null;render()"><div class="bold xx">🚶 擦肩而过</div></div></div>`;
+    }else{G.pendingChoice=null;render();return h;}
+  }else if(G.pendingChoice==="romance_event"){
+    const p = G.romance.partners.find(x=>x.id===G.romance_event_partner_id);
+    const t = G.romance_event_type;
+    const l = LOVERS.find(x => x.id === p.id);
+    h += `<div class="c pk center"><div style="font-size:24px">${l.emoji}</div><div class="bold mt4 xx">${p.name}</div><div class="xx dim">${p.status}</div></div><div class="cg">`;
+    if (t === "pregnant") {
+        h += `<div class="xx pk mb6 center">亲爱的，我怀孕了！我们要当父母了！</div>`;
+        h += `<div class="cb" onclick="handleRomanceEvent('pregnant')"><div class="bold xx">太棒了！👶</div></div>`;
+    } else if (t === "scandal") {
+        h += `<div class="xx rd mb6 center">【突发狗仔】你和${p.name}的地下情险些曝光！狗仔索要封口费。</div>`;
+        h += `<div class="cb" onclick="handleRomanceEvent('pay_scandal')"><div class="bold xx">支付 €100K 封口 (-€100K)</div></div>`;
+        h += `<div class="cb" onclick="handleRomanceEvent('ignore_scandal')"><div class="bold xx">不理会！(大量掉粉，妻子大怒)</div></div>`;
+    } else if (t === "gift") {
+        h += `<div class="xx pk mb6 center">亲爱的，我最近看中了一条很美的项链，买给我好不好？(€10K)</div>`;
+        h += `<div class="cb" onclick="handleRomanceEvent('buy_gift')"><div class="bold xx">买买买！(-€10K, 好感+)</div></div>`;
+        h += `<div class="cb" onclick="handleRomanceEvent('refuse_gift')"><div class="bold xx">太贵了，下次吧 (好感-)</div></div>`;
+    } else if (t === "date") {
+        h += `<div class="xx pk mb6 center">我们好久没出去约会了，今晚陪我吃饭吧？(€2K)</div>`;
+        h += `<div class="cb" onclick="handleRomanceEvent('go_date')"><div class="bold xx">好啊，走起！(-€2K, 好感+)</div></div>`;
+        h += `<div class="cb" onclick="handleRomanceEvent('refuse_date')"><div class="bold xx">我要训练，没空 (好感-)</div></div>`;
+    }
+    h += `</div>`;
   }else if(G.pendingChoice==="post_retire"){
-    h+=`<div class="card gl center"><div style="font-size:28px">🔮</div><div class="bold mt4">退役后？</div></div><div class="cg">`;
-    h+=`<div class="cb" onclick="choosePostRetire('coach')"><div class="cb-t">🧑‍🏫 主教练</div></div>`;
-    h+=`<div class="cb" onclick="choosePostRetire('pundit')"><div class="cb-t">🎙️ 评论员</div></div>`;
-    h+=`<div class="cb" onclick="choosePostRetire('director')"><div class="cb-t">🏢 总监</div></div></div>`;
+    h+=`<div class="c gl center"><div style="font-size:24px">🔮</div><div class="bold mt4">退役后的生活？</div></div><div class="cg">`;
+    h+=`<div class="cb" onclick="choosePostRetire('coach')"><div class="bold xx">🧑‍🏫 转型主教练</div></div>`;
+    h+=`<div class="cb" onclick="choosePostRetire('pundit')"><div class="bold xx">🎙️ 成为评论员</div></div>`;
+    h+=`<div class="cb" onclick="choosePostRetire('director')"><div class="bold xx">🏢 担任俱乐部高管</div></div></div>`;
   }
   h+=`</div>`;return h;
 }
 
-// EXPOSE ALL to window
-window.CC=CC;window.G=G;window.VIEW=VIEW;window.ST=ST;window.TACTIC=TACTIC;
+// EXPOSE
+window.CC=CC;window.G=G;window.VIEW=VIEW;window.ST=ST;window.TAC=TAC;
 window.render=render;window.notify=notify;
 window.startGame=startGame;window.saveGame=saveGame;window.loadGame=loadGame;
 window.advanceWeek=advanceWeek;window.advance4=advance4;window.simSeason=simSeason;
@@ -628,6 +965,9 @@ window.handleInterview=handleInterview;window.handleIntl=handleIntl;
 window.requestTransfer=requestTransfer;window.handleWage=handleWage;
 window.choosePostRetire=choosePostRetire;
 window.buyItem=buyItem;window.spendOn=spendOn;
+window.meetLover=meetLover;window.giveGift=giveGift;window.setActiveLover=setActiveLover;
+window.proposeTo=proposeTo;window.doUnderground=doUnderground;window.haveChild=haveChild;
+window.goDate=goDate;window.handleRomanceEvent=handleRomanceEvent;
 render();
 </script>
 </body>
